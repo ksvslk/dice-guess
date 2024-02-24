@@ -9,10 +9,13 @@ var length = 2
 
 
 func _ready():
-	#generate_specific_level(4)
 	return
-	var path_length = 2
-	for i in range(10):
+	for j in range(1,101):
+		var scene_path = "res://levels/Level" + str(j) +".tscn"
+		var game = load(scene_path).instance()
+		get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
+	var path_length = 15
+	for i in range(100, 200):
 		var level_nr = i + 1
 		var walls_count = int(max(1, level_nr/1.5))
 		path_length = get_level_path_length(level_nr)

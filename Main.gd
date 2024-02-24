@@ -1,5 +1,6 @@
 extends Node
 
+signal switch_level
 onready var dice_current_position = Vector2(0,0)
 onready var tile_map = $ViewportContainer/Viewport/Level
 onready var move_dice_random = $MoveDiceRandom
@@ -25,10 +26,18 @@ var generated_levels = [[]]
 func _ready():
 	score_label.text = "Score: " + str(score_nr)
 	level_nr.text = "Level: " + str(current_level_nr)
-	
-	
-func load_next_level():
+	level_scroller.update_current_level_color()
+
+
+func switch_level(index):
+	level_scroller.visible = false
+	load_next_level(index)
+
+
+func load_next_level(lv:int = -1):
 	current_level_nr = current_level_nr + 1
+	if lv != -1:
+		current_level_nr = lv
 	var new_node_resource = load("res://levels/Level"+str(current_level_nr)+".tscn")
 	var new_node = new_node_resource.instance()
 	var current_node = tile_map
@@ -40,6 +49,7 @@ func load_next_level():
 	score_nr = current_level_nr * 100
 	_update_score_label()
 	tile_map.set_random_dice_side_up()
+	level_scroller.update_current_level_color()
 	
 
 func double_blink_label_red():
@@ -141,11 +151,6 @@ func _reset_level():
 	win = false
 
 
-func _input(event):
-	if event is InputEventMouseButton && not animating:
-		if game_over:
-			_reset_level()
-		
 
 func _set_dice_position(next_position:Vector2):
 	var local_position = tile_map.map_to_world(next_position)
@@ -181,3 +186,18 @@ func _on_5_pressed():
 func _on_6_pressed():
 	if not animating && not game_over:
 		_animate_to_end(6, $Menu/HBoxContainer/GridContainer/"6")
+
+onready var level_scroller = $Menu/LevelScroller
+
+
+func _on_ViewportContainer_gui_input(event):
+	if event is InputEventMouseButton && not animating:
+		if game_over:
+			_reset_level()
+
+
+func _on_HBoxContainer_gui_input(event):
+	if event is InputEventMouseButton:
+		print("tere")
+		level_scroller.visible = true
+

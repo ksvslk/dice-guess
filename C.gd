@@ -1,5 +1,26 @@
 extends Node
 
+# sections
+# "1", "2", "3" etc. for levels
+const various_section: String = "various"
+
+# Initial value is 1, UPDATE on level change
+const current_level_key: String = "progress"
+# Initial value is 0, UPDATE on level complete
+const current_score_key: String = "current_score"
+const best_score_key: String = "best_score"
+
+const unlocked: String = "unlocked"
+
+const various_section_dictionary_keys = [
+	current_level_key,
+]
+
+const level_section_dictionary_keys = [
+	current_score_key,
+	best_score_key,
+	unlocked
+]
 
 func get_top_safe_margin() -> float:
 	var safe_area = OS.get_window_safe_area()

@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
+[ext_resource path="res://level_scroller.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
@@ -7,7 +8,7 @@
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
-[ext_resource path="res://levels/Template.tscn" type="PackedScene" id=10]
+[ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=9]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -71,7 +72,7 @@ msaa = 2
 usage = 0
 render_target_update_mode = 3
 
-[node name="Level" parent="ViewportContainer/Viewport" instance=ExtResource( 10 )]
+[node name="Level" parent="ViewportContainer/Viewport" instance=ExtResource( 9 )]
 
 [node name="Menu" type="Control" parent="."]
 anchor_top = 0.794
@@ -199,6 +200,22 @@ size_flags_vertical = 6
 custom_fonts/font = SubResource( 35 )
 text = "REMOVE ADS"
 
+[node name="LevelScroller" type="GridContainer" parent="Menu"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1441.0
+margin_bottom = 5.0
+mouse_filter = 2
+size_flags_horizontal = 7
+custom_constants/vseparation = 8
+custom_constants/hseparation = 1
+columns = 10
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
 [node name="Wrong" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
 
@@ -214,6 +231,8 @@ stream = ExtResource( 6 )
 [node name="NextLevel" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
 
+[connection signal="gui_input" from="ViewportContainer" to="." method="_on_ViewportContainer_gui_input"]
+[connection signal="gui_input" from="Menu/HBoxContainer" to="." method="_on_HBoxContainer_gui_input"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/1" to="." method="_on_1_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/2" to="." method="_on_2_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/3" to="." method="_on_3_pressed"]

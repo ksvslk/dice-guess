@@ -16,6 +16,8 @@ run/main_scene="res://Main.tscn"
 [autoload]
 
 C="*res://C.gd"
+Data="*res://data.gd"
+Gpack="*res://gpack.gd"
 
 [display]
 

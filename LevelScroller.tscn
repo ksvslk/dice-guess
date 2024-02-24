@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://level_scroller.gd" type="Script" id=1]
+
+[node name="LevelScroller" type="GridContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 7
+custom_constants/vseparation = 8
+custom_constants/hseparation = 1
+columns = 5
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
