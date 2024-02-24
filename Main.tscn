@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://level_scroller.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
 [ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Menu.gd" type="Script" id=10]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -84,6 +85,7 @@ margin_right = -32.0
 margin_bottom = -41.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 10 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
 anchor_top = 1.0
@@ -200,13 +202,15 @@ size_flags_vertical = 6
 custom_fonts/font = SubResource( 35 )
 text = "REMOVE ADS"
 
-[node name="LevelScroller" type="GridContainer" parent="Menu"]
+[node name="LevelScroller" type="GridContainer" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -1441.0
-margin_bottom = 5.0
-mouse_filter = 2
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+mouse_filter = 0
+input_pass_on_modal_close_click = false
 size_flags_horizontal = 7
 custom_constants/vseparation = 8
 custom_constants/hseparation = 1

@@ -32,7 +32,7 @@ func _ready():
 func switch_level(index):
 	level_scroller.visible = false
 	load_next_level(index)
-
+	_reset_partially()
 
 func load_next_level(lv:int = -1):
 	current_level_nr = current_level_nr + 1
@@ -142,6 +142,10 @@ func _reset_level():
 		load_next_level()
 	else:
 		tile_map.reset_level()
+	_reset_partially()
+
+
+func _reset_partially():
 	for c in $Menu/HBoxContainer/GridContainer.get_children():
 		c.modulate = Color.white
 	tile_map.dice.modulate = Color.white
@@ -149,7 +153,6 @@ func _reset_level():
 	score_label.modulate = Color.white
 	game_over = false
 	win = false
-
 
 
 func _set_dice_position(next_position:Vector2):
@@ -187,7 +190,7 @@ func _on_6_pressed():
 	if not animating && not game_over:
 		_animate_to_end(6, $Menu/HBoxContainer/GridContainer/"6")
 
-onready var level_scroller = $Menu/LevelScroller
+onready var level_scroller = $LevelScroller
 
 
 func _on_ViewportContainer_gui_input(event):
@@ -198,6 +201,5 @@ func _on_ViewportContainer_gui_input(event):
 
 func _on_HBoxContainer_gui_input(event):
 	if event is InputEventMouseButton:
-		print("tere")
 		level_scroller.visible = true
 

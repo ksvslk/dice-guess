@@ -1,7 +1,7 @@
 extends GridContainer
 
 var level_button = load("res://LevelSelectButton.tscn")
-onready var main = $"../.."
+onready var main = $".."
 
 func _ready():
 	var levels = Data.get_levels()
@@ -13,14 +13,11 @@ func _ready():
 		button.disabled = !state
 		add_child(button)
 		button.connect("pressed", main, "switch_level", [index + 1])
-	yield(get_tree(), "node_added")
-	var safe_area_position_y = OS.get_window_safe_area().position.y
-	if safe_area_position_y != 0:
-		rect_global_position.y = C.get_top_safe_margin() + 75
-	
+	margin_top += C.get_top_safe_margin()
+	margin_bottom -= C.get_bottom_safe_margin()
+
 
 func update_current_level_color():
-	print("UPdating curr")
 	var added_buttons = get_children()
 	for index in range(0, added_buttons.size()):
 		var level_button_l = get_child(index)
