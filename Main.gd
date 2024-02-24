@@ -23,6 +23,7 @@ enum {LEFT, RIGHT, UP, DOWN}
 
 func _ready():
 	score_label.text = "Score: " + str(score_nr)
+	level_nr.text = "Level: " + str(current_level_nr)
 	
 	
 func load_next_level():
@@ -35,6 +36,27 @@ func load_next_level():
 	current_node.queue_free()
 	tile_map = new_node
 	level_nr.text = "Level: " + str(current_level_nr)
+
+
+func double_blink_label_red():
+	var original_color = score_label.modulate
+	var tween = get_tree().create_tween()
+	tween.tween_property(score_label, "modulate", Color.red, 0.15).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(score_label, "modulate", original_color, 0.15).set_delay(0).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(score_label, "modulate", Color.red, 0.15).set_delay(0).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(score_label, "modulate", original_color, 0.15).set_delay(0).set_trans(Tween.TRANS_BOUNCE)
+
+
+func double_blink_label_green():
+	var original_color = score_label.modulate
+	var tween = get_tree().create_tween()
+	tween.tween_property(score_label, "modulate", Color.greenyellow, 0.25).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(score_label, "modulate", original_color, 0.5).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(score_label, "modulate", Color.greenyellow, 0.25).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(score_label, "modulate", original_color, 0.5).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(score_label, "modulate", Color.greenyellow, 0.25).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(score_label, "modulate", original_color, 0.5).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
+
 
 
 func _set_move_pause(length:int) -> void:
@@ -72,18 +94,19 @@ func _animate_to_end(guess:int, button:TextureButton):
 				move_dice_random.play()
 		_set_dice_position(cell)
 	if tile_map.dice.get_top_number() == guess:
+		double_blink_label_green()
 		tile_map.last.modulate = Color.transparent
 		tile_map.dice.modulate = Color.greenyellow
 		button.modulate = Color.greenyellow
 		correct.play()
 		win = true
 	else:
+		double_blink_label_red()
 		tile_map.last.modulate = Color.transparent
 		tile_map.dice.modulate = Color.red
 		button.modulate = Color.red
 		_decrease_score_and_update_label()
 		wrong.play()
-	
 	animating = false
 	game_over = true
 
@@ -94,7 +117,7 @@ func _decrease_score_and_update_label():
 
 
 func _update_score_label(new_score:int) -> void:
-	score_label.text = str(score_nr)
+	score_label.text = "Score: " + str(score_nr)
 
 
 func _reset_level():
@@ -108,6 +131,7 @@ func _reset_level():
 		c.modulate = Color.white
 	tile_map.dice.modulate = Color.white
 	tile_map.last.modulate = Color.white
+	score_label.modulate = Color.white
 	game_over = false
 	win = false
 

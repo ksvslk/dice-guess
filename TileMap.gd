@@ -20,6 +20,7 @@ func _ready():
 		generate_new_level(walls_count, path_length)
 		create_new_scene(level_nr)
 
+
 func get_level_path_length(level:int, last_path_length:int) -> int:
 	if range(1, 5).has(level):
 		return 2
