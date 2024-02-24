@@ -14,8 +14,9 @@ onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 var game_over = false
 var animating = false
 var win = false
-var score_nr = 1000
 var current_level_nr = 1
+var score_nr = current_level_nr * 100
+
 onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 
 enum {LEFT, RIGHT, UP, DOWN}
@@ -36,7 +37,9 @@ func load_next_level():
 	current_node.queue_free()
 	tile_map = new_node
 	level_nr.text = "Level: " + str(current_level_nr)
-
+	score_nr = current_level_nr * 100
+	_update_score_label()
+	
 
 func double_blink_label_red():
 	var original_color = score_label.modulate
@@ -112,11 +115,12 @@ func _animate_to_end(guess:int, button:TextureButton):
 
 
 func _decrease_score_and_update_label():
-	score_nr = max(score_nr - 50, 0)
-	_update_score_label(score_nr)
+	var decrease_amount = (current_level_nr * 100) / 10
+	score_nr = max(score_nr - decrease_amount, 0)
+	_update_score_label()
 
 
-func _update_score_label(new_score:int) -> void:
+func _update_score_label() -> void:
 	score_label.text = "Score: " + str(score_nr)
 
 

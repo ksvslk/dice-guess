@@ -171,33 +171,33 @@ margin_bottom = 277.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Score" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_right = 330.0
+[node name="LevelNr" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_left = 105.0
+margin_right = 225.0
 margin_bottom = 69.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 35 )
+text = "Wtf?"
+
+[node name="Score" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_top = 73.0
+margin_right = 330.0
+margin_bottom = 142.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 35 )
 text = "Score: 1000"
 
-[node name="Score3" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
+[node name="RemoveAds" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_left = 15.0
-margin_top = 73.0
-margin_right = 315.0
-margin_bottom = 142.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 35 )
-text = "REMOVE ADS"
-
-[node name="LevelNr" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_left = 105.0
 margin_top = 146.0
-margin_right = 225.0
+margin_right = 315.0
 margin_bottom = 215.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 35 )
-text = "Wtf?"
+text = "REMOVE ADS"
 
 [node name="Wrong" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
