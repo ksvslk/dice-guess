@@ -3,25 +3,24 @@ extends TileMap
 onready var last = $Last
 onready var dice = $Dice
 
-var start_pos = Vector2(-13,-13)
-export(Array, int) var unique_path = []
+var start_pos = Vector2(0,0)
+export(Array) var unique_path = []
 var length = 2
 
-var time_start = 0
-var time_now = 0
 
 func _ready():
+	#generate_specific_level(4)
 	return
 	var path_length = 2
-	for i in range(100):
+	for i in range(10):
 		var level_nr = i + 1
-		var walls_count = max(1, level_nr/2)
-		path_length = get_level_path_length(level_nr, path_length)
-		generate_new_level(walls_count, path_length)
+		var walls_count = int(max(1, level_nr/1.5))
+		path_length = get_level_path_length(level_nr)
+		generate_new_level(level_nr, walls_count, path_length)
 		create_new_scene(level_nr)
 
 
-func get_level_path_length(level:int, last_path_length:int) -> int:
+func get_level_path_length(level:int) -> int:
 	if range(1, 5).has(level):
 		return 2
 	elif range(5, 10).has(level):
@@ -46,55 +45,39 @@ func create_new_scene(scene_nr:int):
 		print("Failed to save scene")
 	root_node.queue_free()
 
-	
-func fit_level_to_screen():
-	scale.x = 1
-	scale.y = 1
-	var used = get_used_cells()
-	var parent_rect = get_parent().get_visible_rect()
-	var fit = false
-	while not fit:
-		used = get_used_cells()
-		var count = 0
-		for u in used:
-			var local_position = map_to_world(u)
-			var global_pos = to_global(local_position)
-			if !parent_rect.has_point(global_pos):
-				scale.x -= 0.1
-				scale.y -= 0.1
-				count += 1
-		if count == 0:
-			fit = true
 
-
-func _set_random_dice_side_up():
+func set_random_dice_side_up():
 	var rand_frame:int = randi() % dice.frames.get_frame_count("default")
 	dice.frame = rand_frame
 
 
-func generate_new_level(walls_count:int, path_length:int):
-	clear()
-	start_pos = Vector2(0,0)
-	var selection_of_paths_with_distance = []
-	var came_from_and_distances = []
-	while selection_of_paths_with_distance.empty():
-		var wall_positions = generate_unique_random_cell_coordinates(200, C.allowed_cells.duplicate())
-		came_from_and_distances = get_paths(wall_positions)
-		for came_from_and_distance in came_from_and_distances.values():
-			if came_from_and_distance[1] == path_length:
-				selection_of_paths_with_distance.push_back(came_from_and_distance[0])
-	var index = randi() % selection_of_paths_with_distance.size() - 1
-	var goal = selection_of_paths_with_distance[index]
-	while selection_of_paths_with_distance.find(goal) == -1:
-		index = randi() % came_from_and_distances.keys().size() - 1
-		goal = came_from_and_distances.keys()[index]
-	unique_path = get_path_back_to(start_pos, goal, came_from_and_distances)
-	for v in unique_path:
-		set_cellv(v, 0)
-	set_cellv(unique_path[0], 1)
-	set_cellv(unique_path[unique_path.size() - 1], 2)
-	reset_level()
-	_set_random_dice_side_up()
+func generate_new_level(level:int, walls_count:int, path_length:int):
+	var parent = get_parent().get_parent().get_parent()
+	print("Gene level for ", level)
+	while parent.generated_levels.find(unique_path) != -1:
+		unique_path.clear()
+		clear()
+		start_pos = Vector2(0,0)
+		var selection_of_paths_with_distance = []
+		var came_from_and_distances = []
+		while selection_of_paths_with_distance.empty():
+			var wall_positions = generate_unique_random_cell_coordinates(walls_count, C.allowed_cells.duplicate())
+			came_from_and_distances = get_paths(wall_positions)
+			for came_from_and_distance in came_from_and_distances.values():
+				if came_from_and_distance[1] == path_length:
+					selection_of_paths_with_distance.push_back(came_from_and_distance[0])
+		var index = randi() % selection_of_paths_with_distance.size() - 1
+		var goal = selection_of_paths_with_distance[index]
+		while selection_of_paths_with_distance.find(goal) == -1:
+			index = randi() % came_from_and_distances.keys().size() - 1
+			goal = came_from_and_distances.keys()[index]
+		unique_path = get_path_back_to(start_pos, goal, came_from_and_distances)
+		for v in unique_path:
+			set_cellv(v, 0)
+		set_cellv(unique_path[0], 1)
+		set_cellv(unique_path[unique_path.size() - 1], 2)
+		reset_level()
+	parent.generated_levels.push_back(unique_path.duplicate())
 
 
 func generate_unique_random_cell_coordinates(amount: int, available_coords: Array) -> Array:
@@ -151,6 +134,7 @@ func get_paths(wall_positions:Array) -> Dictionary:
 				came_from_and_distance[next] = [current, 1 + came_from_and_distance[current][1]]
 				#set_cellv(next, 1)
 				#yield(get_tree().create_timer(0.01), "timeout")
+	print("SIZE: ", came_from_and_distance.size())
 	return came_from_and_distance
 
 

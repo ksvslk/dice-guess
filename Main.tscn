@@ -7,7 +7,7 @@
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
-[ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://levels/Template.tscn" type="PackedScene" id=10]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4

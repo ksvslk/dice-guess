@@ -20,7 +20,7 @@ var score_nr = current_level_nr * 100
 onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 
 enum {LEFT, RIGHT, UP, DOWN}
-
+var generated_levels = [[]]
 
 func _ready():
 	score_label.text = "Score: " + str(score_nr)
@@ -39,6 +39,7 @@ func load_next_level():
 	level_nr.text = "Level: " + str(current_level_nr)
 	score_nr = current_level_nr * 100
 	_update_score_label()
+	tile_map.set_random_dice_side_up()
 	
 
 func double_blink_label_red():
