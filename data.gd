@@ -57,6 +57,7 @@ func load_next_level(nr: int = -1, from_level_select: bool = false):
 func get_level_complete_info() -> Dictionary:
 	return {
 		"current_score":_config.get_value(current_level, C.current_score_key),
+		"best_score":_config.get_value(current_level, C.best_score_key),
 	}
 
 
@@ -77,6 +78,18 @@ func _get_total_score() -> int:
 	return total
 
 
+func get_current_score() -> int:
+	var value = _config.get_value(current_level, C.current_score_key)
+	return value
+
+
+func set_current_score(new_score:int) -> void:
+	var best_score = _config.get_value(current_level, C.best_score_key)
+	if new_score > best_score:
+		_config.set_value(current_level, C.best_score_key, new_score)
+	_config.save(_path)
+
+
 func get_tutorial_shown() -> int:
 	var value = _config.get_value(C.various_section, C.tutorial_shown_key)
 	return value
@@ -84,13 +97,6 @@ func get_tutorial_shown() -> int:
 
 func set_tutorial_shown() -> void:
 	_config.set_value(C.various_section, C.tutorial_shown_key, 1)
-	_config.save(_path)
-
-
-func _save_current_level_new_score(new_score: int) -> void:
-	var best_score = _config.get_value(current_level, C.best_score_key)
-	if new_score > best_score:
-		_config.set_value(current_level, C.best_score_key, new_score)
 	_config.save(_path)
 
 

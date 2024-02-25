@@ -30,6 +30,9 @@ func _ready():
 	level_scroller.update_current_level_color()
 
 
+func load_latest_level():
+	Data.load_current_level()
+
 func switch_level(index):
 	level_scroller.visible = false
 	load_next_level(index)

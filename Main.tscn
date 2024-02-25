@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://level_scroller.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -12,8 +12,8 @@
 [ext_resource path="res://Menu.gd" type="Script" id=10]
 [ext_resource path="res://PopupPanel.gd" type="Script" id=11]
 [ext_resource path="res://game_font.tres" type="DynamicFont" id=12]
-[ext_resource path="res://arrow.png" type="Texture" id=13]
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://top_down_dice.png" type="Texture" id=15]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -61,24 +61,51 @@ random_pitch = 1.3
 size = 60
 font_data = ExtResource( 14 )
 
-[sub_resource type="StreamTexture" id=66]
+[sub_resource type="AtlasTexture" id=75]
 flags = 4
-load_path = "res://.import/spritesheet.png-59f7dfdebfc035c80a63445e3bd8a9bd.stex"
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 300, 300 )
 
-[sub_resource type="AtlasTexture" id=67]
+[sub_resource type="AtlasTexture" id=76]
 flags = 4
-atlas = SubResource( 66 )
-region = Rect2( 5, 6, 294, 331 )
+atlas = ExtResource( 15 )
+region = Rect2( 300, 0, 300, 300 )
 
-[sub_resource type="AtlasTexture" id=71]
+[sub_resource type="AtlasTexture" id=77]
 flags = 4
-atlas = SubResource( 66 )
-region = Rect2( 1530, 6, 294, 331 )
+atlas = ExtResource( 15 )
+region = Rect2( 600, 0, 300, 300 )
 
-[sub_resource type="AtlasTexture" id=70]
+[sub_resource type="AtlasTexture" id=78]
 flags = 4
-atlas = SubResource( 66 )
-region = Rect2( 615, 347, 294, 331 )
+atlas = ExtResource( 15 )
+region = Rect2( 0, 300, 300, 300 )
+
+[sub_resource type="AtlasTexture" id=79]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 300, 300, 300, 300 )
+
+[sub_resource type="AtlasTexture" id=80]
+flags = 4
+atlas = ExtResource( 15 )
+region = Rect2( 600, 300, 300, 300 )
+
+[sub_resource type="SpriteFrames" id=81]
+animations = [ {
+"frames": [ SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=82]
+animations = [ {
+"frames": [ SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="DynamicFont" id=74]
 size = 75
@@ -297,12 +324,14 @@ color = Color( 0.0352941, 0.054902, 0.129412, 1 )
 script = ExtResource( 11 )
 
 [node name="Title" type="Label" parent="Tutorial"]
-margin_left = 227.0
-margin_top = 1263.0
-margin_right = 856.0
-margin_bottom = 1412.0
+margin_left = 220.0
+margin_top = 1049.0
+margin_right = 849.0
+margin_bottom = 1274.0
 custom_fonts/font = SubResource( 69 )
-text = "In each level, what side will end facing up?"
+text = "Guess the number
+facing up after rolling
+to the endpoint."
 align = 1
 autowrap = true
 __meta__ = {
@@ -311,158 +340,85 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Tutorial"]
 margin_left = 115.0
-margin_top = 1019.0
+margin_top = 171.0
 margin_right = 972.0
-margin_bottom = 1188.0
+margin_bottom = 340.0
 custom_fonts/font = SubResource( 69 )
-text = "Standard dice opposite
-sides add up to 7."
+text = "The opposite sides of a dice always add up to 7."
 align = 1
 autowrap = true
 
 [node name="Node2D" type="Node2D" parent="Tutorial"]
-position = Vector2( -68, 104 )
+position = Vector2( -68, 174 )
 scale = Vector2( 0.792313, 0.792313 )
 
 [node name="1" type="Node2D" parent="Tutorial/Node2D"]
-position = Vector2( 464.463, 26.5046 )
+position = Vector2( 492.23, 403.881 )
 
 [node name="Eq" type="Label" parent="Tutorial/Node2D/1"]
-margin_left = 369.0
-margin_top = 338.0
-margin_right = 639.0
-margin_bottom = 441.0
+margin_left = 184.271
+margin_top = -46.6986
+margin_right = 661.271
+margin_bottom = 56.3014
 custom_fonts/font = ExtResource( 12 )
-text = "+ =7"
+text = "+                =  7"
 align = 1
 
-[node name="1" type="Label" parent="Tutorial/Node2D/1"]
-margin_left = 289.0
-margin_top = 158.0
-margin_right = 399.0
-margin_bottom = 261.0
-custom_fonts/font = ExtResource( 12 )
-text = "1"
-align = 1
+[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/1"]
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 81 )
 
-[node name="6" type="Label" parent="Tutorial/Node2D/1"]
-margin_left = 289.0
-margin_top = 531.0
-margin_right = 399.0
-margin_bottom = 634.0
-custom_fonts/font = ExtResource( 12 )
-text = "6"
-align = 1
-
-[node name="Arrow" type="Sprite" parent="Tutorial/Node2D/1"]
-position = Vector2( 355, 491.5 )
-rotation = -3.0332
-scale = Vector2( 1, -1 )
-texture = ExtResource( 13 )
-
-[node name="One" type="Sprite" parent="Tutorial/Node2D/1"]
-position = Vector2( 210, 396 )
-scale = Vector2( 0.75, 0.75 )
-texture = SubResource( 67 )
-
-[node name="Arrow3" type="Sprite" parent="Tutorial/Node2D/1"]
-position = Vector2( 345, 313 )
-rotation = 2.94594
-texture = ExtResource( 13 )
+[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/1"]
+position = Vector2( 422.813, 0 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 82 )
+frame = 5
 
 [node name="2" type="Node2D" parent="Tutorial/Node2D"]
-modulate = Color( 0.639216, 1, 0.866667, 1 )
-position = Vector2( 128.737, 439.418 )
+position = Vector2( 492.23, 605.821 )
 
 [node name="Eq" type="Label" parent="Tutorial/Node2D/2"]
-margin_left = 369.0
-margin_top = 338.0
-margin_right = 639.0
-margin_bottom = 441.0
+margin_left = 184.271
+margin_top = -46.6986
+margin_right = 661.271
+margin_bottom = 56.3014
 custom_fonts/font = ExtResource( 12 )
-text = "+ =7"
+text = "+                =  7"
 align = 1
 
-[node name="1" type="Label" parent="Tutorial/Node2D/2"]
-margin_left = 289.0
-margin_top = 158.0
-margin_right = 399.0
-margin_bottom = 261.0
-custom_fonts/font = ExtResource( 12 )
-text = "2"
-align = 1
+[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/2"]
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 81 )
+frame = 1
 
-[node name="6" type="Label" parent="Tutorial/Node2D/2"]
-margin_left = 289.0
-margin_top = 531.0
-margin_right = 399.0
-margin_bottom = 634.0
-custom_fonts/font = ExtResource( 12 )
-text = "5"
-align = 1
-
-[node name="Arrow" type="Sprite" parent="Tutorial/Node2D/2"]
-position = Vector2( 355, 491.5 )
-rotation = -3.0332
-scale = Vector2( 1, -1 )
-texture = ExtResource( 13 )
-
-[node name="One" type="Sprite" parent="Tutorial/Node2D/2"]
-position = Vector2( 210, 396 )
-scale = Vector2( 0.75, 0.75 )
-texture = SubResource( 71 )
-
-[node name="Arrow3" type="Sprite" parent="Tutorial/Node2D/2"]
-position = Vector2( 345, 313 )
-rotation = 2.94594
-texture = ExtResource( 13 )
+[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/2"]
+position = Vector2( 422.813, 0 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 82 )
+frame = 4
 
 [node name="3" type="Node2D" parent="Tutorial/Node2D"]
-modulate = Color( 0.984314, 1, 0.776471, 1 )
-position = Vector2( 759.8, 439.418 )
+position = Vector2( 492.23, 807.762 )
 
 [node name="Eq" type="Label" parent="Tutorial/Node2D/3"]
-margin_left = 369.0
-margin_top = 338.0
-margin_right = 639.0
-margin_bottom = 441.0
+margin_left = 184.271
+margin_top = -46.6986
+margin_right = 661.271
+margin_bottom = 56.3014
 custom_fonts/font = ExtResource( 12 )
-text = "+ =7"
+text = "+                =  7"
 align = 1
 
-[node name="1" type="Label" parent="Tutorial/Node2D/3"]
-margin_left = 289.0
-margin_top = 158.0
-margin_right = 399.0
-margin_bottom = 261.0
-custom_fonts/font = ExtResource( 12 )
-text = "3"
-align = 1
+[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/3"]
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 81 )
+frame = 2
 
-[node name="6" type="Label" parent="Tutorial/Node2D/3"]
-margin_left = 289.0
-margin_top = 531.0
-margin_right = 399.0
-margin_bottom = 634.0
-custom_fonts/font = ExtResource( 12 )
-text = "4"
-align = 1
-
-[node name="Arrow" type="Sprite" parent="Tutorial/Node2D/3"]
-position = Vector2( 355, 491.5 )
-rotation = -3.0332
-scale = Vector2( 1, -1 )
-texture = ExtResource( 13 )
-
-[node name="One" type="Sprite" parent="Tutorial/Node2D/3"]
-position = Vector2( 210, 396 )
-scale = Vector2( 0.75, 0.75 )
-texture = SubResource( 70 )
-
-[node name="Arrow3" type="Sprite" parent="Tutorial/Node2D/3"]
-position = Vector2( 345, 313 )
-rotation = 2.94594
-texture = ExtResource( 13 )
+[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/3"]
+position = Vector2( 422.813, 0 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 82 )
+frame = 3
 
 [node name="Start" type="Button" parent="Tutorial"]
 margin_left = 231.0
