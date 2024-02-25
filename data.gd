@@ -23,22 +23,19 @@ func _ready():
 #	REPOSITORY/VIEWMODEL PART	    #
 ######################################
 
-signal level_loaded(level, score)
 signal all_in_pack
-signal level_unlocked(index)
 
 func increase_taps():
 	emit_signal("tap")
 
-func load_current_level():
+
+func load_latest_level():
 	current_level = String(_config.get_value(C.various_section, C.current_level_key))
 	var current_score = _config.get_value(current_level, C.current_score_key)
-	emit_signal("level_loaded", int(current_level), current_score)
-	
-	
+
+
 func restart_level():
 	var current_score = _config.get_value(current_level, C.current_score_key)
-	emit_signal("level_loaded", int(current_level), current_score)
 
 
 func load_next_level(nr: int = -1, from_level_select: bool = false):
@@ -49,7 +46,9 @@ func load_next_level(nr: int = -1, from_level_select: bool = false):
 	_config.set_value(C.various_section, C.current_level_key, current_level)
 	_config.save(_path)
 	var current_score = _config.get_value(current_level, C.current_score_key)
-	emit_signal("level_loaded", int(current_level), current_score)
+	if current_score == -1:
+		var default_score = nr * 100
+		set_current_score(default_score)
 	if from_level_select:
 		save_game(int(current_level))
 
@@ -63,30 +62,36 @@ func get_level_complete_info() -> Dictionary:
 
 func unlock_next_level():
 	var current = int(current_level)
-	if current != 200:
+	if current != _total_levels_plus_one-1:
 		var level_to_be_unlocked = current + 1
 		_config.set_value(str(level_to_be_unlocked), C.unlocked, 1)
 		_config.save(_path)
-		emit_signal("level_unlocked", level_to_be_unlocked - 1)
 		save_game(level_to_be_unlocked)
 
 
-func _get_total_score() -> int:
+func get_total_score() -> int:
 	var total = 0
 	for i in range(1, _total_levels_plus_one):
 		total += _config.get_value(String(i), C.best_score_key)
 	return total
 
 
+
+func set_current_score(score:int) -> void:
+	_config.set_value(current_level, C.current_score_key, score)
+	_config.save(_path)
+	
+	
 func get_current_score() -> int:
 	var value = _config.get_value(current_level, C.current_score_key)
 	return value
 
 
-func set_current_score(new_score:int) -> void:
+func set_best_score() -> void:
+	var current_score = get_current_score()
 	var best_score = _config.get_value(current_level, C.best_score_key)
-	if new_score > best_score:
-		_config.set_value(current_level, C.best_score_key, new_score)
+	if current_score > best_score:
+		_config.set_value(current_level, C.best_score_key, current_score)
 	_config.save(_path)
 
 
@@ -115,7 +120,7 @@ func _set_initial_launch_settings():
 	
 	for i in range(1, _total_levels_plus_one):
 		_config.set_value(String(i), C.best_score_key, 0)
-		_config.set_value(String(i), C.current_score_key, -1)
+		_config.set_value(String(i), C.current_score_key, i * 100)
 		if i < 201: #TODO: CHANGE BACK
 			_config.set_value(String(i), C.unlocked, 1)
 		else:
@@ -138,8 +143,8 @@ func save_game(next_level:int) -> void:
 				level_info.push_back(_config.get_value(level, level_info_key))
 			game_data[level] = str(level_info)
 		Gpack.save_game(game_data, next_level)
-		
-		
+
+
 func load_game(game_data: Dictionary) -> void:
 	if not game_data.empty():
 		for key in C.various_section_dictionary_keys:

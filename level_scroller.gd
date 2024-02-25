@@ -21,7 +21,7 @@ func update_current_level_color():
 	var added_buttons = get_children()
 	for index in range(0, added_buttons.size()):
 		var level_button_l = get_child(index)
-		if main.current_level_nr == index + 1:
+		if int(Data.current_level) == index + 1:
 			level_button_l.modulate = Color.green
 		else:
 			level_button_l.modulate = Color.white

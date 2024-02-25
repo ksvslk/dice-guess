@@ -12,12 +12,11 @@ var move_pause = 0.05
 const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
+onready var remove_ads = $Menu/HBoxContainer/VBoxContainer/RemoveAds
 
 var game_over = false
 var animating = false
 var win = false
-var current_level_nr = 1
-var score_nr = current_level_nr * 100
 
 onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 
@@ -25,36 +24,39 @@ enum {LEFT, RIGHT, UP, DOWN}
 var generated_levels = [[]]
 
 func _ready():
-	score_label.text = "Score: " + str(score_nr)
-	level_nr.text = "Level: " + str(current_level_nr)
-	level_scroller.update_current_level_color()
+	Data.load_latest_level()
+	_switch_level_scene()
 
-
-func load_latest_level():
-	Data.load_current_level()
 
 func switch_level(index):
 	level_scroller.visible = false
 	load_next_level(index)
 	_reset_partially()
 
+
 func load_next_level(lv:int = -1):
-	current_level_nr = current_level_nr + 1
 	if lv != -1:
-		current_level_nr = lv
-	var new_node_resource = load("res://levels/Level"+str(current_level_nr)+".tscn")
+		Data.load_next_level(lv)
+	else:
+		Data.load_next_level()
+	_switch_level_scene()
+	
+
+func _switch_level_scene():
+	var new_node_resource = load("res://levels/Level"+str(Data.current_level)+".tscn")
 	var new_node = new_node_resource.instance()
 	var current_node = tile_map
 	var parent_node = $ViewportContainer/Viewport
 	parent_node.add_child(new_node)
 	current_node.queue_free()
 	tile_map = new_node
-	level_nr.text = "Level: " + str(current_level_nr)
-	score_nr = current_level_nr * 100
+	level_nr.text = "Level: " + str(Data.current_level)
+	# DATA BASE
 	_update_score_label()
 	tile_map.set_random_dice_side_up()
 	level_scroller.update_current_level_color()
-	
+	remove_ads.text = str(Data.get_total_score()) # TEMP
+
 
 func double_blink_label_red():
 	var original_color = score_label.modulate
@@ -118,6 +120,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 		button.modulate = Color.greenyellow
 		correct.play()
 		win = true
+		Data.set_best_score()
 	else:
 		double_blink_label_red()
 		tile_map.last.modulate = Color.transparent
@@ -130,13 +133,14 @@ func _animate_to_end(guess:int, button:TextureButton):
 
 
 func _decrease_score_and_update_label():
-	var decrease_amount = (current_level_nr * 100) / 10
-	score_nr = max(score_nr - decrease_amount, 0)
+	var decrease_amount = (int(Data.current_level) * 100) / 10
+	var new_score = max(Data.get_current_score() - decrease_amount, 0)
+	Data.set_current_score(new_score)
 	_update_score_label()
 
 
 func _update_score_label() -> void:
-	score_label.text = "Score: " + str(score_nr)
+	score_label.text = "Score: " + str(Data.get_current_score())
 
 
 func _reset_level():

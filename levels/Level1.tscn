@@ -180,8 +180,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Level1" type="TileMap"]
-position = Vector2( 447, 938 )
+[node name="Level2" type="TileMap"]
+position = Vector2( 470, 812 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )
@@ -190,15 +190,15 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( -65536, 1, 0, 0, 2, 0 )
+tile_data = PoolIntArray( 0, 2, 0, 1, 1, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( 0, -1 ), Vector2( 0, 0 ) ]
+unique_path = [ Vector2( 1, 0 ), Vector2( 0, 0 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( 200, -115 )
+position = Vector2( 200, 115 )
 z_index = 1
 frames = SubResource( 28 )
 script = ExtResource( 5 )
