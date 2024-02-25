@@ -220,6 +220,7 @@ size_flags_vertical = 6
 margin_left = 113.0
 margin_right = 226.0
 margin_bottom = 60.0
+mouse_filter = 0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 35 )
@@ -484,5 +485,6 @@ text = "START"
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/4" to="." method="_on_4_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/5" to="." method="_on_5_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
+[connection signal="gui_input" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_gui_input"]
 [connection signal="gui_input" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_gui_input"]
 [connection signal="pressed" from="Tutorial/Start" to="Tutorial" method="_on_Start_pressed"]

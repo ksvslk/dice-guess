@@ -201,7 +201,11 @@ func _on_ViewportContainer_gui_input(event):
 
 
 func _on_Help_gui_input(event):
-	print("tere")
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			tutorial.visible = true
+
+func _on_LevelNr_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			level_scroller.visible = true
