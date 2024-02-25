@@ -11,6 +11,7 @@ onready var next_level = $NextLevel
 var move_pause = 0.05
 const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
+onready var tutorial = $Tutorial
 
 var game_over = false
 var animating = false
@@ -199,7 +200,8 @@ func _on_ViewportContainer_gui_input(event):
 			_reset_level()
 
 
-func _on_HBoxContainer_gui_input(event):
+func _on_Help_gui_input(event):
+	print("tere")
 	if event is InputEventMouseButton:
-		level_scroller.visible = true
-
+		if event.is_pressed():
+			tutorial.visible = true

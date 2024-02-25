@@ -75,7 +75,17 @@ func _get_total_score() -> int:
 	for i in range(1, _total_levels_plus_one):
 		total += _config.get_value(String(i), C.best_score_key)
 	return total
-	
+
+
+func get_tutorial_shown() -> int:
+	var value = _config.get_value(C.various_section, C.tutorial_shown_key)
+	return value
+
+
+func set_tutorial_shown() -> void:
+	_config.set_value(C.various_section, C.tutorial_shown_key, 1)
+	_config.save(_path)
+
 
 func _save_current_level_new_score(new_score: int) -> void:
 	var best_score = _config.get_value(current_level, C.best_score_key)
@@ -95,6 +105,7 @@ func get_levels() -> Dictionary:
 
 func _set_initial_launch_settings():
 	_config.set_value(C.various_section, C.current_level_key, "1")
+	_config.set_value(C.various_section, C.tutorial_shown_key, 0)
 	
 	for i in range(1, _total_levels_plus_one):
 		_config.set_value(String(i), C.best_score_key, 0)
