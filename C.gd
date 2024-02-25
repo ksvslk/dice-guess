@@ -10,6 +10,7 @@ const tutorial_shown_key: String = "tutorial_shown"
 # Initial value is 0, UPDATE on level complete
 const current_score_key: String = "current_score"
 const best_score_key: String = "best_score"
+const level_completed_once_key: String = "level_completed_once"
 
 const unlocked: String = "unlocked"
 

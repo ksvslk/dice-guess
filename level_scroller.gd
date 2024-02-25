@@ -8,6 +8,8 @@ func _ready():
 	for index in range(0, levels.size()):
 		var button = level_button.instance()
 		var state = levels.values()[index][0] as bool
+		var level_completed_once = levels.values()[index][1] as bool
+		button.done_visible = level_completed_once
 		button.level_is_unlocked = state
 		button.button_text = str(index + 1)
 		button.disabled = !state
@@ -33,6 +35,8 @@ func _set_level_buttons_state():
 	for index in range(0, added_buttons.size()):
 		var level_button_l = get_child(index)
 		var state = levels.values()[index][0] as bool
+		var level_completed_once = levels.values()[index][1] as bool
+		level_button_l.set_done_visible(level_completed_once)
 		level_button_l.level_is_unlocked = state
 		level_button_l.disabled = !state
 

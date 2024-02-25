@@ -50,12 +50,11 @@ func _switch_level_scene():
 	parent_node.add_child(new_node)
 	current_node.queue_free()
 	tile_map = new_node
-	level_nr.text = "Level: " + str(Data.current_level)
+	level_nr.text = "Level " + str(Data.current_level)
 	# DATA BASE
 	_update_score_label()
 	tile_map.set_random_dice_side_up()
 	level_scroller.update_current_level_color()
-	remove_ads.text = str(Data.get_total_score()) # TEMP
 
 
 func double_blink_label_red():
@@ -140,7 +139,7 @@ func _decrease_score_and_update_label():
 
 
 func _update_score_label() -> void:
-	score_label.text = "Score: " + str(Data.get_current_score())
+	score_label.text = str(Data.get_current_score())
 
 
 func _reset_level():
@@ -206,13 +205,9 @@ func _on_ViewportContainer_gui_input(event):
 		if game_over:
 			_reset_level()
 
+func _on_LevelNr_pressed():
+	level_scroller.visible = true
 
-func _on_Help_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			tutorial.visible = true
 
-func _on_LevelNr_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			level_scroller.visible = true
+func _on_Help_pressed():
+	tutorial.visible = true

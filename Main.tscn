@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://level_scroller.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -12,8 +12,12 @@
 [ext_resource path="res://Menu.gd" type="Script" id=10]
 [ext_resource path="res://PopupPanel.gd" type="Script" id=11]
 [ext_resource path="res://game_font.tres" type="DynamicFont" id=12]
+[ext_resource path="res://icons/leaderboard.png" type="Texture" id=13]
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://top_down_dice.png" type="Texture" id=15]
+[ext_resource path="res://icons/question.png" type="Texture" id=16]
+[ext_resource path="res://icons/noads.png" type="Texture" id=17]
+[ext_resource path="res://icons/levelselect.png" type="Texture" id=18]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -49,9 +53,29 @@ flags = 4
 atlas = SubResource( 28 )
 region = Rect2( 603, 302, 296, 296 )
 
-[sub_resource type="DynamicFont" id=35]
-size = 50
+[sub_resource type="DynamicFont" id=83]
+size = 60
 font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxEmpty" id=84]
+
+[sub_resource type="DynamicFont" id=86]
+size = 60
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxEmpty" id=87]
+
+[sub_resource type="DynamicFont" id=89]
+size = 60
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxEmpty" id=90]
+
+[sub_resource type="DynamicFont" id=91]
+size = 60
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxEmpty" id=92]
 
 [sub_resource type="AudioStreamRandomPitch" id=36]
 audio_stream = ExtResource( 3 )
@@ -138,7 +162,6 @@ margin_bottom = 540.0
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1050, 1450 )
 handle_input_locally = false
-msaa = 2
 usage = 0
 render_target_update_mode = 3
 
@@ -163,6 +186,7 @@ anchor_bottom = 1.0
 margin_top = -340.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
+custom_constants/separation = 1
 
 [node name="GridContainer" type="GridContainer" parent="Menu/HBoxContainer"]
 margin_top = 4.0
@@ -236,52 +260,82 @@ texture_normal = SubResource( 34 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 597.0
-margin_top = 44.0
-margin_right = 937.0
-margin_bottom = 296.0
+margin_left = 567.0
+margin_top = 18.0
+margin_right = 964.0
+margin_bottom = 322.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="LevelNr" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_left = 113.0
-margin_right = 226.0
-margin_bottom = 60.0
-mouse_filter = 0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 35 )
-text = "Wtf?"
+[node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_right = 397.0
+margin_bottom = 73.0
+size_flags_horizontal = 3
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 83 )
+custom_styles/hover = SubResource( 84 )
+custom_styles/pressed = SubResource( 84 )
+custom_styles/focus = SubResource( 84 )
+custom_styles/disabled = SubResource( 84 )
+custom_styles/normal = SubResource( 84 )
+icon = ExtResource( 18 )
+align = 0
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="Score" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_left = 42.0
-margin_top = 64.0
-margin_right = 298.0
-margin_bottom = 124.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 35 )
-text = "Score: 1000"
+[node name="Score" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_top = 77.0
+margin_right = 397.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 86 )
+custom_styles/hover = SubResource( 87 )
+custom_styles/pressed = SubResource( 87 )
+custom_styles/focus = SubResource( 87 )
+custom_styles/disabled = SubResource( 87 )
+custom_styles/normal = SubResource( 87 )
+icon = ExtResource( 13 )
+align = 0
 
-[node name="RemoveAds" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_top = 128.0
-margin_right = 340.0
-margin_bottom = 188.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 35 )
-text = "BONUS LEVELS"
+[node name="RemoveAds" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_top = 154.0
+margin_right = 397.0
+margin_bottom = 227.0
+size_flags_horizontal = 3
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 89 )
+custom_styles/hover = SubResource( 90 )
+custom_styles/pressed = SubResource( 90 )
+custom_styles/focus = SubResource( 90 )
+custom_styles/disabled = SubResource( 90 )
+custom_styles/normal = SubResource( 90 )
+text = "Remove Ads"
+icon = ExtResource( 17 )
+align = 0
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="Help" type="Label" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_left = 22.0
-margin_top = 192.0
-margin_right = 318.0
-margin_bottom = 252.0
-mouse_filter = 0
-size_flags_horizontal = 6
-size_flags_vertical = 6
-custom_fonts/font = SubResource( 35 )
-text = "How to play?"
+[node name="Help" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_top = 231.0
+margin_right = 397.0
+margin_bottom = 304.0
+size_flags_horizontal = 3
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 91 )
+custom_styles/hover = SubResource( 92 )
+custom_styles/pressed = SubResource( 92 )
+custom_styles/focus = SubResource( 92 )
+custom_styles/disabled = SubResource( 92 )
+custom_styles/normal = SubResource( 92 )
+text = "Help"
+icon = ExtResource( 16 )
+align = 0
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="LevelScroller" type="GridContainer" parent="."]
 visible = false
@@ -349,7 +403,7 @@ align = 1
 autowrap = true
 
 [node name="Node2D" type="Node2D" parent="Tutorial"]
-position = Vector2( -68, 174 )
+position = Vector2( -92, 174 )
 scale = Vector2( 0.792313, 0.792313 )
 
 [node name="1" type="Node2D" parent="Tutorial/Node2D"]
@@ -421,10 +475,10 @@ frames = SubResource( 82 )
 frame = 3
 
 [node name="Start" type="Button" parent="Tutorial"]
-margin_left = 231.0
-margin_top = 1473.0
-margin_right = 856.0
-margin_bottom = 1676.0
+margin_left = 149.0
+margin_top = 1485.0
+margin_right = 909.0
+margin_bottom = 1688.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 74 )
 custom_styles/hover = SubResource( 73 )
@@ -441,6 +495,6 @@ text = "START"
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/4" to="." method="_on_4_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/5" to="." method="_on_5_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
-[connection signal="gui_input" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_gui_input"]
-[connection signal="gui_input" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_gui_input"]
+[connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_pressed"]
 [connection signal="pressed" from="Tutorial/Start" to="Tutorial" method="_on_Start_pressed"]

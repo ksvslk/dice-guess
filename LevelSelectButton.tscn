@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://LongerTextButton.tres" type="DynamicFont" id=1]
 [ext_resource path="res://LevelSelectButton.gd" type="Script" id=2]
+[ext_resource path="res://icons/done.png" type="Texture" id=3]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.0627451, 0.0901961, 0.172549, 1 )
@@ -35,3 +36,14 @@ custom_styles/normal = SubResource( 3 )
 text = "1"
 icon_align = 1
 script = ExtResource( 2 )
+
+[node name="Done" type="TextureRect" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = -8.0
+texture = ExtResource( 3 )
+stretch_mode = 3

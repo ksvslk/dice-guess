@@ -76,7 +76,6 @@ func get_total_score() -> int:
 	return total
 
 
-
 func set_current_score(score:int) -> void:
 	_config.set_value(current_level, C.current_score_key, score)
 	_config.save(_path)
@@ -92,6 +91,8 @@ func set_best_score() -> void:
 	var best_score = _config.get_value(current_level, C.best_score_key)
 	if current_score > best_score:
 		_config.set_value(current_level, C.best_score_key, current_score)
+	_config.set_value(current_level, C.current_score_key, int(current_level) * 100)
+	_config.set_value(current_level, C.level_completed_once_key, 1)
 	_config.save(_path)
 
 
@@ -109,7 +110,8 @@ func get_levels() -> Dictionary:
 	var info = Dictionary()
 	for i in range(1, _total_levels_plus_one):
 		info[str(i)] = [
-			_config.get_value(str(i), C.unlocked)
+			_config.get_value(str(i), C.unlocked),
+			_config.get_value(str(i), C.level_completed_once_key),
 		]
 	return info
 
@@ -121,6 +123,7 @@ func _set_initial_launch_settings():
 	for i in range(1, _total_levels_plus_one):
 		_config.set_value(String(i), C.best_score_key, 0)
 		_config.set_value(String(i), C.current_score_key, i * 100)
+		_config.set_value(String(i), C.level_completed_once_key, 0)
 		if i < 201: #TODO: CHANGE BACK
 			_config.set_value(String(i), C.unlocked, 1)
 		else:
