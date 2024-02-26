@@ -34,7 +34,6 @@ func is_signed_in() -> bool:
 		return game_center.is_authenticated()
 	return false
 	
-
 func ask_for_review():
 	if GPack.android_plugin && !is_amazon:
 		android_plugin.askForReview()

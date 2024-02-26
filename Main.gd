@@ -12,8 +12,9 @@ var move_pause = 0.05
 const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
-onready var remove_ads = $Menu/HBoxContainer/VBoxContainer/RemoveAds
 onready var state_icon = $ViewportContainer/Viewport/StateIcon
+onready var bonus_levels = $Menu/HBoxContainer/VBoxContainer/BonusLevels
+onready var bonus_screen = $BonusScreen
 
 var game_over = false
 var animating = false
@@ -239,3 +240,10 @@ func _on_Help_pressed():
 
 func _on_Score_pressed():
 	GPack.show_leaderboard()
+
+
+func _on_BonusLevels_pressed():
+	bonus_screen.visible = true
+
+func _on_Back_pressed():
+	bonus_screen.visible = false

@@ -1,10 +1,10 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://level_scroller.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
-[ext_resource path="res://NotoSansMono-Black.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://BonusScreen.gd" type="Script" id=5]
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
@@ -16,9 +16,10 @@
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://top_down_dice.png" type="Texture" id=15]
 [ext_resource path="res://icons/question.png" type="Texture" id=16]
-[ext_resource path="res://icons/noads.png" type="Texture" id=17]
+[ext_resource path="res://icons/bonus.png" type="Texture" id=17]
 [ext_resource path="res://icons/levelselect.png" type="Texture" id=18]
 [ext_resource path="res://icons/forward.png" type="Texture" id=19]
+[ext_resource path="res://BonusButton.tscn" type="PackedScene" id=20]
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -82,6 +83,21 @@ font_data = ExtResource( 14 )
 audio_stream = ExtResource( 3 )
 random_pitch = 1.3
 
+[sub_resource type="DynamicFont" id=74]
+size = 75
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxFlat" id=73]
+content_margin_left = 200.0
+content_margin_right = 200.0
+content_margin_top = 50.0
+content_margin_bottom = 50.0
+bg_color = Color( 0, 0.588235, 0.772549, 1 )
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
 [sub_resource type="DynamicFont" id=69]
 size = 60
 font_data = ExtResource( 14 )
@@ -131,21 +147,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="DynamicFont" id=74]
-size = 75
-font_data = ExtResource( 5 )
-
-[sub_resource type="StyleBoxFlat" id=73]
-content_margin_left = 200.0
-content_margin_right = 200.0
-content_margin_top = 50.0
-content_margin_bottom = 50.0
-bg_color = Color( 0, 0.588235, 0.772549, 1 )
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
 
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
@@ -270,15 +271,15 @@ texture_normal = SubResource( 34 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 571.0
+margin_left = 559.0
 margin_top = 18.0
-margin_right = 959.0
+margin_right = 971.0
 margin_bottom = 322.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_right = 388.0
+margin_right = 412.0
 margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -296,7 +297,7 @@ __meta__ = {
 
 [node name="Score" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 77.0
-margin_right = 388.0
+margin_right = 412.0
 margin_bottom = 150.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -309,9 +310,9 @@ custom_styles/normal = SubResource( 87 )
 icon = ExtResource( 13 )
 align = 0
 
-[node name="RemoveAds" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+[node name="BonusLevels" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 154.0
-margin_right = 388.0
+margin_right = 412.0
 margin_bottom = 227.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -321,7 +322,7 @@ custom_styles/pressed = SubResource( 90 )
 custom_styles/focus = SubResource( 90 )
 custom_styles/disabled = SubResource( 90 )
 custom_styles/normal = SubResource( 90 )
-text = "Remove ads"
+text = "Bonus Levels"
 icon = ExtResource( 17 )
 align = 0
 __meta__ = {
@@ -330,7 +331,7 @@ __meta__ = {
 
 [node name="Help" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 231.0
-margin_right = 388.0
+margin_right = 412.0
 margin_bottom = 304.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -379,6 +380,107 @@ stream = ExtResource( 6 )
 
 [node name="NextLevel" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
+
+[node name="BonusScreen" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -960.0
+margin_right = 540.0
+margin_bottom = 960.0
+color = Color( 0.0352941, 0.054902, 0.129412, 1 )
+script = ExtResource( 5 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BonusScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -960.0
+margin_right = 540.0
+margin_bottom = 960.0
+custom_constants/separation = 25
+alignment = 1
+
+[node name="AllLevelPacks" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 122.0
+margin_right = 1080.0
+margin_bottom = 394.0
+title_text = "All Level Packs"
+subtitle_text = "Unlock all below"
+title_color = Color( 1, 0.87451, 0.298039, 1 )
+
+[node name="LevelPack1" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 419.0
+margin_right = 1080.0
+margin_bottom = 691.0
+title_text = "Level Pack 1"
+subtitle_text = "Unlock levels from 51 - 100"
+
+[node name="LevelPack2" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 716.0
+margin_right = 1080.0
+margin_bottom = 988.0
+title_text = "Level Pack 2"
+subtitle_text = "Unlock levels from 101 - 150"
+
+[node name="LevelPack3" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 1013.0
+margin_right = 1080.0
+margin_bottom = 1285.0
+title_text = "Level Pack 3"
+subtitle_text = "Unlock levels from 151 - 200"
+
+[node name="Back" type="Button" parent="BonusScreen/VBoxContainer"]
+margin_top = 1310.0
+margin_right = 1080.0
+margin_bottom = 1501.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 74 )
+custom_styles/hover = SubResource( 73 )
+custom_styles/pressed = SubResource( 73 )
+custom_styles/focus = SubResource( 73 )
+custom_styles/disabled = SubResource( 73 )
+custom_styles/normal = SubResource( 73 )
+text = "Continue"
+
+[node name="Restore" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 1526.0
+margin_right = 1080.0
+margin_bottom = 1798.0
+title_text = "Restore"
+
+[node name="StoreTimer" type="Timer" parent="BonusScreen"]
+wait_time = 2.0
 
 [node name="Tutorial" type="ColorRect" parent="."]
 visible = false
@@ -507,5 +609,12 @@ text = "START"
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Score" to="." method="_on_Score_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/BonusLevels" to="." method="_on_BonusLevels_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_pressed"]
+[connection signal="gui_input" from="BonusScreen/VBoxContainer/AllLevelPacks" to="BonusScreen" method="_on_AllLevelPacks_gui_input"]
+[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack1" to="BonusScreen" method="_on_LevelPack1_gui_input"]
+[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack2" to="BonusScreen" method="_on_LevelPack2_gui_input"]
+[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack3" to="BonusScreen" method="_on_LevelPack3_gui_input"]
+[connection signal="pressed" from="BonusScreen/VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="gui_input" from="BonusScreen/VBoxContainer/Restore" to="BonusScreen" method="_on_Restore_gui_input"]
 [connection signal="pressed" from="Tutorial/Start" to="Tutorial" method="_on_Start_pressed"]

@@ -6,6 +6,18 @@ const _path: String = "user://data.cfg"
 const _total_levels_plus_one := 201 # each level has its own section: "1", "2" etc.
 var current_level := "-1"
 
+const all_level_packs_id = "all_level_packs"
+const level_pack_1_id = "level_pack_51_100"
+const level_pack_2_id = "level_pack_101_150"
+const level_pack_3_id = "level_pack_151_200"
+
+var skus = {
+	all_level_packs_id:false,
+	level_pack_1_id:false,
+	level_pack_2_id:false,
+	level_pack_3_id:false
+}
+
 ########################
 #	 DATABASE PART	  #
 ########################	
@@ -22,11 +34,6 @@ func _ready():
 ######################################
 #	REPOSITORY/VIEWMODEL PART	    #
 ######################################
-
-signal all_in_pack
-
-func increase_taps():
-	emit_signal("tap")
 
 
 func load_latest_level():
@@ -111,10 +118,38 @@ func get_levels() -> Dictionary:
 	var info = Dictionary()
 	for i in range(1, _total_levels_plus_one):
 		info[str(i)] = [
-			_config.get_value(str(i), C.unlocked),
 			_config.get_value(str(i), C.level_completed_once_key),
+			_config.get_value(str(i), C.level_purchased_key),
 		]
 	return info
+
+
+func set_all_level_packs_purchased():
+	skus[all_level_packs_id] = true
+	for i in range(1, _total_levels_plus_one):
+		_config.set_value(str(i), C.level_purchased_key, 1)
+	_config.save(_path)
+
+
+func set_level_pack_1_purchased():
+	skus[level_pack_1_id] = true
+	for i in range(51, 101):
+		_config.set_value(str(i), C.level_purchased_key, 1)
+	_config.save(_path)
+
+
+func set_level_pack_2_purchased():
+	skus[level_pack_2_id] = true
+	for i in range(101, 151):
+		_config.set_value(str(i), C.level_purchased_key, 1)
+	_config.save(_path)	
+
+
+func set_level_pack_3_purchased():
+	skus[level_pack_3_id] = true
+	for i in range(151, _total_levels_plus_one):
+		_config.set_value(str(i), C.level_purchased_key, 1)
+	_config.save(_path)
 
 
 func _set_initial_launch_settings():
@@ -125,10 +160,10 @@ func _set_initial_launch_settings():
 		_config.set_value(String(i), C.best_score_key, 0)
 		_config.set_value(String(i), C.current_score_key, i * 100)
 		_config.set_value(String(i), C.level_completed_once_key, 0)
-		if i < 201: #TODO: CHANGE BACK
-			_config.set_value(String(i), C.unlocked, 1)
+		if i < 51:
+			_config.set_value(String(i), C.level_purchased_key, 1)
 		else:
-			_config.set_value(String(i), C.unlocked, 0)
+			_config.set_value(String(i), C.level_purchased_key, 0)
 	_config.save(_path)
 
 

@@ -14,18 +14,19 @@ const tutorial_shown_key: String = "tutorial_shown"
 const current_score_key: String = "current_score"
 const best_score_key: String = "best_score"
 const level_completed_once_key: String = "level_completed_once"
+const level_purchased_key: String = "level_purchased"
 
 const unlocked: String = "unlocked"
 
 const various_section_dictionary_keys = [
 	current_level_key,
-	tutorial_shown_key
+	tutorial_shown_key,
 ]
 
 const level_section_dictionary_keys = [
 	current_score_key,
 	best_score_key,
-	unlocked
+	level_purchased_key
 ]
 
 const success_vibration = 4;

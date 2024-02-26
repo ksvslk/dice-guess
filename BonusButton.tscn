@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://BonusButton.gd" type="Script" id=2]
+[ext_resource path="res://ColorRect.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=94]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=93]
+content_margin_left = 50.0
+content_margin_right = 50.0
+content_margin_top = 50.0
+content_margin_bottom = 50.0
+bg_color = Color( 0.686275, 0.952941, 0.984314, 1 )
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="Shader" id=97]
+code = "shader_type canvas_item;
+
+
+uniform vec4 shine_color : hint_color = vec4(1.0);
+uniform float shine_progress : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform float shine_size : hint_range(0.01, 1.0, 0.01) = 0.1;
+uniform float shine_angle : hint_range(0.0, 89.9, 0.1) = 45.0;
+
+float scale(float value, float inMin, float inMax, float outMin, float outMax) {
+    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
+void fragment() {
+    COLOR = texture(TEXTURE, UV);
+	float slope = tan(radians(shine_angle));
+	float progress = scale(shine_progress, 0.0, 1.0, -1.0 - shine_size - shine_size * slope, 1.0 * slope);
+    float shine = step(slope * UV.x - UV.y, progress + shine_size + shine_size * slope) - step(slope * UV.x - UV.y, progress);
+    COLOR.rgb = mix(COLOR.rgb, shine_color.rgb, shine * shine_color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=98]
+shader = SubResource( 97 )
+shader_param/shine_color = Color( 0.32549, 0.929412, 0.913725, 1 )
+shader_param/shine_progress = 1.0
+shader_param/shine_size = 0.5
+shader_param/shine_angle = 89.9
+
+[sub_resource type="DynamicFont" id=95]
+size = 45
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=96]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 20.0
+content_margin_bottom = 20.0
+bg_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[node name="LevelPack1" type="VBoxContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -540.0
+margin_top = -960.0
+margin_right = 540.0
+margin_bottom = 960.0
+alignment = 1
+script = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="."]
+margin_top = 824.0
+margin_right = 1080.0
+margin_bottom = 997.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 94 )
+custom_styles/normal = SubResource( 93 )
+align = 1
+
+[node name="LoadingBar" type="ColorRect" parent="Title"]
+visible = false
+material = SubResource( 98 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -32.0
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="Title/LoadingBar"]
+
+[node name="Subtitle" type="Label" parent="."]
+margin_top = 1001.0
+margin_right = 1080.0
+margin_bottom = 1096.0
+custom_fonts/font = SubResource( 95 )
+custom_styles/normal = SubResource( 96 )
+align = 1
