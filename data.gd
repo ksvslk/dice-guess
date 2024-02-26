@@ -51,7 +51,8 @@ func load_next_level(nr: int = -1, from_level_select: bool = false):
 		set_current_score(default_score)
 	if from_level_select:
 		save_game(int(current_level))
-
+	if current_level == "11":
+		GPack.ask_for_review()
 
 func get_level_complete_info() -> Dictionary:
 	return {
@@ -145,7 +146,7 @@ func save_game(next_level:int) -> void:
 			for level_info_key in _config.get_section_keys(level):
 				level_info.push_back(_config.get_value(level, level_info_key))
 			game_data[level] = str(level_info)
-		Gpack.save_game(game_data, next_level)
+		GPack.save_game(game_data, next_level)
 
 
 func load_game(game_data: Dictionary) -> void:

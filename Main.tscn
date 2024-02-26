@@ -270,15 +270,15 @@ texture_normal = SubResource( 34 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 567.0
+margin_left = 571.0
 margin_top = 18.0
-margin_right = 964.0
+margin_right = 959.0
 margin_bottom = 322.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_right = 397.0
+margin_right = 388.0
 margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -296,7 +296,7 @@ __meta__ = {
 
 [node name="Score" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 77.0
-margin_right = 397.0
+margin_right = 388.0
 margin_bottom = 150.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -311,7 +311,7 @@ align = 0
 
 [node name="RemoveAds" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 154.0
-margin_right = 397.0
+margin_right = 388.0
 margin_bottom = 227.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -321,7 +321,7 @@ custom_styles/pressed = SubResource( 90 )
 custom_styles/focus = SubResource( 90 )
 custom_styles/disabled = SubResource( 90 )
 custom_styles/normal = SubResource( 90 )
-text = "Remove Ads"
+text = "Remove ads"
 icon = ExtResource( 17 )
 align = 0
 __meta__ = {
@@ -330,7 +330,7 @@ __meta__ = {
 
 [node name="Help" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_top = 231.0
-margin_right = 397.0
+margin_right = 388.0
 margin_bottom = 304.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -388,10 +388,10 @@ color = Color( 0.0352941, 0.054902, 0.129412, 1 )
 script = ExtResource( 11 )
 
 [node name="Title" type="Label" parent="Tutorial"]
-margin_left = 220.0
-margin_top = 1049.0
-margin_right = 849.0
-margin_bottom = 1274.0
+margin_left = 219.0
+margin_top = 1135.0
+margin_right = 848.0
+margin_bottom = 1360.0
 custom_fonts/font = SubResource( 69 )
 text = "Guess the number
 facing up after rolling
@@ -403,17 +403,17 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tutorial"]
-margin_left = 115.0
-margin_top = 171.0
-margin_right = 972.0
-margin_bottom = 340.0
+margin_left = 114.0
+margin_top = 257.0
+margin_right = 971.0
+margin_bottom = 426.0
 custom_fonts/font = SubResource( 69 )
 text = "The opposite sides of a dice always add up to 7."
 align = 1
 autowrap = true
 
 [node name="Node2D" type="Node2D" parent="Tutorial"]
-position = Vector2( -92, 174 )
+position = Vector2( -93, 260 )
 scale = Vector2( 0.792313, 0.792313 )
 
 [node name="1" type="Node2D" parent="Tutorial/Node2D"]
@@ -506,5 +506,6 @@ text = "START"
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/5" to="." method="_on_5_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Score" to="." method="_on_Score_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_pressed"]
 [connection signal="pressed" from="Tutorial/Start" to="Tutorial" method="_on_Start_pressed"]

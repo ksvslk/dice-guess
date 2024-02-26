@@ -28,6 +28,11 @@ const level_section_dictionary_keys = [
 	unlocked
 ]
 
+const success_vibration = 4;
+const fail_vibration = 17;
+const soft_vibration = 3;
+const tap_vibration = 1;
+
 func get_top_safe_margin() -> float:
 	var safe_area = OS.get_window_safe_area()
 	var top_no_go_area = Rect2(0, 0, safe_area.size.x, safe_area.position.y)

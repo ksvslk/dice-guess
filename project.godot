@@ -27,7 +27,7 @@ run/main_scene="res://Main.tscn"
 
 C="*res://C.gd"
 Data="*res://data.gd"
-Gpack="*res://gpack.gd"
+GPack="*res://gpack.gd"
 
 [display]
 

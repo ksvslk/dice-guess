@@ -10,6 +10,8 @@ var plugin = null
 var current_ad = ""
 var haptic_enabled = true
 
+const is_amazon = false
+
 
 func _ready():
 	if Engine.has_singleton("GPack"):
@@ -26,7 +28,7 @@ func _ready():
 
 
 func is_signed_in() -> bool:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		return android_plugin.isSignedIn()
 	elif game_center:
 		return game_center.is_authenticated()
@@ -34,7 +36,7 @@ func is_signed_in() -> bool:
 	
 
 func ask_for_review():
-	if Gpack.android_plugin && !C.is_amazon:
+	if GPack.android_plugin && !is_amazon:
 		android_plugin.askForReview()
 	elif Engine.has_singleton("InAppStore"):
 		var ias = Engine.get_singleton("InAppStore")
@@ -46,7 +48,7 @@ func ask_for_review():
 ################
 
 func unlock_achievement(id: String) -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.unlockAchievement(id)
 	elif game_center:
 		game_center.award_achievement({ 
@@ -57,7 +59,7 @@ func unlock_achievement(id: String) -> void:
 
 
 func show_achievements() -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.showAchievements()
 	elif game_center:
 		game_center.show_game_center({ "view":"achievements" })
@@ -68,16 +70,17 @@ func show_achievements() -> void:
 ################
 
 
-func submit_score(score: int, send_scores:bool = false) -> void:
-	if android_plugin && !C.is_amazon:
-		android_plugin.submitScore(score, C.leaderboard_id, send_scores)
+func submit_score() -> void:
+	var score = Data.get_total_score()
+	if android_plugin && !is_amazon:
+		android_plugin.submitScore(score, C.leaderboard_id)
 	elif game_center:
 		game_center.post_score({ "score": score, "category": C.leaderboard_id, })
 	
 
-func show_leaderboard(id: String) -> void:
-	if android_plugin && !C.is_amazon:
-		android_plugin.showLeaderboard(id)
+func show_leaderboard() -> void:
+	if android_plugin && !is_amazon:
+		android_plugin.showLeaderboard(C.leaderboard_id)
 	elif game_center:
 		game_center.show_game_center({ "view":"leaderboards" })
 
@@ -86,7 +89,7 @@ func show_leaderboard(id: String) -> void:
 ################
 
 func log_event(event_name: String, dictionary: Dictionary) -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.logEvent(event_name, dictionary)
 
 
@@ -95,18 +98,18 @@ func log_event(event_name: String, dictionary: Dictionary) -> void:
 ################
 
 func load_rewarded_ad() -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.loadRewardedAd()
 
 
 func is_rewarded_ad_loaded() -> bool:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		return android_plugin.isRewardedAdLoaded()
 	return false
 
 
 func show_rewarded_ad(ad_category: String) -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		current_ad = ad_category
 		android_plugin.showRewardedAd()
 
@@ -116,7 +119,7 @@ func show_rewarded_ad(ad_category: String) -> void:
 ################
 
 func save_game(data: Dictionary, progress: int) -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.saveGame(data, progress)
 	elif icloud:
 		data["progress"] = progress
@@ -124,7 +127,7 @@ func save_game(data: Dictionary, progress: int) -> void:
 
 
 func load_game() -> void:
-	if android_plugin && !C.is_amazon:
+	if android_plugin && !is_amazon:
 		android_plugin.loadGame()
 	elif icloud:
 		var game_data = icloud.get_all_key_values()

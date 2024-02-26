@@ -83,9 +83,19 @@ func _set_move_pause(length:int) -> void:
 	move_pause = sqrt(length) / length * 0.75
 
 
-func _animate_to_end(guess:int, button:TextureButton):
+func _hide_tutorial():
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = false
+
+
+func _show_tutorial():
+	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
+		tile_map.get_node("Blinker").visible = true
+		
+		
+func _animate_to_end(guess:int, button:TextureButton):
+	GPack.perform_haptic_feedback(C.tap_vibration)
+	_hide_tutorial()
 	dice_current_position = tile_map.unique_path[0]
 	animating = true
 	button.modulate = Color.aqua
@@ -93,7 +103,8 @@ func _animate_to_end(guess:int, button:TextureButton):
 	_set_move_pause(path.size())
 	var first = true
 	var last_three = path.size() - 2
-	for cell_index in path.size():
+	var path_size = path.size()
+	for cell_index in path_size:
 		var cell = path[cell_index]
 		if cell_index >= last_three:
 			move_pause = last_move_pause
@@ -116,6 +127,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 				move_dice_random.play()
 		_set_dice_position(cell)
 	if tile_map.dice.get_top_number() == guess:
+		GPack.perform_haptic_feedback(C.success_vibration)
 		double_blink_label_green()
 		tile_map.last.modulate = Color.transparent
 		tile_map.dice.modulate = Color.greenyellow
@@ -123,10 +135,11 @@ func _animate_to_end(guess:int, button:TextureButton):
 		correct.play()
 		win = true
 		Data.set_best_score()
-		remove_ads.text = str(Data.get_total_score())
+		GPack.submit_score()
 		state_icon.visible = true
 		state_icon.texture = load("res://icons/forward.png")
 	else:
+		GPack.perform_haptic_feedback(C.fail_vibration)
 		double_blink_label_red()
 		tile_map.last.modulate = Color.transparent
 		tile_map.dice.modulate = Color.red
@@ -158,8 +171,7 @@ func _reset_level():
 		load_next_level()
 	else:
 		tile_map.reset_level()
-		if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
-			tile_map.get_node("Blinker").visible = true
+		_show_tutorial()
 	_reset_partially()
 
 
@@ -223,3 +235,7 @@ func _on_LevelNr_pressed():
 
 func _on_Help_pressed():
 	tutorial.visible = true
+
+
+func _on_Score_pressed():
+	GPack.show_leaderboard()
