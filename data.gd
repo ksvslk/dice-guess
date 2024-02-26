@@ -45,11 +45,29 @@ func restart_level():
 	var current_score = _config.get_value(current_level, C.current_score_key)
 
 
-func load_next_level(nr: int = -1, from_level_select: bool = false):
+func is_next_level_purchased(lv:int) -> bool:
+	var is_purchased = _config.get_value(str(lv), C.level_purchased_key)
+	return is_purchased == 1
+	
+
+# success code - 0
+# next level not purchased - 1
+# game complete, no more levels - 2
+
+func load_next_level(nr: int = -1, from_level_select: bool = false) -> int:
+	var next_level_nr = 0
 	if nr == -1:
-		current_level = str(int(current_level) + 1)
+		next_level_nr = int(current_level) + 1
 	else:
-		current_level = str(nr)
+		next_level_nr = nr
+	var is_next_purchased = is_next_level_purchased(next_level_nr)
+	
+	if next_level_nr == 201:
+		return 2
+	if !is_next_purchased:
+		return 1
+		
+	current_level = str(next_level_nr)
 	_config.set_value(C.various_section, C.current_level_key, current_level)
 	_config.save(_path)
 	var current_score = _config.get_value(current_level, C.current_score_key)
@@ -60,7 +78,9 @@ func load_next_level(nr: int = -1, from_level_select: bool = false):
 		save_game(int(current_level))
 	if current_level == "11":
 		GPack.ask_for_review()
-
+	return 0
+	
+	
 func get_level_complete_info() -> Dictionary:
 	return {
 		"current_score":_config.get_value(current_level, C.current_score_key),
@@ -92,7 +112,7 @@ func set_current_score(score:int) -> void:
 func get_current_score() -> int:
 	var value = _config.get_value(current_level, C.current_score_key)
 	return value
-
+	
 
 func set_best_score() -> void:
 	var current_score = get_current_score()
@@ -168,6 +188,7 @@ func _set_initial_launch_settings():
 
 
 func save_game(next_level:int) -> void:
+	return
 	if OS.get_name() == "Android" or OS.get_name() == "iOS":
 		var game_data = Dictionary()
 		for key in C.various_section_dictionary_keys:
@@ -185,6 +206,7 @@ func save_game(next_level:int) -> void:
 
 
 func load_game(game_data: Dictionary) -> void:
+	return
 	if not game_data.empty():
 		for key in C.various_section_dictionary_keys:
 			_config.set_value(C.various_section, key, game_data[key])

@@ -9,8 +9,9 @@ onready var level_pack_2 = $VBoxContainer/LevelPack2
 onready var level_pack_3 = $VBoxContainer/LevelPack3
 onready var restore = $VBoxContainer/Restore
 onready var store_timer = $StoreTimer
+onready var bonus_levels = $"../Menu/HBoxContainer/VBoxContainer/BonusLevels"
 
-var in_progress_purchase_id = "[LOADING]"
+var in_progress_purchase_id = ""
 
 func _ready():
 	if Engine.has_singleton("GodotGooglePlayBilling"):
@@ -58,7 +59,7 @@ func _ready():
 func _on_connected():
 	if !GPack.is_amazon:
 		payment.queryPurchases("inapp") # Use "subs" for subscriptions.
-		payment.querySkuDetails(Data.skus, "inapp")
+		payment.querySkuDetails(Data.skus.keys(), "inapp")
 
 # GOOGLE PLAY
 func _notification(what):
@@ -80,20 +81,22 @@ func _on_query_purchases_response(query_result):
 # GOOGLE PLAY
 func _get_button_title_google_play(available_sku) -> String:
 	var price = available_sku["price"]
-	return (available_sku["title"].get_slice("(", 0) + " - " + price).to_upper()
+	return available_sku["title"].get_slice("(", 0) + " - " + price
 
 
 # GOOGLE PLAY
 func _on_sku_details_query_completed(sku_details):
+	print("QUERY COMPLETED!!!")
+	print(sku_details)
 	for available_sku in sku_details:
 		if available_sku["sku"] == Data.all_level_packs_id:
-			all_level_packs.text = _get_button_title_google_play(available_sku)
+			all_level_packs.set_title(_get_button_title_google_play(available_sku))
 		elif available_sku["sku"] == Data.level_pack_1_id:
-			level_pack_1.text = _get_button_title_google_play(available_sku)
+			level_pack_1.set_title(_get_button_title_google_play(available_sku))
 		elif available_sku["sku"] == Data.level_pack_2_id:
-			level_pack_2.text = _get_button_title_google_play(available_sku)
+			level_pack_2.set_title(_get_button_title_google_play(available_sku))
 		elif available_sku["sku"] == Data.level_pack_3_id:
-			level_pack_3.text = _get_button_title_google_play(available_sku)
+			level_pack_3.set_title(_get_button_title_google_play(available_sku))
 	_display_purchase_buttons_reasonably()
 
 
@@ -198,7 +201,7 @@ func handle_ios_store_events():
 func _get_button_title(response_event, index) -> String:
 	var title = response_event["titles"][index]
 	var price = response_event["localized_prices"][index]
-	return title.to_upper() + " - " + price
+	return title + " - " + price
 
 
 # APP STORE
@@ -207,19 +210,20 @@ func update_ios_products_buttons(response_event):
 		var product_id = response_event.ids[index]
 		print("response event: ", response_event)
 		if product_id == Data.all_level_packs_id:
-			all_level_packs.text = _get_button_title(response_event, index)
+			all_level_packs.set_title(_get_button_title(response_event, index))
 		elif product_id == Data.level_pack_1_id:
-			level_pack_1.text = _get_button_title(response_event, index)
+			level_pack_1.set_title( _get_button_title(response_event, index))
 		elif product_id == Data.level_pack_2_id:
-			level_pack_2.text = _get_button_title(response_event, index)
+			level_pack_2.set_title(_get_button_title(response_event, index))
 		elif product_id == Data.level_pack_3_id:
-			level_pack_3.text = _get_button_title(response_event, index)
+			level_pack_3.set_title(_get_button_title(response_event, index))
 
 # APP STORE
 func _on_Restore_gui_input(event):
-	if in_progress_purchase_id == "":
-		set_loading_for_bonus_menu("restore")
-		var _result = ios_payment.restore_purchases()
+	if event is InputEventMouseButton:
+		if event.is_pressed() && in_progress_purchase_id == "":
+			set_loading_for_bonus_menu("restore")
+			var _result = ios_payment.restore_purchases()
 		
 		
 		
@@ -252,7 +256,7 @@ func _display_purchase_buttons_reasonably():
 	var count_packs_purchased = 0
 	var is_all_in_purchased = false
 	for sku_id in Data.skus.keys():
-		if sku_id != Data.all_level_packs_id:
+		if sku_id == Data.all_level_packs_id:
 			is_all_in_purchased = Data.skus[sku_id]
 		elif Data.skus[sku_id] == true:
 			count_packs_purchased += 1
@@ -267,8 +271,17 @@ func _display_purchase_buttons_reasonably():
 		level_pack_1.visible = false
 		level_pack_2.visible = false
 		level_pack_3.visible = false
-	elif count_packs_purchased > 1:
+		visible = false
+		bonus_levels.visible = false
+	elif count_packs_purchased == 2:
 		all_level_packs.visible = false
+	elif count_packs_purchased == 3:
+		all_level_packs.visible = false
+		visible = false
+		bonus_levels.visible = false
+	elif count_packs_purchased == 1:
+		visible = false
+		
 
 
 # UNIVERSAL

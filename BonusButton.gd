@@ -14,6 +14,16 @@ func _ready():
 	title.modulate = title_color
 	if subtitle_text == "":
 		subtitle.visible = false
+		
+
+func set_title(s):
+	title_text = s
+	title.text = title_text
+
+
+func set_subtitle(s):
+	subtitle_text = s
+	subtitle.text = subtitle_text
 
 
 func start_loading():

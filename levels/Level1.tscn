@@ -223,7 +223,7 @@ texture = ExtResource( 8 )
 script = ExtResource( 9 )
 
 [node name="Sprite" type="Sprite" parent="Blinker"]
-position = Vector2( -853.133, 446.329 )
-rotation = -0.292649
+position = Vector2( -296.272, -375.895 )
+rotation = 1.13992
 scale = Vector2( 3, 3 )
 texture = ExtResource( 10 )

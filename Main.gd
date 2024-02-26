@@ -15,6 +15,10 @@ onready var tutorial = $Tutorial
 onready var state_icon = $ViewportContainer/Viewport/StateIcon
 onready var bonus_levels = $Menu/HBoxContainer/VBoxContainer/BonusLevels
 onready var bonus_screen = $BonusScreen
+onready var level_scroll_container = $LevelScrollContainer
+onready var level_scroller = $LevelScrollContainer/LevelScroller
+onready var win_dialog = $WinDialog
+
 
 var game_over = false
 var animating = false
@@ -26,11 +30,14 @@ enum {LEFT, RIGHT, UP, DOWN}
 var generated_levels = [[]]
 
 func _ready():
+	level_scroll_container.margin_top += C.get_top_safe_margin()
+	level_scroll_container.margin_bottom -= C.get_bottom_safe_margin()
 	Data.load_latest_level()
 	_switch_level_scene()
 
 
 func switch_level(index):
+	level_scroll_container.visible = false
 	level_scroller.visible = false
 	load_next_level(index)
 	_reset_partially()
@@ -40,9 +47,19 @@ func load_next_level(lv:int = -1):
 	if lv != -1:
 		Data.load_next_level(lv)
 	else:
-		Data.load_next_level()
+		var result = Data.load_next_level()
+		if result == 1:
+			bonus_screen.visible = true
+			tile_map.reset_level()
+			_update_score_label()
+			return
+		elif result == 2: # game over
+			win_dialog.show()
+			tile_map.reset_level()
+			_update_score_label()
+			return
 	_switch_level_scene()
-	
+
 
 func _switch_level_scene():
 	var new_node_resource = load("res://levels/Level"+str(Data.current_level)+".tscn")
@@ -221,8 +238,6 @@ func _on_6_pressed():
 	if not animating && not game_over:
 		_animate_to_end(6, $Menu/HBoxContainer/GridContainer/"6")
 
-onready var level_scroller = $LevelScroller
-
 
 func _on_ViewportContainer_gui_input(event):
 	if event is InputEventMouseButton && not animating:
@@ -231,7 +246,8 @@ func _on_ViewportContainer_gui_input(event):
 
 
 func _on_LevelNr_pressed():
-	level_scroller.visible = true
+	level_scroll_container.visible = !level_scroll_container.visible
+	level_scroller.visible = !level_scroller.visible
 
 
 func _on_Help_pressed():
@@ -243,7 +259,11 @@ func _on_Score_pressed():
 
 
 func _on_BonusLevels_pressed():
+	level_scroll_container.visible = false
+	level_scroller.visible = false
 	bonus_screen.visible = true
+
 
 func _on_Back_pressed():
 	bonus_screen.visible = false
+
