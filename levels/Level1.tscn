@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://platform_350.png" type="Texture" id=1]
 [ext_resource path="res://TileMap.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Dice.gd" type="Script" id=5]
 [ext_resource path="res://platform_350_first.png" type="Texture" id=6]
 [ext_resource path="res://empty.png" type="Texture" id=7]
+[ext_resource path="res://tut.png" type="Texture" id=8]
+[ext_resource path="res://levels/BlinkingSprite.gd" type="Script" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "platform_350.png 0"
@@ -209,3 +211,12 @@ __meta__ = {
 [node name="Last" type="Sprite" parent="."]
 z_index = 1
 texture = ExtResource( 7 )
+
+[node name="Blinker" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+self_modulate = Color( 0.772549, 0.929412, 0.0196078, 0.529412 )
+position = Vector2( 272.375, 157.982 )
+scale = Vector2( 0.497431, 0.497431 )
+z_index = 1
+texture = ExtResource( 8 )
+script = ExtResource( 9 )

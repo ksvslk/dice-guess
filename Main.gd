@@ -13,6 +13,7 @@ const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
 onready var remove_ads = $Menu/HBoxContainer/VBoxContainer/RemoveAds
+onready var state_icon = $ViewportContainer/Viewport/StateIcon
 
 var game_over = false
 var animating = false
@@ -83,6 +84,8 @@ func _set_move_pause(length:int) -> void:
 
 
 func _animate_to_end(guess:int, button:TextureButton):
+	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
+		tile_map.get_node("Blinker").visible = false
 	dice_current_position = tile_map.unique_path[0]
 	animating = true
 	button.modulate = Color.aqua
@@ -120,6 +123,9 @@ func _animate_to_end(guess:int, button:TextureButton):
 		correct.play()
 		win = true
 		Data.set_best_score()
+		remove_ads.text = str(Data.get_total_score())
+		state_icon.visible = true
+		state_icon.texture = load("res://icons/forward.png")
 	else:
 		double_blink_label_red()
 		tile_map.last.modulate = Color.transparent
@@ -127,6 +133,8 @@ func _animate_to_end(guess:int, button:TextureButton):
 		button.modulate = Color.red
 		_decrease_score_and_update_label()
 		wrong.play()
+		state_icon.visible = true
+		state_icon.texture = load("res://icons/restart.png")
 	animating = false
 	game_over = true
 
@@ -143,12 +151,15 @@ func _update_score_label() -> void:
 
 
 func _reset_level():
+	state_icon.visible = false
 	restart.play()
 	if win:
 		next_level.play()
 		load_next_level()
 	else:
 		tile_map.reset_level()
+		if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
+			tile_map.get_node("Blinker").visible = true
 	_reset_partially()
 
 
@@ -204,6 +215,7 @@ func _on_ViewportContainer_gui_input(event):
 	if event is InputEventMouseButton && not animating:
 		if game_over:
 			_reset_level()
+
 
 func _on_LevelNr_pressed():
 	level_scroller.visible = true

@@ -68,11 +68,11 @@ func show_achievements() -> void:
 ################
 
 
-func submit_score(score: int, leaderboard: String, send_scores:bool = false) -> void:
+func submit_score(score: int, send_scores:bool = false) -> void:
 	if android_plugin && !C.is_amazon:
-		android_plugin.submitScore(score, leaderboard,send_scores)
+		android_plugin.submitScore(score, C.leaderboard_id, send_scores)
 	elif game_center:
-		game_center.post_score({ "score": score, "category": C.kings_of_evolution, })
+		game_center.post_score({ "score": score, "category": C.leaderboard_id, })
 	
 
 func show_leaderboard(id: String) -> void:
@@ -168,3 +168,8 @@ const s_on_ending_review = "on_ending_review"
 
 const s_on_loading_player_scores = "on_loading_player_scores"
 const s_on_player_scores_loaded = "on_player_scores_loaded"
+
+#50 - 100, 0.99$
+#101 - 150, 0.99$
+#151 - 200, 0.99$
+# All levels - 1.99$

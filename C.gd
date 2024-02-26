@@ -1,5 +1,8 @@
 extends Node
 
+# Achievements and leaderboards
+const leaderboard_id: String = "CgkIzqWCiqAaEAIQAQ"
+
 # sections
 # "1", "2", "3" etc. for levels
 const various_section: String = "various"
