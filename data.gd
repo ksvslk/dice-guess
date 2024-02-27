@@ -183,7 +183,7 @@ func _set_initial_launch_settings():
 		if i < 51:
 			_config.set_value(String(i), C.level_purchased_key, 1)
 		else:
-			_config.set_value(String(i), C.level_purchased_key, 0)
+			_config.set_value(String(i), C.level_purchased_key, 1)
 	_config.save(_path)
 
 

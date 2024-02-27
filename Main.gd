@@ -29,7 +29,31 @@ onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 enum {LEFT, RIGHT, UP, DOWN}
 var generated_levels = [[]]
 
+func _assert_levels_correctness():
+	for j in range(1,201):
+		var scene_path = "res://levels/Level" + str(j) +".tscn"
+		var game = load(scene_path).instance() as TileMap
+		assert(game.get_used_cells().size() == game.unique_path.size())
+		var count_of_start_points = 0
+		var count_of_end_points = 0
+		var count_of_regular_points = 0
+		for cell in game.unique_path:
+			var cell_tile = game.get_cellv(cell)
+			assert(cell_tile != -1)
+			if cell_tile == 1:
+				count_of_start_points +=1
+			elif cell_tile == 2:
+				count_of_end_points +=1
+			elif cell_tile == 0:
+				count_of_regular_points += 1
+		assert(count_of_start_points == 1)
+		assert(count_of_end_points == 1)
+		assert(count_of_regular_points == (game.unique_path.size() - count_of_end_points - count_of_start_points))
+		game.queue_free()
+
+
 func _ready():
+	#_assert_levels_correctness()
 	level_scroll_container.margin_top += C.get_top_safe_margin()
 	level_scroll_container.margin_bottom -= C.get_bottom_safe_margin()
 	Data.load_latest_level()

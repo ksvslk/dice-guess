@@ -181,7 +181,7 @@ animations = [ {
 } ]
 
 [node name="Level32" type="TileMap"]
-position = Vector2( 755, 1132 )
+position = Vector2( 756, 1015 )
 scale = Vector2( 0.721579, 0.721579 )
 mode = 1
 tile_set = SubResource( 1 )

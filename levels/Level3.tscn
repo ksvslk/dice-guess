@@ -187,7 +187,7 @@ size = 50
 font_data = ExtResource( 8 )
 
 [node name="Level3" type="TileMap"]
-position = Vector2( 654, 878 )
+position = Vector2( 661, 878 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )

@@ -9,7 +9,7 @@ func _ready():
 		var button = level_button.instance()
 		var level_completed_once = levels.values()[index][0] as bool
 		var level_purchased = levels.values()[index][1] as bool
-		button.done_visible = level_completed_once
+		button.done_visible = level_completed_once 
 		button.level_is_unlocked = level_purchased
 		button.button_text = str(index + 1)
 		button.disabled = !level_purchased
