@@ -191,15 +191,15 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( 65535, 2, 0, 0, 0, 0, 1, 0, 0, 65537, 1, 0 )
+tile_data = PoolIntArray( 1, 2, 0, 131071, 1, 0, 65536, 0, 0, 65537, 0, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 1, 1 ) ]
+unique_path = [ Vector2( -1, 1 ), Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 1, 0 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( 0, 230 )
+position = Vector2( -400, 0 )
 z_index = 1
 frames = SubResource( 28 )
 script = ExtResource( 6 )
@@ -208,6 +208,6 @@ __meta__ = {
 }
 
 [node name="Last" type="Sprite" parent="."]
-position = Vector2( -200, -115 )
+position = Vector2( 200, 115 )
 z_index = 1
 texture = ExtResource( 7 )

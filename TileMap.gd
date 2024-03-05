@@ -13,9 +13,9 @@ func _ready():
 	#	var scene_path = "res://levels/Level" + str(j) +".tscn"
 	#	var game = load(scene_path).instance()
 	#	get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
-
+	return
 	var path_length = 2
-	for i in range(0, 500):
+	for i in range(0, 10):
 		var level_nr = i + 1
 		var walls_count = int(max(1, level_nr/1.5))
 		path_length = get_level_path_length(level_nr)
@@ -25,15 +25,14 @@ func _ready():
 		scale.y = 1
 		
 		
-func _center_the_tilemap():
-	var cs = get_used_cells()
+func _center_the_tilemap() -> void:
 	var min_x = INF
 	var max_x = -INF
 	var min_y = INF
 	var max_y = -INF
 
 	# Step 1: Determine the bounds
-	for c in cs:
+	for c in unique_path:
 		var world_pos = to_global(map_to_world(c))
 		min_x = min(min_x, world_pos.x)
 		max_x = max(max_x, world_pos.x)
@@ -54,7 +53,7 @@ func _center_the_tilemap():
 
 #	 Step 5: Shift all tiles by the offset
 	var new_tiles = []
-	for c in cs:
+	for c in unique_path:
 		# Calculate the new position for each cell by applying the offset
 		var new_pos = c + offset
 		# Store the cell's data (tile ID, etc.) to move it to the new position
@@ -63,9 +62,12 @@ func _center_the_tilemap():
 
 	# Clear the TileMap before moving tiles to avoid overlap issues
 	clear()
-
+	
+	unique_path.clear()
+	
 	# Now, place tiles at their new positions
 	for tile in new_tiles:
+		unique_path.append(tile["pos"])
 		set_cellv(tile["pos"], tile["id"])
 
 
@@ -106,7 +108,7 @@ func generate_new_level(level:int, walls_count:int, path_length:int):
 	while parent.generated_levels.find(unique_path) != -1:
 		unique_path.clear()
 		clear()
-		start_pos = Vector2(2, 0)
+		start_pos = Vector2(0, 0)
 		var selection_of_paths_with_distance = []
 		var came_from_and_distances = []
 		while selection_of_paths_with_distance.empty():
@@ -126,7 +128,6 @@ func generate_new_level(level:int, walls_count:int, path_length:int):
 		set_cellv(unique_path[0], 1)
 		set_cellv(unique_path[unique_path.size() - 1], 2)
 		_center_the_tilemap()
-		unique_path = get_used_cells()
 		reset_level()
 	parent.generated_levels.push_back(unique_path.duplicate())
 
@@ -155,15 +156,8 @@ func generate_unique_random_cell_coordinates(amount: int, available_coords: Arra
 	
 
 func reset_level():
-	var start_position
-	var end_position 
-	for cell in get_used_cells():
-		if get_cell(cell.x, cell.y) == 1:
-			start_position = cell
-		elif get_cell(cell.x, cell.y) == 2:
-			end_position = cell
-	dice.position = map_to_world(start_position)
-	last.position = map_to_world(end_position)
+	dice.position = map_to_world(unique_path[0])
+	last.position = map_to_world(unique_path[unique_path.size() - 1])
 
 
 func get_cell_neighbors(cell:Vector2, walls:Array) -> Array:

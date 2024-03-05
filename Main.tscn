@@ -4,7 +4,7 @@
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
-[ext_resource path="res://levels/Template.tscn" type="PackedScene" id=5]
+[ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
@@ -345,14 +345,12 @@ expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
 margin_left = 1449.0
-margin_top = 38.0
 margin_right = 1499.0
-margin_bottom = 111.0
+margin_bottom = 150.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-visible = false
 margin_right = 50.0
 margin_bottom = 73.0
 size_flags_horizontal = 3
@@ -370,8 +368,9 @@ __meta__ = {
 }
 
 [node name="Score" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
+margin_top = 77.0
 margin_right = 50.0
-margin_bottom = 73.0
+margin_bottom = 150.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 86 )

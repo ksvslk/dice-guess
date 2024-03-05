@@ -70,8 +70,9 @@ func _ready():
 
 	#_assert_levels_correctness()
 
-	#Data.load_latest_level()
-	#_switch_level_scene()
+	
+	Data.load_latest_level()
+	_switch_level_scene()
 
 
 func switch_level(index):
@@ -142,11 +143,13 @@ func _set_move_pause(length:int) -> void:
 
 
 func _hide_tutorial():
+	return
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = false
 
 
 func _show_tutorial():
+	return
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = true
 		

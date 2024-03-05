@@ -196,7 +196,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( 1, 1 ) ]
+unique_path = [ Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 1, 0 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
 position = Vector2( -200, 115 )
