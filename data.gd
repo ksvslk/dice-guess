@@ -76,8 +76,6 @@ func load_next_level(nr: int = -1, from_level_select: bool = false) -> int:
 		set_current_score(default_score)
 	if from_level_select:
 		save_game(int(current_level))
-	if current_level == "11":
-		GPack.ask_for_review()
 	return 0
 	
 	
@@ -180,10 +178,8 @@ func _set_initial_launch_settings():
 		_config.set_value(String(i), C.best_score_key, 0)
 		_config.set_value(String(i), C.current_score_key, i * 100)
 		_config.set_value(String(i), C.level_completed_once_key, 0)
-		if i < 51:
-			_config.set_value(String(i), C.level_purchased_key, 1)
-		else:
-			_config.set_value(String(i), C.level_purchased_key, 1)
+		_config.set_value(String(i), C.level_purchased_key, 1)
+
 	_config.save(_path)
 
 

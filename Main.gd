@@ -2,7 +2,6 @@ extends Node
 
 signal switch_level
 onready var dice_current_position = Vector2(0,0)
-onready var tile_map = $ViewportContainer/Viewport/Level
 onready var move_dice_random = $MoveDiceRandom
 onready var restart = $Restart
 onready var correct = $Correct
@@ -12,12 +11,15 @@ var move_pause = 0.05
 const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
-onready var state_icon = $ViewportContainer/Viewport/StateIcon
-onready var bonus_levels = $Menu/HBoxContainer/VBoxContainer/BonusLevels
-onready var bonus_screen = $BonusScreen
+onready var tile_map = $MarginContainer/Level
+onready var state_icon = $MarginContainer/StateIcon
+onready var level_parent = $MarginContainer
+
 onready var level_scroll_container = $LevelScrollContainer
 onready var level_scroller = $LevelScrollContainer/LevelScroller
 onready var win_dialog = $WinDialog
+onready var request_review = $RequestReview
+onready var grid_container = $Menu/HBoxContainer/GridContainer
 
 
 var game_over = false
@@ -28,6 +30,15 @@ onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 
 enum {LEFT, RIGHT, UP, DOWN}
 var generated_levels = [[]]
+
+func _input(event):
+	return
+	if event is InputEventKey:
+		print(event.scancode)
+		print(event.physical_scancode)
+		print(event.unicode)
+	if event is InputEventJoypadButton:
+		print(event.button_index)
 
 func _assert_levels_correctness():
 	for j in range(1,201):
@@ -53,16 +64,20 @@ func _assert_levels_correctness():
 
 
 func _ready():
+	$Menu/HBoxContainer/GridContainer/"1".grab_focus()
+	if Data.get_tutorial_shown() == 0:
+		tutorial.visible = true
+
 	#_assert_levels_correctness()
-	level_scroll_container.margin_top += C.get_top_safe_margin()
-	level_scroll_container.margin_bottom -= C.get_bottom_safe_margin()
-	Data.load_latest_level()
-	_switch_level_scene()
+
+	#Data.load_latest_level()
+	#_switch_level_scene()
 
 
 func switch_level(index):
 	level_scroll_container.visible = false
 	level_scroller.visible = false
+	state_icon.visible = false
 	load_next_level(index)
 	_reset_partially()
 
@@ -73,7 +88,6 @@ func load_next_level(lv:int = -1):
 	else:
 		var result = Data.load_next_level()
 		if result == 1:
-			bonus_screen.visible = true
 			tile_map.reset_level()
 			_update_score_label()
 			return
@@ -83,13 +97,15 @@ func load_next_level(lv:int = -1):
 			_update_score_label()
 			return
 	_switch_level_scene()
+	if OS.get_name() == "iOS" && int(Data.current_level) == 11:
+		request_review.show()
 
 
 func _switch_level_scene():
 	var new_node_resource = load("res://levels/Level"+str(Data.current_level)+".tscn")
 	var new_node = new_node_resource.instance()
 	var current_node = tile_map
-	var parent_node = $ViewportContainer/Viewport
+	var parent_node = level_parent
 	parent_node.add_child(new_node)
 	current_node.queue_free()
 	tile_map = new_node
@@ -218,7 +234,7 @@ func _reset_level():
 
 
 func _reset_partially():
-	for c in $Menu/HBoxContainer/GridContainer.get_children():
+	for c in grid_container.get_children():
 		c.modulate = Color.white
 	tile_map.dice.modulate = Color.white
 	tile_map.last.modulate = Color.white
@@ -234,39 +250,33 @@ func _set_dice_position(next_position:Vector2):
 	
 
 func _on_1_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(1, $Menu/HBoxContainer/GridContainer/"1")
 
 
 func _on_2_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(2, $Menu/HBoxContainer/GridContainer/"2")
 
 
 func _on_3_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(3, $Menu/HBoxContainer/GridContainer/"3")
 
 
 func _on_4_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(4, $Menu/HBoxContainer/GridContainer/"4")
 
 
 func _on_5_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(5, $Menu/HBoxContainer/GridContainer/"5")
 
 
 func _on_6_pressed():
-	if not animating && not game_over:
+	if not animating && not game_over && level_parent.visible:
 		_animate_to_end(6, $Menu/HBoxContainer/GridContainer/"6")
-
-
-func _on_ViewportContainer_gui_input(event):
-	if event is InputEventMouseButton && not animating:
-		if game_over:
-			_reset_level()
 
 
 func _on_LevelNr_pressed():
@@ -282,12 +292,55 @@ func _on_Score_pressed():
 	GPack.show_leaderboard()
 
 
-func _on_BonusLevels_pressed():
-	level_scroll_container.visible = false
-	level_scroller.visible = false
-	bonus_screen.visible = true
+func _on_No_pressed():
+	request_review.hide()
 
 
-func _on_Back_pressed():
-	bonus_screen.visible = false
+func _on_Yes_pressed():
+	request_review.hide()
+	OS.shell_open("https://apps.apple.com/app/dice-guess/id6478107812")
 
+
+func _on_MarginContainer_gui_input(event):
+	if event is InputEventMouseButton && not animating:
+		if game_over:
+			_reset_level()
+
+
+func _on_LevelScrollContainer_visibility_changed():
+	if level_scroll_container.visible:
+		level_parent.visible = false
+		grid_container.modulate.a = 0.5
+	else:
+		level_parent.visible = true
+		grid_container.modulate.a = 1
+
+
+func _on_Tutorial_visibility_changed():
+	if tutorial.visible:
+		level_parent.visible = false
+		grid_container.modulate.a = 0.5
+	else:
+		level_parent.visible = true
+		grid_container.modulate.a = 1
+		
+
+
+func _on_WinDialog_visibility_changed():
+	if win_dialog.visible:
+		level_parent.visible = false
+		grid_container.modulate.a = 0.5
+	else:
+		level_parent.visible = true
+		grid_container.modulate.a = 1
+		
+
+
+func _on_RequestReview_visibility_changed():
+	if request_review.visible:
+		level_parent.visible = false
+		grid_container.modulate.a = 0.5
+	else:
+		level_parent.visible = true
+		grid_container.modulate.a = 1
+		

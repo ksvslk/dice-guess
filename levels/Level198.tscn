@@ -4,8 +4,8 @@
 [ext_resource path="res://TileMap.gd" type="Script" id=2]
 [ext_resource path="res://spritesheet.png" type="Texture" id=3]
 [ext_resource path="res://platform_350_last.png" type="Texture" id=4]
-[ext_resource path="res://Dice.gd" type="Script" id=5]
-[ext_resource path="res://platform_350_first.png" type="Texture" id=6]
+[ext_resource path="res://platform_350_first.png" type="Texture" id=5]
+[ext_resource path="res://Dice.gd" type="Script" id=6]
 [ext_resource path="res://empty.png" type="Texture" id=7]
 
 [sub_resource type="TileSet" id=1]
@@ -24,7 +24,7 @@
 0/shapes = [  ]
 0/z_index = 0
 1/name = "platform_350_first.png 1"
-1/texture = ExtResource( 6 )
+1/texture = ExtResource( 5 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 352, 256 )
@@ -53,122 +53,122 @@
 2/z_index = 0
 
 [sub_resource type="AtlasTexture" id=29]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=30]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 305, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=31]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 610, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=32]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 915, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=33]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1220, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=34]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1525, 0, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=35]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 0, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=36]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 305, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=37]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 610, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=38]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 915, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=39]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1220, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=40]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1525, 341, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=41]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 0, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=42]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 305, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=43]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 610, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=44]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 915, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=45]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1220, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=46]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1525, 682, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=47]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 0, 1023, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=48]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 305, 1023, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=49]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 610, 1023, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=50]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 915, 1023, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=51]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1220, 1023, 305, 341 )
 
 [sub_resource type="AtlasTexture" id=52]
-flags = 4
+flags = 5
 atlas = ExtResource( 3 )
 region = Rect2( 1525, 1023, 305, 341 )
 
@@ -181,8 +181,8 @@ animations = [ {
 } ]
 
 [node name="Level198" type="TileMap"]
-position = Vector2( 109, 1200 )
-scale = Vector2( 0.391112, 0.391112 )
+position = Vector2( 960, 450 )
+scale = Vector2( 0.290001, 0.290001 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )
@@ -191,22 +191,23 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( -983046, 1, 0, -983045, 0, 0, -917509, 0, 0, -917508, 0, 0, -851972, 0, 0, -851971, 0, 0, -786435, 0, 0, -786434, 0, 0, -720898, 0, 0, -655362, 0, 0, -589826, 0, 0, -524290, 0, 0, -458754, 0, 0, -393218, 0, 0, -393217, 0, 0, -458752, 0, 0, -393216, 0, 0, -327680, 0, 0, -262144, 0, 0, -196608, 0, 0, -131072, 0, 0, -65536, 0, 0, 0, 2, 0 )
+tile_data = PoolIntArray( -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 10, 2, 0, 131067, 0, 0, 131068, 0, 0, 131069, 0, 0, 131070, 0, 0, 131071, 0, 0, 196598, 1, 0, 196599, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( -6, -16 ), Vector2( -5, -16 ), Vector2( -5, -15 ), Vector2( -4, -15 ), Vector2( -4, -14 ), Vector2( -3, -14 ), Vector2( -3, -13 ), Vector2( -2, -13 ), Vector2( -2, -12 ), Vector2( -2, -11 ), Vector2( -2, -10 ), Vector2( -2, -9 ), Vector2( -2, -8 ), Vector2( -2, -7 ), Vector2( -1, -7 ), Vector2( 0, -7 ), Vector2( 0, -6 ), Vector2( 0, -5 ), Vector2( 0, -4 ), Vector2( 0, -3 ), Vector2( 0, -2 ), Vector2( 0, -1 ), Vector2( 0, 0 ) ]
+unique_path = [ Vector2( 3, -1 ), Vector2( 4, -1 ), Vector2( 5, -1 ), Vector2( 6, -1 ), Vector2( 7, -1 ), Vector2( 8, -1 ), Vector2( 9, -1 ), Vector2( 10, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 10, 0 ), Vector2( -5, 1 ), Vector2( -4, 1 ), Vector2( -3, 1 ), Vector2( -2, 1 ), Vector2( -1, 1 ), Vector2( -10, 2 ), Vector2( -9, 2 ), Vector2( -8, 2 ), Vector2( -7, 2 ), Vector2( -6, 2 ), Vector2( -5, 2 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( 2000, -2530 )
+position = Vector2( -2400, -920 )
 z_index = 1
 frames = SubResource( 28 )
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Last" type="Sprite" parent="."]
+position = Vector2( 2000, 1150 )
 z_index = 1
 texture = ExtResource( 7 )

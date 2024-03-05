@@ -47,7 +47,7 @@ func _ready():
 		store_timer.connect("timeout", self, "handle_ios_store_events")
 		store_timer.start()
 		request_ios_products_info()
-		restore.disabled = false
+		restore.visible = true
 	else:
 		printerr("Android IAP support is not enabled. Make sure you have enabled 'Custom Build' and installed and enabled the GodotGooglePlayBilling plugin in your Android export settings! This application will not work.")
 
@@ -86,8 +86,6 @@ func _get_button_title_google_play(available_sku) -> String:
 
 # GOOGLE PLAY
 func _on_sku_details_query_completed(sku_details):
-	print("QUERY COMPLETED!!!")
-	print(sku_details)
 	for available_sku in sku_details:
 		if available_sku["sku"] == Data.all_level_packs_id:
 			all_level_packs.set_title(_get_button_title_google_play(available_sku))
@@ -208,7 +206,6 @@ func _get_button_title(response_event, index) -> String:
 func update_ios_products_buttons(response_event):
 	for index in range(response_event.ids.size()):
 		var product_id = response_event.ids[index]
-		print("response event: ", response_event)
 		if product_id == Data.all_level_packs_id:
 			all_level_packs.set_title(_get_button_title(response_event, index))
 		elif product_id == Data.level_pack_1_id:
@@ -221,9 +218,12 @@ func update_ios_products_buttons(response_event):
 # APP STORE
 func _on_Restore_gui_input(event):
 	if event is InputEventMouseButton:
-		if event.is_pressed() && in_progress_purchase_id == "":
-			set_loading_for_bonus_menu("restore")
-			var _result = ios_payment.restore_purchases()
+		if event.is_pressed():
+			if in_progress_purchase_id == "":
+				set_loading_for_bonus_menu("restore")
+				ios_payment.restore_purchases()
+			elif in_progress_purchase_id == "restore":
+				set_active_for_bonus_menu("restore")
 		
 		
 		
@@ -295,6 +295,8 @@ func set_loading_for_bonus_menu(product_id: String):
 		level_pack_2.start_loading()
 	elif product_id == Data.level_pack_3_id:
 		level_pack_3.start_loading()
+	elif product_id == "restore":
+		restore.start_loading()
 
 
 # UNIVERSAL
@@ -332,7 +334,6 @@ func _on_AllLevelPacks_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed() && in_progress_purchase_id == "":
 			_purchase(Data.all_level_packs_id)
-			print("_on_AllLevelPacks_gui_input")
 
 
 # UNIVERSAL
@@ -340,7 +341,6 @@ func _on_LevelPack1_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed() && in_progress_purchase_id == "":
 			_purchase(Data.level_pack_1_id)
-			print("_on_LevelPack1_gui_input")
 
 
 # UNIVERSAL
@@ -348,7 +348,6 @@ func _on_LevelPack2_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed() && in_progress_purchase_id == "":
 			_purchase(Data.level_pack_2_id)
-			print("_on_LevelPack2_gui_input")
 
 
 # UNIVERSAL
@@ -356,4 +355,3 @@ func _on_LevelPack3_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed() && in_progress_purchase_id == "":
 			_purchase(Data.level_pack_3_id)
-			print("_on_LevelPack3_gui_input")

@@ -15,8 +15,6 @@ func _ready():
 		button.disabled = !level_purchased
 		add_child(button)
 		button.connect("pressed", main, "switch_level", [index + 1])
-	margin_top += C.get_top_safe_margin()
-	margin_bottom -= C.get_bottom_safe_margin()
 
 
 func update_current_level_color():

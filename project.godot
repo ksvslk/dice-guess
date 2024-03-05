@@ -8,37 +8,34 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Object",
-"class": "PoingAdMobVersionHelper",
-"language": "GDScript",
-"path": "res://addons/admob/version_helper.gd"
-} ]
-_global_script_class_icons={
-"PoingAdMobVersionHelper": ""
-}
-
 [application]
 
-config/name="dice-guess"
+config/name="Dice Guess Steam"
 run/main_scene="res://Main.tscn"
+boot_splash/image="res://icons/icon256.png"
+boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 
 [autoload]
 
 C="*res://C.gd"
 Data="*res://data.gd"
-GPack="*res://gpack.gd"
+GPack="*res://GPack.gd"
 
 [display]
 
-window/size/width=1080
-window/size/height=1920
-window/size/test_width=1080
-window/size/test_height=1920
-window/handheld/orientation="portrait"
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/size/test_width=1920
+window/size/test_height=1080
+mouse_cursor/custom_image="res://blacklight.png"
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray(  )
 
 [gui]
 

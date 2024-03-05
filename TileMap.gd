@@ -3,38 +3,85 @@ extends TileMap
 onready var last = $Last
 onready var dice = $Dice
 
-var start_pos = Vector2(0,0)
+var start_pos = Vector2(2,0)
 export(Array) var unique_path = []
 var length = 2
 
 
 func _ready():
-	return
-	for j in range(1,101):
-		var scene_path = "res://levels/Level" + str(j) +".tscn"
-		var game = load(scene_path).instance()
-		get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
-	var path_length = 15
-	for i in range(100, 200):
+	#for j in range(1,101):
+	#	var scene_path = "res://levels/Level" + str(j) +".tscn"
+	#	var game = load(scene_path).instance()
+	#	get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
+
+	var path_length = 2
+	for i in range(0, 500):
 		var level_nr = i + 1
 		var walls_count = int(max(1, level_nr/1.5))
 		path_length = get_level_path_length(level_nr)
 		generate_new_level(level_nr, walls_count, path_length)
 		create_new_scene(level_nr)
+		scale.x = 1
+		scale.y = 1
+		
+		
+func _center_the_tilemap():
+	var cs = get_used_cells()
+	var min_x = INF
+	var max_x = -INF
+	var min_y = INF
+	var max_y = -INF
+
+	# Step 1: Determine the bounds
+	for c in cs:
+		var world_pos = to_global(map_to_world(c))
+		min_x = min(min_x, world_pos.x)
+		max_x = max(max_x, world_pos.x)
+		min_y = min(min_y, world_pos.y)
+		max_y = max(max_y, world_pos.y)
+
+	# Step 2: Construct the Rect2
+	var rect_position = Vector2(min_x, min_y)
+	var rect_size = Vector2(max_x - min_x, max_y - min_y)
+	var bounding_rect = Rect2(rect_position, rect_size)
+
+	# Step 3: Find the center of the Rect2
+	var center_of_rect = bounding_rect.position + bounding_rect.size * 0.5
+
+	var center_cell = world_to_map(to_local(center_of_rect))
+	# Step 4: Calculate the offset to move center_cell to (0,0)
+	var offset = Vector2(0, 0) - center_cell
+
+#	 Step 5: Shift all tiles by the offset
+	var new_tiles = []
+	for c in cs:
+		# Calculate the new position for each cell by applying the offset
+		var new_pos = c + offset
+		# Store the cell's data (tile ID, etc.) to move it to the new position
+		var tile_id = get_cellv(c)
+		new_tiles.append({"pos": new_pos, "id": tile_id})
+
+	# Clear the TileMap before moving tiles to avoid overlap issues
+	clear()
+
+	# Now, place tiles at their new positions
+	for tile in new_tiles:
+		set_cellv(tile["pos"], tile["id"])
 
 
 func get_level_path_length(level:int) -> int:
 	if range(1, 5).has(level):
-		return 2
-	elif range(5, 10).has(level):
 		return 3
-	elif range(10, 20).has(level):
+	elif range(5, 10).has(level):
 		return 4
+	elif range(10, 20).has(level):
+		return 5
 	else:
-		return 4 + (level / 10)
+		return 6 + (level / 10)
 
 
 func create_new_scene(scene_nr:int):
+	resize_scene()
 	var scene_name = "Level"+str(scene_nr)
 	var new_scene = PackedScene.new()
 	var root_node = duplicate()
@@ -55,12 +102,11 @@ func set_random_dice_side_up():
 
 
 func generate_new_level(level:int, walls_count:int, path_length:int):
-	var parent = get_parent().get_parent().get_parent()
-	print("Gene level for ", level)
+	var parent = get_parent().get_parent()
 	while parent.generated_levels.find(unique_path) != -1:
 		unique_path.clear()
 		clear()
-		start_pos = Vector2(0,0)
+		start_pos = Vector2(2, 0)
 		var selection_of_paths_with_distance = []
 		var came_from_and_distances = []
 		while selection_of_paths_with_distance.empty():
@@ -79,6 +125,8 @@ func generate_new_level(level:int, walls_count:int, path_length:int):
 			set_cellv(v, 0)
 		set_cellv(unique_path[0], 1)
 		set_cellv(unique_path[unique_path.size() - 1], 2)
+		_center_the_tilemap()
+		unique_path = get_used_cells()
 		reset_level()
 	parent.generated_levels.push_back(unique_path.duplicate())
 
@@ -107,8 +155,15 @@ func generate_unique_random_cell_coordinates(amount: int, available_coords: Arra
 	
 
 func reset_level():
-	dice.position = map_to_world(unique_path[0])
-	last.position = map_to_world(unique_path[unique_path.size() - 1])
+	var start_position
+	var end_position 
+	for cell in get_used_cells():
+		if get_cell(cell.x, cell.y) == 1:
+			start_position = cell
+		elif get_cell(cell.x, cell.y) == 2:
+			end_position = cell
+	dice.position = map_to_world(start_position)
+	last.position = map_to_world(end_position)
 
 
 func get_cell_neighbors(cell:Vector2, walls:Array) -> Array:
@@ -149,3 +204,48 @@ func get_path_back_to(start:Vector2, goal:Vector2, came_from_and_distance:Dictio
 		current = came_from_and_distance[current][0]
 	path.append(start)
 	return path
+
+
+#func get_cell_neighbors(cell:Vector2, walls:Array) -> Array:
+#	var neighbors = []
+#	if is_inside_walls(cell + Vector2.UP) && walls.find(cell + Vector2.UP) == -1:
+#		neighbors.push_back(cell + Vector2.UP)
+#	if  is_inside_walls(cell + Vector2.RIGHT) && walls.find(cell + Vector2.RIGHT) == -1:
+#		neighbors.push_back(cell + Vector2.RIGHT)
+#	if is_inside_walls(cell + Vector2.DOWN) && walls.find(cell + Vector2.DOWN) == -1:
+#		neighbors.push_back(cell + Vector2.DOWN)
+#	if is_inside_walls(cell + Vector2.LEFT) && walls.find(cell + Vector2.LEFT) == -1:
+#		neighbors.push_back(cell + Vector2.LEFT)
+#	return neighbors
+
+
+func resize_scene():
+	var exists_out_of_screen_cell = true
+	var cells = get_used_cells()
+	var count_of_oos_cells = 0
+	while exists_out_of_screen_cell:
+		exists_out_of_screen_cell = false
+		for cell in cells:
+			if !is_inside_walls(cell):
+				count_of_oos_cells += 1
+		if count_of_oos_cells == 0:
+			exists_out_of_screen_cell = false
+		else:
+			count_of_oos_cells = 0
+			scale.x -= 0.01
+			scale.y -= 0.01
+			exists_out_of_screen_cell = true
+			
+
+
+func is_inside_walls(map_pos:Vector2) -> bool:
+	# 341/2=170.5 or last.get_rect().size.y/2 is the dice height that must also fit to screen (on the platform extra height)
+	var local_pos = map_to_world(map_pos)
+	var pos = to_global(local_pos)
+	pos.x += 960
+	pos.y += 450
+	var left_limit = cell_size.x * scale.x
+	var right_limit = 1920 - cell_size.x * scale.x
+	var top_limit = cell_size.y / 2 * scale.y
+	var bottom_limit = 900 - (3 * cell_size.y * scale.y)
+	return pos.x > left_limit && pos.x < right_limit && pos.y > top_limit && pos.y < bottom_limit

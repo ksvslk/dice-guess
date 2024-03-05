@@ -1,14 +1,13 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://WinDialog.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
-[ext_resource path="res://BonusScreen.gd" type="Script" id=5]
+[ext_resource path="res://levels/Template.tscn" type="PackedScene" id=5]
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
-[ext_resource path="res://levels/Level4.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Menu.gd" type="Script" id=10]
 [ext_resource path="res://PopupPanel.gd" type="Script" id=11]
 [ext_resource path="res://game_font.tres" type="DynamicFont" id=12]
@@ -16,12 +15,13 @@
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://top_down_dice.png" type="Texture" id=15]
 [ext_resource path="res://icons/question.png" type="Texture" id=16]
-[ext_resource path="res://icons/bonus.png" type="Texture" id=17]
 [ext_resource path="res://icons/levelselect.png" type="Texture" id=18]
 [ext_resource path="res://icons/forward.png" type="Texture" id=19]
-[ext_resource path="res://BonusButton.tscn" type="PackedScene" id=20]
 [ext_resource path="res://LevelScroller2.gd" type="Script" id=21]
 [ext_resource path="res://smiley.png" type="Texture" id=22]
+
+[sub_resource type="StyleBoxFlat" id=97]
+bg_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -32,9 +32,23 @@ flags = 4
 atlas = SubResource( 28 )
 region = Rect2( 3, 2, 296, 296 )
 
+[sub_resource type="StreamTexture" id=99]
+flags = 4
+load_path = "res://.import/dice_selected.png-279bccdb7a5024212f3fd726215e08cc.stex"
+
+[sub_resource type="AtlasTexture" id=100]
+flags = 4
+atlas = SubResource( 99 )
+region = Rect2( 3, 2, 296, 296 )
+
 [sub_resource type="AtlasTexture" id=30]
 flags = 4
 atlas = SubResource( 28 )
+region = Rect2( 303, 2, 296, 296 )
+
+[sub_resource type="AtlasTexture" id=98]
+flags = 4
+atlas = SubResource( 99 )
 region = Rect2( 303, 2, 296, 296 )
 
 [sub_resource type="AtlasTexture" id=31]
@@ -42,9 +56,19 @@ flags = 4
 atlas = SubResource( 28 )
 region = Rect2( 603, 2, 296, 296 )
 
+[sub_resource type="AtlasTexture" id=101]
+flags = 4
+atlas = SubResource( 99 )
+region = Rect2( 603, 2, 296, 296 )
+
 [sub_resource type="AtlasTexture" id=32]
 flags = 4
 atlas = SubResource( 28 )
+region = Rect2( 3, 302, 296, 296 )
+
+[sub_resource type="AtlasTexture" id=102]
+flags = 4
+atlas = SubResource( 99 )
 region = Rect2( 3, 302, 296, 296 )
 
 [sub_resource type="AtlasTexture" id=33]
@@ -52,9 +76,19 @@ flags = 4
 atlas = SubResource( 28 )
 region = Rect2( 303, 302, 296, 296 )
 
+[sub_resource type="AtlasTexture" id=103]
+flags = 4
+atlas = SubResource( 99 )
+region = Rect2( 303, 302, 296, 296 )
+
 [sub_resource type="AtlasTexture" id=34]
 flags = 4
 atlas = SubResource( 28 )
+region = Rect2( 603, 302, 296, 296 )
+
+[sub_resource type="AtlasTexture" id=104]
+flags = 4
+atlas = SubResource( 99 )
 region = Rect2( 603, 302, 296, 296 )
 
 [sub_resource type="DynamicFont" id=83]
@@ -69,12 +103,6 @@ font_data = ExtResource( 14 )
 
 [sub_resource type="StyleBoxEmpty" id=87]
 
-[sub_resource type="DynamicFont" id=89]
-size = 60
-font_data = ExtResource( 14 )
-
-[sub_resource type="StyleBoxEmpty" id=90]
-
 [sub_resource type="DynamicFont" id=91]
 size = 60
 font_data = ExtResource( 14 )
@@ -84,21 +112,6 @@ font_data = ExtResource( 14 )
 [sub_resource type="AudioStreamRandomPitch" id=36]
 audio_stream = ExtResource( 3 )
 random_pitch = 1.3
-
-[sub_resource type="DynamicFont" id=74]
-size = 75
-font_data = ExtResource( 14 )
-
-[sub_resource type="StyleBoxFlat" id=73]
-content_margin_left = 200.0
-content_margin_right = 200.0
-content_margin_top = 50.0
-content_margin_bottom = 50.0
-bg_color = Color( 0, 0.588235, 0.772549, 1 )
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
 
 [sub_resource type="DynamicFont" id=69]
 size = 60
@@ -150,6 +163,21 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="DynamicFont" id=74]
+size = 75
+font_data = ExtResource( 14 )
+
+[sub_resource type="StyleBoxFlat" id=73]
+content_margin_left = 200.0
+content_margin_right = 200.0
+content_margin_top = 50.0
+content_margin_bottom = 50.0
+bg_color = Color( 0, 0.588235, 0.772549, 1 )
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
 [sub_resource type="StyleBoxFlat" id=94]
 bg_color = Color( 0.0352941, 0.054902, 0.129412, 1 )
 corner_radius_top_left = 16
@@ -161,82 +189,94 @@ corner_radius_bottom_left = 16
 size = 50
 font_data = ExtResource( 14 )
 
+[sub_resource type="StyleBoxFlat" id=95]
+bg_color = Color( 0, 0.254902, 0.188235, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id=96]
+bg_color = Color( 0.133333, 0, 0.254902, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
 
-[node name="ViewportContainer" type="ViewportContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -540.0
-margin_top = -910.0
-margin_right = 540.0
-margin_bottom = 540.0
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = 360.0
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1080, 1450 )
-handle_input_locally = false
-usage = 0
-render_target_update_mode = 3
-
-[node name="Level" parent="ViewportContainer/Viewport" instance=ExtResource( 9 )]
-
-[node name="StateIcon" type="TextureRect" parent="ViewportContainer/Viewport"]
+[node name="StateIcon" type="TextureRect" parent="MarginContainer"]
 visible = false
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 120.0
-margin_bottom = 120.0
+margin_right = 1920.0
+margin_bottom = 900.0
 mouse_filter = 2
 texture = ExtResource( 19 )
+
+[node name="Level" parent="MarginContainer" instance=ExtResource( 5 )]
 
 [node name="LevelScrollContainer" type="ScrollContainer" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -414.0
+custom_styles/bg = SubResource( 97 )
 scroll_horizontal_enabled = false
 scroll_deadzone = 25
 
 [node name="LevelScroller" type="VBoxContainer" parent="LevelScrollContainer"]
 visible = false
-margin_right = 1080.0
-margin_bottom = 1506.0
+margin_right = 1920.0
+margin_bottom = 666.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
 script = ExtResource( 21 )
 
-[node name="Menu" type="Control" parent="."]
-anchor_top = 0.794
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 32.0
-margin_top = 4.5199
-margin_right = -32.0
-margin_bottom = -41.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 10 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
+[node name="Menu" type="MarginContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -340.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
+margin_top = -182.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+script = ExtResource( 10 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 1904.0
+margin_bottom = 166.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_constants/separation = 1
+alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="Menu/HBoxContainer"]
-margin_top = 4.0
-margin_right = 514.0
-margin_bottom = 336.0
+margin_right = 1060.0
+margin_bottom = 150.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 custom_constants/vseparation = 32
 custom_constants/hseparation = 32
-columns = 3
+columns = 6
 
 [node name="1" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_right = 150.0
@@ -245,6 +285,7 @@ rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 29 )
+texture_focused = SubResource( 100 )
 expand = true
 
 [node name="2" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
@@ -255,6 +296,7 @@ rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 30 )
+texture_focused = SubResource( 98 )
 expand = true
 
 [node name="3" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
@@ -265,50 +307,53 @@ rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 31 )
+texture_focused = SubResource( 101 )
 expand = true
 
 [node name="4" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
-margin_top = 182.0
-margin_right = 150.0
-margin_bottom = 332.0
+margin_left = 546.0
+margin_right = 696.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 32 )
+texture_focused = SubResource( 102 )
 expand = true
 
 [node name="5" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
-margin_left = 182.0
-margin_top = 182.0
-margin_right = 332.0
-margin_bottom = 332.0
+margin_left = 728.0
+margin_right = 878.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 33 )
+texture_focused = SubResource( 103 )
 expand = true
 
 [node name="6" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
-margin_left = 364.0
-margin_top = 182.0
-margin_right = 514.0
-margin_bottom = 332.0
+margin_left = 910.0
+margin_right = 1060.0
+margin_bottom = 150.0
 rect_min_size = Vector2( 150, 150 )
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = SubResource( 34 )
+texture_focused = SubResource( 104 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 554.0
-margin_top = 18.0
-margin_right = 977.0
-margin_bottom = 322.0
+margin_left = 1449.0
+margin_top = 38.0
+margin_right = 1499.0
+margin_bottom = 111.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_right = 423.0
+visible = false
+margin_right = 50.0
 margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
@@ -325,9 +370,8 @@ __meta__ = {
 }
 
 [node name="Score" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_top = 77.0
-margin_right = 423.0
-margin_bottom = 150.0
+margin_right = 50.0
+margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 86 )
@@ -339,29 +383,10 @@ custom_styles/normal = SubResource( 87 )
 icon = ExtResource( 13 )
 align = 0
 
-[node name="BonusLevels" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_top = 154.0
-margin_right = 423.0
-margin_bottom = 227.0
-size_flags_horizontal = 3
-custom_constants/hseparation = 16
-custom_fonts/font = SubResource( 89 )
-custom_styles/hover = SubResource( 90 )
-custom_styles/pressed = SubResource( 90 )
-custom_styles/focus = SubResource( 90 )
-custom_styles/disabled = SubResource( 90 )
-custom_styles/normal = SubResource( 90 )
-text = "Bonus Levels"
-icon = ExtResource( 17 )
-align = 0
-__meta__ = {
-"_editor_description_": ""
-}
-
 [node name="Help" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
-margin_top = 231.0
+visible = false
 margin_right = 423.0
-margin_bottom = 304.0
+margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 91 )
@@ -392,102 +417,6 @@ stream = ExtResource( 6 )
 [node name="NextLevel" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
 
-[node name="BonusScreen" type="ColorRect" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.0352941, 0.054902, 0.129412, 1 )
-script = ExtResource( 5 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="BonusScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -500.0
-margin_top = -920.0
-margin_right = 500.0
-margin_bottom = 920.0
-custom_constants/separation = 25
-alignment = 1
-
-[node name="AllLevelPacks" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 82.0
-margin_right = 1000.0
-margin_bottom = 354.0
-title_text = "Loading..."
-subtitle_text = "Unlock all 150 levels"
-title_color = Color( 1, 0.87451, 0.298039, 1 )
-
-[node name="LevelPack1" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 379.0
-margin_right = 1000.0
-margin_bottom = 651.0
-title_text = "Loading..."
-subtitle_text = "Unlock levels from 51 - 100"
-
-[node name="LevelPack2" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 676.0
-margin_right = 1000.0
-margin_bottom = 948.0
-title_text = "Loading..."
-subtitle_text = "Unlock levels from 101 - 150"
-
-[node name="LevelPack3" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 973.0
-margin_right = 1000.0
-margin_bottom = 1245.0
-title_text = "Loading..."
-subtitle_text = "Unlock levels from 151 - 200"
-
-[node name="Restore" parent="BonusScreen/VBoxContainer" instance=ExtResource( 20 )]
-modulate = Color( 0.643137, 0.607843, 0.670588, 1 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 1270.0
-margin_right = 1000.0
-margin_bottom = 1542.0
-title_text = "Restore"
-
-[node name="Back" type="Button" parent="BonusScreen/VBoxContainer"]
-margin_top = 1567.0
-margin_right = 1000.0
-margin_bottom = 1758.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 74 )
-custom_styles/hover = SubResource( 73 )
-custom_styles/pressed = SubResource( 73 )
-custom_styles/focus = SubResource( 73 )
-custom_styles/disabled = SubResource( 73 )
-custom_styles/normal = SubResource( 73 )
-text = "Continue"
-
-[node name="StoreTimer" type="Timer" parent="BonusScreen"]
-wait_time = 2.0
-
 [node name="Tutorial" type="ColorRect" parent="."]
 visible = false
 anchor_right = 1.0
@@ -496,10 +425,14 @@ color = Color( 0.0352941, 0.054902, 0.129412, 1 )
 script = ExtResource( 11 )
 
 [node name="Title" type="Label" parent="Tutorial"]
-margin_left = 219.0
-margin_top = 1071.0
-margin_right = 848.0
-margin_bottom = 1296.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -321.0
+margin_top = 111.0
+margin_right = 308.0
+margin_bottom = 336.0
 custom_fonts/font = SubResource( 69 )
 text = "Guess the number
 facing up after rolling
@@ -511,23 +444,37 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Tutorial"]
-margin_left = 114.0
-margin_top = 257.0
-margin_right = 971.0
-margin_bottom = 426.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -426.0
+margin_top = -703.0
+margin_right = 431.0
+margin_bottom = -534.0
 custom_fonts/font = SubResource( 69 )
 text = "The opposite sides of a dice always add up to 7."
 align = 1
 autowrap = true
 
-[node name="Node2D" type="Node2D" parent="Tutorial"]
-position = Vector2( -93, 260 )
+[node name="Control" type="Control" parent="Tutorial"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Node2D" type="Node2D" parent="Tutorial/Control"]
+position = Vector2( -595, -679 )
 scale = Vector2( 0.792313, 0.792313 )
 
-[node name="1" type="Node2D" parent="Tutorial/Node2D"]
+[node name="1" type="Node2D" parent="Tutorial/Control/Node2D"]
 position = Vector2( 492.23, 403.881 )
 
-[node name="Eq" type="Label" parent="Tutorial/Node2D/1"]
+[node name="Eq" type="Label" parent="Tutorial/Control/Node2D/1"]
 margin_left = 184.271
 margin_top = -46.6986
 margin_right = 661.271
@@ -536,20 +483,20 @@ custom_fonts/font = ExtResource( 12 )
 text = "+                =  7"
 align = 1
 
-[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/1"]
+[node name="1" type="AnimatedSprite" parent="Tutorial/Control/Node2D/1"]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 81 )
 
-[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/1"]
+[node name="6" type="AnimatedSprite" parent="Tutorial/Control/Node2D/1"]
 position = Vector2( 422.813, 0 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 82 )
 frame = 5
 
-[node name="2" type="Node2D" parent="Tutorial/Node2D"]
+[node name="2" type="Node2D" parent="Tutorial/Control/Node2D"]
 position = Vector2( 492.23, 605.821 )
 
-[node name="Eq" type="Label" parent="Tutorial/Node2D/2"]
+[node name="Eq" type="Label" parent="Tutorial/Control/Node2D/2"]
 margin_left = 184.271
 margin_top = -46.6986
 margin_right = 661.271
@@ -558,21 +505,21 @@ custom_fonts/font = ExtResource( 12 )
 text = "+                =  7"
 align = 1
 
-[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/2"]
+[node name="1" type="AnimatedSprite" parent="Tutorial/Control/Node2D/2"]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 81 )
 frame = 1
 
-[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/2"]
+[node name="6" type="AnimatedSprite" parent="Tutorial/Control/Node2D/2"]
 position = Vector2( 422.813, 0 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 82 )
 frame = 4
 
-[node name="3" type="Node2D" parent="Tutorial/Node2D"]
+[node name="3" type="Node2D" parent="Tutorial/Control/Node2D"]
 position = Vector2( 492.23, 807.762 )
 
-[node name="Eq" type="Label" parent="Tutorial/Node2D/3"]
+[node name="Eq" type="Label" parent="Tutorial/Control/Node2D/3"]
 margin_left = 184.271
 margin_top = -46.6986
 margin_right = 661.271
@@ -581,12 +528,12 @@ custom_fonts/font = ExtResource( 12 )
 text = "+                =  7"
 align = 1
 
-[node name="1" type="AnimatedSprite" parent="Tutorial/Node2D/3"]
+[node name="1" type="AnimatedSprite" parent="Tutorial/Control/Node2D/3"]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 81 )
 frame = 2
 
-[node name="6" type="AnimatedSprite" parent="Tutorial/Node2D/3"]
+[node name="6" type="AnimatedSprite" parent="Tutorial/Control/Node2D/3"]
 position = Vector2( 422.813, 0 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 82 )
@@ -659,7 +606,63 @@ text = "Awesome job!"
 align = 1
 autowrap = true
 
-[connection signal="gui_input" from="ViewportContainer" to="." method="_on_ViewportContainer_gui_input"]
+[node name="RequestReview" type="PopupDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -347.0
+margin_top = -406.0
+margin_right = 347.0
+margin_bottom = 406.0
+custom_styles/panel = SubResource( 94 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RequestReview"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -277.0
+margin_top = -288.5
+margin_right = 277.0
+margin_bottom = 288.5
+custom_constants/separation = 32
+alignment = 1
+
+[node name="Label2" type="Label" parent="RequestReview/VBoxContainer"]
+margin_right = 554.0
+margin_bottom = 123.0
+custom_fonts/font = SubResource( 93 )
+text = "Would you like to leave a review?"
+align = 1
+autowrap = true
+
+[node name="Yes" type="Button" parent="RequestReview/VBoxContainer"]
+margin_top = 155.0
+margin_right = 554.0
+margin_bottom = 355.0
+rect_min_size = Vector2( 0, 200 )
+custom_styles/hover = SubResource( 95 )
+custom_styles/pressed = SubResource( 95 )
+custom_styles/focus = SubResource( 95 )
+custom_styles/disabled = SubResource( 95 )
+custom_styles/normal = SubResource( 95 )
+text = "YES"
+
+[node name="No" type="Button" parent="RequestReview/VBoxContainer"]
+margin_top = 387.0
+margin_right = 554.0
+margin_bottom = 577.0
+rect_min_size = Vector2( 0, 190 )
+custom_styles/hover = SubResource( 96 )
+custom_styles/pressed = SubResource( 96 )
+custom_styles/focus = SubResource( 96 )
+custom_styles/disabled = SubResource( 96 )
+custom_styles/normal = SubResource( 96 )
+text = "NO"
+
+[connection signal="gui_input" from="MarginContainer" to="." method="_on_MarginContainer_gui_input"]
+[connection signal="visibility_changed" from="LevelScrollContainer" to="." method="_on_LevelScrollContainer_visibility_changed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/1" to="." method="_on_1_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/2" to="." method="_on_2_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/3" to="." method="_on_3_pressed"]
@@ -668,13 +671,11 @@ autowrap = true
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Score" to="." method="_on_Score_pressed"]
-[connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/BonusLevels" to="." method="_on_BonusLevels_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Help" to="." method="_on_Help_pressed"]
-[connection signal="gui_input" from="BonusScreen/VBoxContainer/AllLevelPacks" to="BonusScreen" method="_on_AllLevelPacks_gui_input"]
-[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack1" to="BonusScreen" method="_on_LevelPack1_gui_input"]
-[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack2" to="BonusScreen" method="_on_LevelPack2_gui_input"]
-[connection signal="gui_input" from="BonusScreen/VBoxContainer/LevelPack3" to="BonusScreen" method="_on_LevelPack3_gui_input"]
-[connection signal="gui_input" from="BonusScreen/VBoxContainer/Restore" to="BonusScreen" method="_on_Restore_gui_input"]
-[connection signal="pressed" from="BonusScreen/VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="visibility_changed" from="Tutorial" to="." method="_on_Tutorial_visibility_changed"]
 [connection signal="pressed" from="Tutorial/Start" to="Tutorial" method="_on_Start_pressed"]
+[connection signal="visibility_changed" from="WinDialog" to="." method="_on_WinDialog_visibility_changed"]
 [connection signal="pressed" from="WinDialog/VBoxContainer/TextureButton" to="WinDialog" method="_on_TextureButton_pressed"]
+[connection signal="visibility_changed" from="RequestReview" to="." method="_on_RequestReview_visibility_changed"]
+[connection signal="pressed" from="RequestReview/VBoxContainer/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="RequestReview/VBoxContainer/No" to="." method="_on_No_pressed"]
