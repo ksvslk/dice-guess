@@ -3,7 +3,7 @@ extends Node
 onready var _config := ConfigFile.new()
 
 const _path: String = "user://data.cfg"
-const _total_levels_plus_one := 11 # each level has its own section: "1", "2" etc.
+const _total_levels_plus_one := 556 # each level has its own section: "1", "2" etc.
 var current_level := "-1"
 
 const all_level_packs_id = "all_level_packs"

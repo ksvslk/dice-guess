@@ -182,7 +182,7 @@ animations = [ {
 
 [node name="Level3" type="TileMap"]
 position = Vector2( 960, 450 )
-scale = Vector2( 0.58, 0.58 )
+scale = Vector2( 0.67, 0.67 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )
@@ -191,15 +191,15 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( 1, 2, 0, 65536, 1, 0, 65537, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 65536, 2, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 1, 0 ) ]
+unique_path = [ Vector2( 1, 0 ), Vector2( 0, 0 ), Vector2( 0, 1 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( -200, 115 )
+position = Vector2( 200, 115 )
 z_index = 1
 frames = SubResource( 28 )
 script = ExtResource( 6 )
@@ -208,6 +208,6 @@ __meta__ = {
 }
 
 [node name="Last" type="Sprite" parent="."]
-position = Vector2( 200, 115 )
+position = Vector2( -200, 115 )
 z_index = 1
 texture = ExtResource( 7 )

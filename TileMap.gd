@@ -15,7 +15,7 @@ func _ready():
 	#	get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
 	return
 	var path_length = 2
-	for i in range(0, 10):
+	for i in range(0, 556):
 		var level_nr = i + 1
 		var walls_count = int(max(1, level_nr/1.5))
 		path_length = get_level_path_length(level_nr)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://LongerTextButton.tres" type="DynamicFont" id=1]
 [ext_resource path="res://LevelSelectButton.gd" type="Script" id=2]
@@ -13,19 +13,28 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0.490196, 0.792157, 1 )
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [node name="Control" type="Button"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -3.0
-margin_top = -2.0
-margin_right = -3.0
-margin_bottom = -2.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
 rect_min_size = Vector2( 0, 150 )
 mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 3 )
 custom_styles/normal = SubResource( 3 )
 text = "1"
