@@ -182,7 +182,7 @@ animations = [ {
 
 [node name="Level396" type="TileMap"]
 position = Vector2( 960, 450 )
-scale = Vector2( 0.260001, 0.260001 )
+scale = Vector2( 0.360001, 0.360001 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )
@@ -191,15 +191,15 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( -393213, 0, 0, -393212, 0, 0, -393211, 0, 0, -262149, 1, 0, -262146, 0, 0, -262145, 0, 0, -327680, 0, 0, -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327675, 0, 0, -196613, 0, 0, -196612, 0, 0, -196611, 0, 0, -196610, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -196601, 0, 0, -131066, 0, 0, -131065, 0, 0, -65531, 0, 0, -65530, 0, 0, 5, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 131079, 0, 0, 131080, 0, 0, 196616, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 327683, 0, 0, 327684, 0, 0, 458749, 0, 0, 458750, 0, 0, 458751, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 524285, 2, 0 )
+tile_data = PoolIntArray( -458750, 0, 0, -458749, 0, 0, -458748, 0, 0, -393216, 0, 0, -393215, 0, 0, -393214, 0, 0, -393212, 0, 0, -327680, 0, 0, -327676, 0, 0, -262144, 0, 0, -262140, 0, 0, -196608, 2, 0, -196604, 0, 0, -196603, 0, 0, -131067, 0, 0, -3, 0, 0, -2, 0, 0, -1, 0, 0, -65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 131066, 0, 0, 131067, 0, 0, 131068, 0, 0, 65537, 0, 0, 65541, 0, 0, 196602, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 262138, 0, 0, 262139, 0, 0, 327675, 0, 0, 327676, 0, 0, 327677, 0, 0, 393213, 0, 0, 458747, 1, 0, 458748, 0, 0, 458749, 0, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( -5, -5 ), Vector2( -5, -4 ), Vector2( -4, -4 ), Vector2( -3, -4 ), Vector2( -2, -4 ), Vector2( -2, -5 ), Vector2( -1, -5 ), Vector2( 0, -5 ), Vector2( 1, -5 ), Vector2( 2, -5 ), Vector2( 3, -5 ), Vector2( 3, -6 ), Vector2( 4, -6 ), Vector2( 5, -6 ), Vector2( 5, -5 ), Vector2( 5, -4 ), Vector2( 6, -4 ), Vector2( 7, -4 ), Vector2( 7, -3 ), Vector2( 7, -2 ), Vector2( 6, -2 ), Vector2( 6, -1 ), Vector2( 5, -1 ), Vector2( 5, 0 ), Vector2( 5, 1 ), Vector2( 6, 1 ), Vector2( 7, 1 ), Vector2( 7, 2 ), Vector2( 8, 2 ), Vector2( 8, 3 ), Vector2( 8, 4 ), Vector2( 7, 4 ), Vector2( 6, 4 ), Vector2( 5, 4 ), Vector2( 4, 4 ), Vector2( 4, 5 ), Vector2( 3, 5 ), Vector2( 3, 6 ), Vector2( 2, 6 ), Vector2( 1, 6 ), Vector2( 0, 6 ), Vector2( -1, 6 ), Vector2( -2, 6 ), Vector2( -3, 6 ), Vector2( -3, 7 ) ]
+unique_path = [ Vector2( -5, 6 ), Vector2( -4, 6 ), Vector2( -3, 6 ), Vector2( -3, 5 ), Vector2( -3, 4 ), Vector2( -4, 4 ), Vector2( -5, 4 ), Vector2( -5, 3 ), Vector2( -6, 3 ), Vector2( -6, 2 ), Vector2( -6, 1 ), Vector2( -5, 1 ), Vector2( -4, 1 ), Vector2( -4, 0 ), Vector2( -3, 0 ), Vector2( -3, -1 ), Vector2( -2, -1 ), Vector2( -1, -1 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 1, 1 ), Vector2( 1, 2 ), Vector2( 2, 2 ), Vector2( 3, 2 ), Vector2( 4, 2 ), Vector2( 5, 2 ), Vector2( 5, 1 ), Vector2( 5, 0 ), Vector2( 5, -1 ), Vector2( 5, -2 ), Vector2( 5, -3 ), Vector2( 4, -3 ), Vector2( 4, -4 ), Vector2( 4, -5 ), Vector2( 4, -6 ), Vector2( 4, -7 ), Vector2( 3, -7 ), Vector2( 2, -7 ), Vector2( 2, -6 ), Vector2( 1, -6 ), Vector2( 0, -6 ), Vector2( 0, -5 ), Vector2( 0, -4 ), Vector2( 0, -3 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -1150 )
+position = Vector2( -2200, 115 )
 z_index = 1
 frames = SubResource( 28 )
 script = ExtResource( 6 )
@@ -208,6 +208,6 @@ __meta__ = {
 }
 
 [node name="Last" type="Sprite" parent="."]
-position = Vector2( -2000, 460 )
+position = Vector2( 600, -345 )
 z_index = 1
 texture = ExtResource( 7 )

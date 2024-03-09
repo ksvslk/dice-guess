@@ -1,10 +1,10 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://WinDialog.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
-[ext_resource path="res://levels/Level1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://levels/Template.tscn" type="PackedScene" id=5]
 [ext_resource path="res://dieGrab1.wav" type="AudioStream" id=6]
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
@@ -24,6 +24,7 @@
 [ext_resource path="res://smiley.png" type="Texture" id=22]
 [ext_resource path="res://Leaderboard.gd" type="Script" id=23]
 [ext_resource path="res://PlayerScoreUpdate.tscn" type="PackedScene" id=24]
+[ext_resource path="res://icons/quit.png" type="Texture" id=25]
 
 [sub_resource type="StyleBoxFlat" id=97]
 bg_color = Color( 0, 0, 0, 1 )
@@ -210,26 +211,28 @@ margin_left = 32.0
 margin_top = 8.0
 margin_right = -32.0
 margin_bottom = -8.0
+grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TopBar"]
 margin_right = 1856.0
-margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="StateIcon" type="TextureRect" parent="TopBar/HBoxContainer"]
-margin_right = 1032.0
+visible = false
+margin_right = 1856.0
 margin_bottom = 100.0
 mouse_filter = 2
 size_flags_horizontal = 3
 texture = ExtResource( 19 )
 
 [node name="PlayerScoreUpdate" parent="TopBar/HBoxContainer" instance=ExtResource( 24 )]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
 margin_left = 1036.0
 margin_right = 1856.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -300,7 +303,7 @@ alignment = 1
 margin_top = 25.0
 margin_right = 52.0
 margin_bottom = 125.0
-focus_previous = NodePath("../Help")
+focus_previous = NodePath("../HelpQuit/Help")
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture_normal = ExtResource( 20 )
@@ -389,11 +392,11 @@ texture_focused = SubResource( 104 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 1353.0
-margin_right = 1403.0
+margin_left = 1454.0
+margin_right = 1504.0
 margin_bottom = 150.0
-size_flags_horizontal = 6
-size_flags_vertical = 6
+size_flags_horizontal = 10
+size_flags_vertical = 10
 
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_right = 50.0
@@ -429,12 +432,17 @@ custom_styles/normal = SubResource( 87 )
 icon = ExtResource( 13 )
 align = 0
 
-[node name="Help" type="Button" parent="Menu/HBoxContainer"]
-margin_left = 1737.0
-margin_top = 38.0
-margin_right = 1787.0
-margin_bottom = 111.0
-focus_next = NodePath("../StartFocus")
+[node name="HelpQuit" type="VBoxContainer" parent="Menu/HBoxContainer"]
+margin_left = 1675.0
+margin_right = 1725.0
+margin_bottom = 150.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Help" type="Button" parent="Menu/HBoxContainer/HelpQuit"]
+margin_right = 50.0
+margin_bottom = 73.0
+focus_next = NodePath("../../StartFocus")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -447,6 +455,30 @@ custom_styles/focus = SubResource( 105 )
 custom_styles/disabled = SubResource( 118 )
 custom_styles/normal = SubResource( 118 )
 icon = ExtResource( 16 )
+flat = true
+align = 0
+icon_align = 1
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Quit" type="Button" parent="Menu/HBoxContainer/HelpQuit"]
+margin_top = 77.0
+margin_right = 50.0
+margin_bottom = 150.0
+focus_next = NodePath("../../StartFocus")
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.5
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 91 )
+custom_styles/hover = SubResource( 118 )
+custom_styles/pressed = SubResource( 118 )
+custom_styles/focus = SubResource( 105 )
+custom_styles/disabled = SubResource( 118 )
+custom_styles/normal = SubResource( 118 )
+icon = ExtResource( 25 )
 flat = true
 align = 0
 icon_align = 1
@@ -778,7 +810,8 @@ __meta__ = {
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/6" to="." method="_on_6_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/LevelNr" to="." method="_on_LevelNr_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/VBoxContainer/Score" to="." method="_on_Score_pressed"]
-[connection signal="pressed" from="Menu/HBoxContainer/Help" to="." method="_on_Help_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/HelpQuit/Help" to="." method="_on_Help_pressed"]
+[connection signal="pressed" from="Menu/HBoxContainer/HelpQuit/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="visibility_changed" from="Tutorial" to="." method="_on_Tutorial_visibility_changed"]
 [connection signal="gui_input" from="Tutorial/MarginContainer/VBoxContainer/ContinueButton" to="Tutorial" method="_on_ContinueButton_gui_input"]
 [connection signal="visibility_changed" from="WinDialog" to="." method="_on_WinDialog_visibility_changed"]

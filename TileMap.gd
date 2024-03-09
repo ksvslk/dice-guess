@@ -6,7 +6,8 @@ onready var dice = $Dice
 var start_pos = Vector2(2,0)
 export(Array) var unique_path = []
 var length = 2
-
+var minimum_scale = 0.35
+var allowed_cells_count = 768
 
 func _ready():
 	#for j in range(1,101):
@@ -15,16 +16,18 @@ func _ready():
 	#	get_parent().get_parent().get_parent().generated_levels.push_back(game.unique_path)
 	return
 	var path_length = 2
-	for i in range(0, 556):
+	for i in range(0, 1000):
 		var level_nr = i + 1
-		var walls_count = int(max(1, level_nr/1.5))
+		#var walls_count = int(max(1, level_nr * 10))
+		allowed_cells_count -= 1
 		path_length = get_level_path_length(level_nr)
-		generate_new_level(level_nr, walls_count, path_length)
+		generate_new_level(level_nr, allowed_cells_count, path_length)
 		create_new_scene(level_nr)
 		scale.x = 1
 		scale.y = 1
 		
 		
+
 func _center_the_tilemap() -> void:
 	var min_x = INF
 	var max_x = -INF
@@ -83,7 +86,6 @@ func get_level_path_length(level:int) -> int:
 
 
 func create_new_scene(scene_nr:int):
-	resize_scene()
 	var scene_name = "Level"+str(scene_nr)
 	var new_scene = PackedScene.new()
 	var root_node = duplicate()
@@ -105,7 +107,9 @@ func set_random_dice_side_up():
 
 func generate_new_level(level:int, walls_count:int, path_length:int):
 	var parent = get_parent().get_parent()
-	while parent.generated_levels.find(unique_path) != -1:
+	while parent.generated_levels.find(unique_path) != -1 || scale.x < minimum_scale:
+		scale.x = 1
+		scale.y = 1
 		unique_path.clear()
 		clear()
 		start_pos = Vector2(0, 0)
@@ -129,6 +133,8 @@ func generate_new_level(level:int, walls_count:int, path_length:int):
 		set_cellv(unique_path[unique_path.size() - 1], 2)
 		_center_the_tilemap()
 		reset_level()
+		resize_scene()
+		
 	parent.generated_levels.push_back(unique_path.duplicate())
 
 

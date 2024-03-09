@@ -182,7 +182,7 @@ animations = [ {
 
 [node name="Level71" type="TileMap"]
 position = Vector2( 960, 450 )
-scale = Vector2( 0.390001, 0.390001 )
+scale = Vector2( 0.360001, 0.360001 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 400, 230 )
@@ -191,15 +191,15 @@ cell_tile_origin = 1
 cell_y_sort = true
 centered_textures = true
 format = 1
-tile_data = PoolIntArray( 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 2, 0, 131067, 1, 0, 131068, 0, 0, 131069, 0, 0, 131070, 0, 0 )
+tile_data = PoolIntArray( -3, 0, 0, -2, 0, 0, -1, 0, 0, 65533, 2, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 262147, 1, 0 )
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
-unique_path = [ Vector2( -5, 1 ), Vector2( -4, 1 ), Vector2( -3, 1 ), Vector2( -2, 1 ), Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ), Vector2( 4, 0 ), Vector2( 5, 0 ), Vector2( 6, 0 ) ]
+unique_path = [ Vector2( 3, 4 ), Vector2( 3, 3 ), Vector2( 3, 2 ), Vector2( 3, 1 ), Vector2( 3, 0 ), Vector2( 2, 0 ), Vector2( 1, 0 ), Vector2( 0, 0 ), Vector2( -1, 0 ), Vector2( -1, -1 ), Vector2( -2, -1 ), Vector2( -3, -1 ), Vector2( -3, 0 ) ]
 
 [node name="Dice" type="AnimatedSprite" parent="."]
-position = Vector2( -1200, -460 )
+position = Vector2( -200, 805 )
 z_index = 1
 frames = SubResource( 28 )
 script = ExtResource( 6 )
@@ -208,6 +208,6 @@ __meta__ = {
 }
 
 [node name="Last" type="Sprite" parent="."]
-position = Vector2( 1200, 690 )
+position = Vector2( -600, -345 )
 z_index = 1
 texture = ExtResource( 7 )

@@ -3,7 +3,7 @@ extends Node
 onready var _config := ConfigFile.new()
 
 const _path: String = "user://data.cfg"
-const _total_levels_plus_one := 556 # each level has its own section: "1", "2" etc.
+const _total_levels_plus_one := 445 # each level has its own section: "1", "2" etc.
 var current_level := "-1"
 
 const all_level_packs_id = "all_level_packs"
@@ -62,7 +62,7 @@ func load_next_level(nr: int = -1, from_level_select: bool = false) -> int:
 		next_level_nr = nr
 	var is_next_purchased = is_next_level_purchased(next_level_nr)
 	
-	if next_level_nr == 201:
+	if next_level_nr == _total_levels_plus_one:
 		return 2
 	if !is_next_purchased:
 		return 1

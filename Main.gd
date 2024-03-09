@@ -37,7 +37,7 @@ var generated_levels = [[]]
 
 
 func _assert_levels_correctness():
-	for j in range(1,201):
+	for j in range(1,445):
 		var scene_path = "res://levels/Level" + str(j) +".tscn"
 		var game = load(scene_path).instance() as TileMap
 		assert(game.get_used_cells().size() == game.unique_path.size())
@@ -57,11 +57,11 @@ func _assert_levels_correctness():
 		assert(count_of_end_points == 1)
 		assert(count_of_regular_points == (game.unique_path.size() - count_of_end_points - count_of_start_points))
 		game.queue_free()
+	print("Levels correct.")
 
 
-	
+
 func _ready():
-	
 	if Data.get_tutorial_shown() == 0:
 		tutorial.visible = true
 
@@ -140,13 +140,11 @@ func _set_move_pause(length:int) -> void:
 
 
 func _hide_tutorial():
-	return
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = false
 
 
 func _show_tutorial():
-	return
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = true
 		
@@ -224,6 +222,8 @@ func _update_score_label() -> void:
 
 func _input(event):
 	if event is InputEvent && not animating:
+		if event.is_action_pressed("debug_switch"):
+			load_next_level()
 		if event.is_action_pressed("ui_cancel"):
 			_exit_menu()
 		if event.is_action_pressed("ui_accept"):
@@ -403,3 +403,7 @@ func _exit_menu():
 	tutorial.visible = false
 	_enable_focus_for_dices()
 	
+
+
+func _on_Quit_pressed():
+	get_tree().quit()
