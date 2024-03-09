@@ -15,7 +15,8 @@ const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
 onready var tile_map = $MarginContainer/Level
-onready var state_icon = $MarginContainer/StateIcon
+onready var state_icon = $TopBar/HBoxContainer/StateIcon
+
 onready var level_parent = $MarginContainer
 
 onready var level_scroll_container = $LevelScrollContainer
@@ -23,7 +24,7 @@ onready var level_scroller = $LevelScrollContainer/LevelScroller
 onready var win_dialog = $WinDialog
 onready var request_review = $RequestReview
 onready var grid_container = $Menu/HBoxContainer/GridContainer
-
+onready var player_score_update = $TopBar/HBoxContainer/PlayerScoreUpdate
 
 var game_over = false
 var animating = false
@@ -58,7 +59,9 @@ func _assert_levels_correctness():
 		game.queue_free()
 
 
+	
 func _ready():
+	
 	if Data.get_tutorial_shown() == 0:
 		tutorial.visible = true
 
@@ -67,6 +70,7 @@ func _ready():
 	Data.load_latest_level()
 	_switch_level_scene()
 	start_focus.call_deferred("grab_focus")
+
 
 func switch_level(index):
 	level_scroll_container.visible = false
@@ -190,7 +194,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 		correct.play()
 		win = true
 		Data.set_best_score()
-		GPack.submit_score()
+		Steam.submit_score()
 		state_icon.visible = true
 		state_icon.texture = load("res://icons/forward.png")
 	else:
