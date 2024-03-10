@@ -61,8 +61,8 @@ func _input(event):
 			var focus_owner = get_focus_owner()
 			var focus_index = get_children().find(focus_owner)
 			var new_focus_index = (focus_index + 20) - 5
-			if new_focus_index > 554:
-				new_focus_index = 554
+			if new_focus_index > 443:
+				new_focus_index = 443
 			var new_focus = get_child(new_focus_index)
 			if new_focus:
 				new_focus.grab_focus()

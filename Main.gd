@@ -22,7 +22,6 @@ onready var level_parent = $MarginContainer
 onready var level_scroll_container = $LevelScrollContainer
 onready var level_scroller = $LevelScrollContainer/LevelScroller
 onready var win_dialog = $WinDialog
-onready var request_review = $RequestReview
 onready var grid_container = $Menu/HBoxContainer/GridContainer
 onready var player_score_update = $TopBar/HBoxContainer/PlayerScoreUpdate
 
@@ -95,8 +94,6 @@ func load_next_level(lv:int = -1):
 			_update_score_label()
 			return
 	_switch_level_scene()
-	if OS.get_name() == "iOS" && int(Data.current_level) == 11:
-		request_review.show()
 
 
 func _switch_level_scene():
@@ -107,7 +104,7 @@ func _switch_level_scene():
 	parent_node.add_child(new_node)
 	current_node.queue_free()
 	tile_map = new_node
-	level_nr.text = "Level " + str(Data.current_level)
+	level_nr.text = tr("level") + " " + str(Data.current_level)
 	# DATA BASE
 	_update_score_label()
 	tile_map.set_random_dice_side_up()
@@ -193,6 +190,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 		win = true
 		Data.set_best_score()
 		Steam.submit_score()
+		Steam.set_achievement(int(Data.current_level))
 		state_icon.visible = true
 		state_icon.texture = load("res://icons/forward.png")
 	else:
@@ -325,19 +323,6 @@ func _on_Help_pressed():
 	tutorial.visible = true
 
 
-func _on_Score_pressed():
-	GPack.show_leaderboard()
-
-
-func _on_No_pressed():
-	request_review.hide()
-
-
-func _on_Yes_pressed():
-	request_review.hide()
-	OS.shell_open("https://apps.apple.com/app/dice-guess/id6478107812")
-
-
 func _on_LevelScrollContainer_visibility_changed():
 	if level_scroll_container.visible:
 		_disable_focus_for_dices()
@@ -376,21 +361,8 @@ func _on_WinDialog_visibility_changed():
 		level_parent.visible = true
 		grid_container.modulate.a = 1
 		start_focus.modulate.a = 1
-		
 
 
-func _on_RequestReview_visibility_changed():
-	if request_review.visible:
-		_disable_focus_for_dices()
-		level_parent.visible = false
-		grid_container.modulate.a = 0.5
-		start_focus.modulate.a = 0.5
-	else:
-		_enable_focus_for_dices()
-		level_parent.visible = true
-		grid_container.modulate.a = 1
-		start_focus.modulate.a = 1
-		
 
 func _exit_menu():
 	level_parent.visible = true
@@ -399,7 +371,6 @@ func _exit_menu():
 	level_scroll_container.visible = false
 	level_scroller.visible = false
 	win_dialog.visible = false
-	request_review.visible = false
 	tutorial.visible = false
 	_enable_focus_for_dices()
 	

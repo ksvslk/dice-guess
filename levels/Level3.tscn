@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://platform_350.png" type="Texture" id=1]
 [ext_resource path="res://TileMap.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://empty.png" type="Texture" id=7]
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://arrow2.png" type="Texture" id=9]
+[ext_resource path="res://font/Main.tres" type="DynamicFont" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "platform_350.png 0"
@@ -220,15 +221,14 @@ texture = ExtResource( 7 )
 [node name="Blinker" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="Blinker"]
-margin_left = -829.0
+margin_left = -998.0
 margin_top = -239.0
-margin_right = -369.0
-margin_bottom = -53.0
-custom_fonts/font = SubResource( 53 )
-text = "Remember,
-opposite sides
-add up to 7."
+margin_right = -401.0
+margin_bottom = -15.0
+custom_fonts/font = ExtResource( 10 )
+text = "opposite_sides"
 align = 2
+autowrap = true
 
 [node name="Label2" type="Label" parent="Blinker"]
 modulate = Color( 1, 0, 0.572549, 1 )
