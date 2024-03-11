@@ -14,6 +14,10 @@ func _ready():
 		button.level_is_unlocked = level_purchased
 		button.button_text = str(index + 1)
 		button.disabled = !level_purchased
+		if level_purchased:
+			button.focus_mode = FOCUS_ALL
+		else:
+			button.focus_mode = FOCUS_NONE
 		add_child(button)
 		button.connect("pressed", main, "switch_level", [index + 1])
 	update_current_level_color()
@@ -41,7 +45,10 @@ func _set_level_buttons_state():
 		level_button_l.disabled = !level_purchased
 		if int(Data.current_level) == index + 1:
 			level_button_l.call_deferred("grab_focus")
-			
+		if level_purchased:
+			level_button_l.focus_mode = FOCUS_ALL
+		else:
+			level_button_l.focus_mode = FOCUS_NONE
 
 func _input(event):
 	if level_scroll_container.visible:

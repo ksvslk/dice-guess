@@ -169,6 +169,7 @@ func _show_controller_tutorial():
 
 
 func _animate_to_end(guess:int, button:TextureButton):
+	print("_animate_to_end")
 	_disable_focus_for_dices()
 	GPack.perform_haptic_feedback(C.tap_vibration)
 	_hide_tutorial()
@@ -211,8 +212,9 @@ func _animate_to_end(guess:int, button:TextureButton):
 		correct.play()
 		win = true
 		Data.set_best_score()
-		Steam.submit_score()
-		Steam.set_achievement(int(Data.current_level))
+		Data.unlock_next_level()
+		GSteam.submit_score()
+		GSteam.set_achievement(int(Data.current_level))
 		state_icon.visible = true
 		state_icon.texture = load("res://icons/forward.png")
 	else:
@@ -242,30 +244,35 @@ func _update_score_label() -> void:
 
 func _input(event):
 	if event is InputEvent && not animating:
-		if event.is_action_pressed("ui_cancel"):
+		if event.is_action_pressed("debug_switch"):
+			load_next_level()
+		elif event.is_action_pressed("ui_cancel"):
 			_exit_menu()
-		if event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel") || (event is InputEventScreenTouch && event.is_pressed()):
+		elif event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel") || (event is InputEventScreenTouch && event.is_pressed()):
 			if game_over:
 				_reset_level()
-		if event.is_action_pressed("ui_focus_next") || event.is_action_pressed("ui_focus_prev"):
+			elif win_dialog.visible:
+				yield(get_tree().create_timer(0.5), "timeout")
+				win_dialog.hide()
+		elif event.is_action_pressed("ui_focus_next") || event.is_action_pressed("ui_focus_prev"):
 			select.play()
-		if event is InputEventJoypadButton:
+		elif event is InputEventJoypadButton:
 			if _is_x_pressed(event):
 				if game_over:
 					_reset_level()
-		if event.is_action_pressed("ui_left") || event.is_action_pressed("ui_right") || event.is_action_pressed("ui_down") || event.is_action_pressed("ui_up"):
+		elif event.is_action_pressed("ui_left") || event.is_action_pressed("ui_right") || event.is_action_pressed("ui_down") || event.is_action_pressed("ui_up"):
 			select.play()
-		if event.is_action_pressed("nr_1"):
+		elif event.is_action_pressed("nr_1"):
 			_on_1_pressed()
-		if event.is_action_pressed("nr_2"):
+		elif event.is_action_pressed("nr_2"):
 			_on_2_pressed()
-		if event.is_action_pressed("nr_3"):
+		elif event.is_action_pressed("nr_3"):
 			_on_3_pressed()
-		if event.is_action_pressed("nr_4"):
+		elif event.is_action_pressed("nr_4"):
 			_on_4_pressed()
-		if event.is_action_pressed("nr_5"):
+		elif event.is_action_pressed("nr_5"):
 			_on_5_pressed()
-		if event.is_action_pressed("nr_6"):
+		elif event.is_action_pressed("nr_6"):
 			_on_6_pressed()
 
 
@@ -308,7 +315,6 @@ func _reset_partially():
 	score_label.modulate = Color.white
 	game_over = false
 	win = false
-	one.call_deferred("grab_focus")
 	_enable_focus_for_dices()
 
 
@@ -398,7 +404,6 @@ func _exit_menu():
 	tutorial.visible = false
 	_enable_focus_for_dices()
 	
-
 
 func _on_Quit_pressed():
 	get_tree().quit()

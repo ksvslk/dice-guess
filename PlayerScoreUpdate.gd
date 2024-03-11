@@ -6,11 +6,11 @@ onready var label = $Score
 
 func _ready():
 	modulate.a = 0
-	Steam.connect("score_uploaded", self, "animate_score")
+	GSteam.connect("score_uploaded", self, "animate_score")
 	
 
 func _exit_tree():
-	Steam.disconnect("score_uploaded", self, "animate_score")
+	GSteam.disconnect("score_uploaded", self, "animate_score")
 
 
 func animate_score(this_score:Dictionary) -> void:
