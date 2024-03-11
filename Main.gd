@@ -8,7 +8,6 @@ onready var correct = $Correct
 onready var wrong = $Wrong
 onready var next_level = $NextLevel
 onready var select = $Select
-onready var start_focus = $Menu/HBoxContainer/StartFocus
 
 var move_pause = 0.05
 const last_move_pause = 0.5
@@ -24,6 +23,14 @@ onready var level_scroller = $LevelScrollContainer/LevelScroller
 onready var win_dialog = $WinDialog
 onready var grid_container = $Menu/HBoxContainer/GridContainer
 onready var player_score_update = $TopBar/HBoxContainer/PlayerScoreUpdate
+
+onready var one = $"Menu/HBoxContainer/GridContainer/1"
+onready var two = $"Menu/HBoxContainer/GridContainer/2"
+onready var three = $"Menu/HBoxContainer/GridContainer/3"
+onready var four = $"Menu/HBoxContainer/GridContainer/4"
+onready var five = $"Menu/HBoxContainer/GridContainer/5"
+onready var six = $"Menu/HBoxContainer/GridContainer/6"
+
 
 var game_over = false
 var animating = false
@@ -68,8 +75,9 @@ func _ready():
 
 	Data.load_latest_level()
 	_switch_level_scene()
-	start_focus.call_deferred("grab_focus")
-
+	
+	one.call_deferred("grab_focus")
+	_show_controller_tutorial()
 
 func switch_level(index):
 	level_scroll_container.visible = false
@@ -94,6 +102,7 @@ func load_next_level(lv:int = -1):
 			_update_score_label()
 			return
 	_switch_level_scene()
+	_show_controller_tutorial()
 
 
 func _switch_level_scene():
@@ -144,8 +153,15 @@ func _hide_tutorial():
 func _show_tutorial():
 	if Data.current_level == "1" || Data.current_level == "2" || Data.current_level == "3":
 		tile_map.get_node("Blinker").visible = true
-		
-		
+
+
+func _show_controller_tutorial():
+	if Data.current_level == "1":
+		$ControllerTutorial.visible = true
+	else:
+		$ControllerTutorial.visible = false
+
+
 func _animate_to_end(guess:int, button:TextureButton):
 	_disable_focus_for_dices()
 	GPack.perform_haptic_feedback(C.tap_vibration)
@@ -224,7 +240,7 @@ func _input(event):
 			load_next_level()
 		if event.is_action_pressed("ui_cancel"):
 			_exit_menu()
-		if event.is_action_pressed("ui_accept"):
+		if event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel"):
 			if game_over:
 				_reset_level()
 		if event.is_action_pressed("ui_focus_next") || event.is_action_pressed("ui_focus_prev"):
@@ -233,6 +249,8 @@ func _input(event):
 			if _is_x_pressed(event):
 				if game_over:
 					_reset_level()
+		if event.is_action_pressed("ui_left") || event.is_action_pressed("ui_right") || event.is_action_pressed("ui_down") || event.is_action_pressed("ui_up"):
+			select.play()
 
 
 func _is_x_pressed(event:InputEventJoypadButton):
@@ -265,7 +283,7 @@ func _enable_focus_for_dices():
 		for c in grid_container.get_children():
 			c.modulate = Color.white
 			c.enabled_focus_mode = Control.FOCUS_ALL
-		start_focus.call_deferred("grab_focus")
+		one.call_deferred("grab_focus")
 		
 
 func _reset_partially():
@@ -274,7 +292,7 @@ func _reset_partially():
 	score_label.modulate = Color.white
 	game_over = false
 	win = false
-	start_focus.call_deferred("grab_focus")
+	one.call_deferred("grab_focus")
 	_enable_focus_for_dices()
 
 
@@ -328,12 +346,10 @@ func _on_LevelScrollContainer_visibility_changed():
 		_disable_focus_for_dices()
 		level_parent.visible = false
 		grid_container.modulate.a = 0.5
-		start_focus.modulate.a = 0.5
 	else:
 		_enable_focus_for_dices()
 		level_parent.visible = true
 		grid_container.modulate.a = 1
-		start_focus.modulate.a = 1
 
 
 func _on_Tutorial_visibility_changed():
@@ -341,13 +357,11 @@ func _on_Tutorial_visibility_changed():
 		_disable_focus_for_dices()
 		level_parent.visible = false
 		grid_container.modulate.a = 0.5
-		start_focus.modulate.a = 0.5
 		$Tutorial/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 	else:
 		_enable_focus_for_dices()
 		level_parent.visible = true
 		grid_container.modulate.a = 1
-		start_focus.modulate.a = 1
 
 
 func _on_WinDialog_visibility_changed():
@@ -355,19 +369,16 @@ func _on_WinDialog_visibility_changed():
 		_disable_focus_for_dices()
 		level_parent.visible = false
 		grid_container.modulate.a = 0.5
-		start_focus.modulate.a = 0.5
 	else:
 		_enable_focus_for_dices()
 		level_parent.visible = true
 		grid_container.modulate.a = 1
-		start_focus.modulate.a = 1
 
 
 
 func _exit_menu():
 	level_parent.visible = true
 	grid_container.modulate.a = 1
-	start_focus.modulate.a = 1
 	level_scroll_container.visible = false
 	level_scroller.visible = false
 	win_dialog.visible = false

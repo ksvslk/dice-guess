@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://WinDialog.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -9,7 +9,9 @@
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
 [ext_resource path="res://sound/select.wav" type="AudioStream" id=9]
+[ext_resource path="res://addons/controller_icons/assets/key/enter_alt.png" type="Texture" id=10]
 [ext_resource path="res://PopupPanel.gd" type="Script" id=11]
+[ext_resource path="res://addons/controller_icons/objects/Button.gd" type="Script" id=12]
 [ext_resource path="res://icons/leaderboard.png" type="Texture" id=13]
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://FlashingControl.gd" type="Script" id=15]
@@ -17,12 +19,29 @@
 [ext_resource path="res://GridContainer.gd" type="Script" id=17]
 [ext_resource path="res://icons/levelselect.png" type="Texture" id=18]
 [ext_resource path="res://icons/forward.png" type="Texture" id=19]
-[ext_resource path="res://icons/arrow.png" type="Texture" id=20]
-[ext_resource path="res://icons/arrow_focus.png" type="Texture" id=21]
+[ext_resource path="res://addons/controller_icons/assets/mouse/simple.png" type="Texture" id=20]
+[ext_resource path="res://custom_mouse.gd" type="Script" id=21]
 [ext_resource path="res://smiley.png" type="Texture" id=22]
+[ext_resource path="res://addons/controller_icons/assets/key/tab.png" type="Texture" id=23]
 [ext_resource path="res://PlayerScoreUpdate.tscn" type="PackedScene" id=24]
 [ext_resource path="res://icons/quit.png" type="Texture" id=25]
 [ext_resource path="res://font/Main.tres" type="DynamicFont" id=26]
+[ext_resource path="res://addons/controller_icons/assets/key/esc.png" type="Texture" id=27]
+[ext_resource path="res://font/NotoSansSC-Black.ttf" type="DynamicFontData" id=28]
+[ext_resource path="res://font/NotoSansKR-Black.ttf" type="DynamicFontData" id=29]
+[ext_resource path="res://font/NotoSansJP-Black.ttf" type="DynamicFontData" id=30]
+[ext_resource path="res://font/NotoSansArabic-Black.ttf" type="DynamicFontData" id=31]
+[ext_resource path="res://font/NotoSans-Black.ttf" type="DynamicFontData" id=32]
+[ext_resource path="res://font/NotoSerifThai-Black.ttf" type="DynamicFontData" id=33]
+
+[sub_resource type="DynamicFont" id=119]
+size = 35
+font_data = ExtResource( 32 )
+fallback/0 = ExtResource( 31 )
+fallback/1 = ExtResource( 28 )
+fallback/2 = ExtResource( 30 )
+fallback/3 = ExtResource( 29 )
+fallback/4 = ExtResource( 33 )
 
 [sub_resource type="StyleBoxFlat" id=97]
 bg_color = Color( 0, 0, 0, 1 )
@@ -173,6 +192,85 @@ corner_radius_bottom_left = 16
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
 
+[node name="ControllerTutorial" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 32.0
+margin_top = -389.0
+margin_right = 385.0
+margin_bottom = 236.0
+
+[node name="NextHint" type="Button" parent="ControllerTutorial"]
+margin_right = 353.0
+margin_bottom = 106.0
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "next"
+icon = ExtResource( 23 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 12 )
+path = "ui_focus_next"
+
+[node name="PrevHint" type="Button" parent="ControllerTutorial"]
+margin_top = 110.0
+margin_right = 353.0
+margin_bottom = 216.0
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "previous"
+icon = ExtResource( 23 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 12 )
+path = "ui_focus_prev"
+
+[node name="ConfirmHint" type="Button" parent="ControllerTutorial"]
+margin_top = 220.0
+margin_right = 353.0
+margin_bottom = 326.0
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "confirm"
+icon = ExtResource( 10 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 12 )
+path = "ui_accept"
+
+[node name="BackHint" type="Button" parent="ControllerTutorial"]
+margin_top = 330.0
+margin_right = 353.0
+margin_bottom = 436.0
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "back"
+icon = ExtResource( 27 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 12 )
+path = "ui_cancel"
+
+[node name="MouseHint" type="Button" parent="ControllerTutorial"]
+margin_top = 440.0
+margin_right = 353.0
+margin_bottom = 546.0
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "or"
+icon = ExtResource( 20 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
 [node name="TopBar" type="MarginContainer" parent="."]
 anchor_right = 1.0
 margin_left = 32.0
@@ -188,8 +286,8 @@ size_flags_vertical = 3
 
 [node name="StateIcon" type="TextureRect" parent="TopBar/HBoxContainer"]
 visible = false
-margin_right = 1856.0
-margin_bottom = 100.0
+margin_right = 1413.0
+margin_bottom = 106.0
 mouse_filter = 2
 size_flags_horizontal = 3
 texture = ExtResource( 19 )
@@ -197,8 +295,10 @@ texture = ExtResource( 19 )
 [node name="PlayerScoreUpdate" parent="TopBar/HBoxContainer" instance=ExtResource( 24 )]
 visible = false
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 1036.0
+margin_left = 1209.0
+margin_top = 3.0
 margin_right = 1856.0
+margin_bottom = 103.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 0.5
@@ -224,7 +324,7 @@ anchor_bottom = 0.5
 margin_left = -940.0
 margin_top = -520.0
 margin_right = 940.0
-margin_bottom = 320.0
+margin_bottom = 354.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/bg = SubResource( 97 )
@@ -235,7 +335,7 @@ scroll_deadzone = 25
 [node name="LevelScroller" type="GridContainer" parent="LevelScrollContainer"]
 visible = false
 margin_right = 1880.0
-margin_bottom = 840.0
+margin_bottom = 874.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 32
@@ -266,20 +366,8 @@ size_flags_vertical = 3
 custom_constants/separation = 8
 alignment = 1
 
-[node name="StartFocus" type="TextureButton" parent="Menu/HBoxContainer"]
-margin_top = 25.0
-margin_right = 52.0
-margin_bottom = 125.0
-focus_previous = NodePath("../HelpQuit/Help")
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource( 20 )
-texture_focused = ExtResource( 21 )
-stretch_mode = 4
-
 [node name="GridContainer" type="GridContainer" parent="Menu/HBoxContainer"]
-margin_left = 60.0
-margin_right = 1120.0
+margin_right = 1060.0
 margin_bottom = 150.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -359,9 +447,9 @@ texture_focused = SubResource( 104 )
 expand = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 1454.0
+margin_left = 1424.0
 margin_top = 8.0
-margin_right = 1504.0
+margin_right = 1474.0
 margin_bottom = 150.0
 size_flags_horizontal = 10
 size_flags_vertical = 10
@@ -402,8 +490,8 @@ icon = ExtResource( 13 )
 align = 0
 
 [node name="HelpQuit" type="VBoxContainer" parent="Menu/HBoxContainer"]
-margin_left = 1675.0
-margin_right = 1725.0
+margin_left = 1660.0
+margin_right = 1710.0
 margin_bottom = 150.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -411,7 +499,6 @@ size_flags_vertical = 6
 [node name="Help" type="Button" parent="Menu/HBoxContainer/HelpQuit"]
 margin_right = 50.0
 margin_bottom = 73.0
-focus_next = NodePath("../../StartFocus")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -435,7 +522,6 @@ __meta__ = {
 margin_top = 77.0
 margin_right = 50.0
 margin_bottom = 150.0
-focus_next = NodePath("../../StartFocus")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -694,6 +780,7 @@ margin_left = 94.0
 margin_top = 155.0
 margin_right = 494.0
 margin_bottom = 555.0
+mouse_filter = 1
 size_flags_horizontal = 6
 size_flags_vertical = 6
 texture_normal = ExtResource( 22 )
@@ -720,5 +807,5 @@ autowrap = true
 [connection signal="pressed" from="Menu/HBoxContainer/HelpQuit/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="visibility_changed" from="Tutorial" to="." method="_on_Tutorial_visibility_changed"]
 [connection signal="gui_input" from="Tutorial/MarginContainer/VBoxContainer/ContinueButton" to="Tutorial" method="_on_ContinueButton_gui_input"]
+[connection signal="gui_input" from="WinDialog" to="WinDialog" method="_on_WinDialog_gui_input"]
 [connection signal="visibility_changed" from="WinDialog" to="." method="_on_WinDialog_visibility_changed"]
-[connection signal="pressed" from="WinDialog/VBoxContainer/TextureButton" to="WinDialog" method="_on_TextureButton_pressed"]

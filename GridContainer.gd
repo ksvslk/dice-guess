@@ -42,8 +42,6 @@ func _set_level_buttons_state():
 		level_button_l.disabled = !level_purchased
 		if int(Data.current_level) == index + 1:
 			level_button_l.call_deferred("grab_focus")
-			print("grab focus for: ", level_button_l.name)
-			print("grab focus for: ", index + 1)
 			
 
 func _input(event):
@@ -51,7 +49,7 @@ func _input(event):
 		if event.is_action_pressed("ui_up"):
 			var focus_owner = get_focus_owner()
 			var focus_index = get_children().find(focus_owner)
-			var new_focus_index = (focus_index - 20) + 5
+			var new_focus_index = (focus_index - 5) + 5
 			if new_focus_index < 0:
 				new_focus_index = 0
 			var new_focus = get_child(new_focus_index)
@@ -60,7 +58,7 @@ func _input(event):
 		elif event.is_action_pressed("ui_down"):
 			var focus_owner = get_focus_owner()
 			var focus_index = get_children().find(focus_owner)
-			var new_focus_index = (focus_index + 20) - 5
+			var new_focus_index = (focus_index + 5) - 5
 			if new_focus_index > 443:
 				new_focus_index = 443
 			var new_focus = get_child(new_focus_index)

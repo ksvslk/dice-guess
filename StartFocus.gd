@@ -1,0 +1,2 @@
+extends "res://FlashingControl.gd"
+
