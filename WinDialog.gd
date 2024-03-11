@@ -1,9 +1,9 @@
 extends PopupDialog
 
 
-func _on_WinDialog_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed:
+func _input(event):
+	if visible:
+		if event is InputEventMouseButton && event.pressed:
 			hide()
-	elif event.is_action_pressed("ui_accept"):
-		hide()
+		elif event.is_action_pressed("ui_accept"):
+			hide()

@@ -14,7 +14,7 @@ func _exit_tree():
 
 
 func animate_score(this_score:Dictionary) -> void:
-	if this_score["score_changed"] == 1:
+	if this_score["score_changed"] == 1 && this_score.has("new_rank") && this_score.has("prev_rank") && this_score.has("score"):
 		var new_score = this_score["score"]
 		var new_rank = this_score["new_rank"]
 		var prev_rank = this_score["prev_rank"]

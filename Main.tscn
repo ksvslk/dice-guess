@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://WinDialog.gd" type="Script" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -33,6 +33,12 @@
 [ext_resource path="res://font/NotoSansArabic-Black.ttf" type="DynamicFontData" id=31]
 [ext_resource path="res://font/NotoSans-Black.ttf" type="DynamicFontData" id=32]
 [ext_resource path="res://font/NotoSerifThai-Black.ttf" type="DynamicFontData" id=33]
+[ext_resource path="res://addons/controller_icons/assets/key/1.png" type="Texture" id=34]
+[ext_resource path="res://addons/controller_icons/assets/key/5.png" type="Texture" id=35]
+[ext_resource path="res://addons/controller_icons/assets/key/3.png" type="Texture" id=36]
+[ext_resource path="res://addons/controller_icons/assets/key/2.png" type="Texture" id=37]
+[ext_resource path="res://addons/controller_icons/assets/key/4.png" type="Texture" id=38]
+[ext_resource path="res://addons/controller_icons/assets/key/6.png" type="Texture" id=39]
 
 [sub_resource type="DynamicFont" id=119]
 size = 35
@@ -386,6 +392,17 @@ texture_normal = SubResource( 29 )
 texture_focused = SubResource( 100 )
 expand = true
 
+[node name="TextureRect" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/1"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 34 )
+stretch_mode = 4
+
 [node name="2" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 182.0
 margin_right = 332.0
@@ -397,6 +414,17 @@ size_flags_vertical = 6
 texture_normal = SubResource( 30 )
 texture_focused = SubResource( 98 )
 expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 37 )
+stretch_mode = 4
 
 [node name="3" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 364.0
@@ -410,6 +438,17 @@ texture_normal = SubResource( 31 )
 texture_focused = SubResource( 101 )
 expand = true
 
+[node name="TextureRect3" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/3"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 36 )
+stretch_mode = 4
+
 [node name="4" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 546.0
 margin_right = 696.0
@@ -421,6 +460,17 @@ size_flags_vertical = 6
 texture_normal = SubResource( 32 )
 texture_focused = SubResource( 102 )
 expand = true
+
+[node name="TextureRect4" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/4"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 38 )
+stretch_mode = 4
 
 [node name="5" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 728.0
@@ -434,6 +484,17 @@ texture_normal = SubResource( 33 )
 texture_focused = SubResource( 103 )
 expand = true
 
+[node name="TextureRect5" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/5"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 35 )
+stretch_mode = 4
+
 [node name="6" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 910.0
 margin_right = 1060.0
@@ -445,6 +506,17 @@ size_flags_vertical = 6
 texture_normal = SubResource( 34 )
 texture_focused = SubResource( 104 )
 expand = true
+
+[node name="TextureRect6" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/6"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -138.0
+margin_bottom = -138.0
+mouse_filter = 2
+size_flags_horizontal = 3
+texture = ExtResource( 39 )
+stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
 margin_left = 1424.0
@@ -754,6 +826,7 @@ margin_top = -446.5
 margin_right = 347.0
 margin_bottom = 446.5
 custom_styles/panel = SubResource( 94 )
+popup_exclusive = true
 script = ExtResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WinDialog"]
@@ -806,6 +879,4 @@ autowrap = true
 [connection signal="pressed" from="Menu/HBoxContainer/HelpQuit/Help" to="." method="_on_Help_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/HelpQuit/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="visibility_changed" from="Tutorial" to="." method="_on_Tutorial_visibility_changed"]
-[connection signal="gui_input" from="Tutorial/MarginContainer/VBoxContainer/ContinueButton" to="Tutorial" method="_on_ContinueButton_gui_input"]
-[connection signal="gui_input" from="WinDialog" to="WinDialog" method="_on_WinDialog_gui_input"]
 [connection signal="visibility_changed" from="WinDialog" to="." method="_on_WinDialog_visibility_changed"]

@@ -5,9 +5,9 @@ func _on_Start_pressed():
 	visible = false
 
 
-func _on_ContinueButton_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.pressed:
+func _input(event):
+	if visible:
+		if event is InputEventMouseButton && event.pressed:
 			_on_Start_pressed()
-	elif event.is_action_pressed("ui_accept"):
-		_on_Start_pressed()
+		elif event.is_action_pressed("ui_accept"):
+			_on_Start_pressed()

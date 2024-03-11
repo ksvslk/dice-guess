@@ -79,12 +79,14 @@ func _ready():
 	one.call_deferred("grab_focus")
 	_show_controller_tutorial()
 
+
 func switch_level(index):
-	level_scroll_container.visible = false
-	level_scroller.visible = false
-	state_icon.visible = false
-	load_next_level(index)
-	_reset_partially()
+	if not animating:
+		level_scroll_container.visible = false
+		level_scroller.visible = false
+		state_icon.visible = false
+		load_next_level(index)
+		_reset_partially()
 
 
 func load_next_level(lv:int = -1):
@@ -158,8 +160,12 @@ func _show_tutorial():
 func _show_controller_tutorial():
 	if Data.current_level == "1":
 		$ControllerTutorial.visible = true
+		for c in [one, two, three, four, five, six]:
+			c.get_child(0).visible = true
 	else:
 		$ControllerTutorial.visible = false
+		for c in [one, two, three, four, five, six]:
+			c.get_child(0).visible = false
 
 
 func _animate_to_end(guess:int, button:TextureButton):
@@ -168,7 +174,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 	_hide_tutorial()
 	dice_current_position = tile_map.unique_path[0]
 	animating = true
-	button.modulate = Color.aqua
+	button.modulate = Color.gold
 	var path = tile_map.unique_path
 	_set_move_pause(path.size())
 	var first = true
@@ -236,11 +242,9 @@ func _update_score_label() -> void:
 
 func _input(event):
 	if event is InputEvent && not animating:
-		if event.is_action_pressed("debug_switch"):
-			load_next_level()
 		if event.is_action_pressed("ui_cancel"):
 			_exit_menu()
-		if event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel"):
+		if event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel") || (event is InputEventScreenTouch && event.is_pressed()):
 			if game_over:
 				_reset_level()
 		if event.is_action_pressed("ui_focus_next") || event.is_action_pressed("ui_focus_prev"):
@@ -251,6 +255,18 @@ func _input(event):
 					_reset_level()
 		if event.is_action_pressed("ui_left") || event.is_action_pressed("ui_right") || event.is_action_pressed("ui_down") || event.is_action_pressed("ui_up"):
 			select.play()
+		if event.is_action_pressed("nr_1"):
+			_on_1_pressed()
+		if event.is_action_pressed("nr_2"):
+			_on_2_pressed()
+		if event.is_action_pressed("nr_3"):
+			_on_3_pressed()
+		if event.is_action_pressed("nr_4"):
+			_on_4_pressed()
+		if event.is_action_pressed("nr_5"):
+			_on_5_pressed()
+		if event.is_action_pressed("nr_6"):
+			_on_6_pressed()
 
 
 func _is_x_pressed(event:InputEventJoypadButton):
@@ -304,32 +320,32 @@ func _set_dice_position(next_position:Vector2):
 
 func _on_1_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(1, $Menu/HBoxContainer/GridContainer/"1")
+		_animate_to_end(1, one)
 
 
 func _on_2_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(2, $Menu/HBoxContainer/GridContainer/"2")
+		_animate_to_end(2, two)
 
 
 func _on_3_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(3, $Menu/HBoxContainer/GridContainer/"3")
+		_animate_to_end(3, three)
 
 
 func _on_4_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(4, $Menu/HBoxContainer/GridContainer/"4")
+		_animate_to_end(4, four)
 
 
 func _on_5_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(5, $Menu/HBoxContainer/GridContainer/"5")
+		_animate_to_end(5, five)
 
 
 func _on_6_pressed():
 	if not animating && not game_over && level_parent.visible:
-		_animate_to_end(6, $Menu/HBoxContainer/GridContainer/"6")
+		_animate_to_end(6, six)
 
 
 func _on_LevelNr_pressed():
@@ -338,6 +354,7 @@ func _on_LevelNr_pressed():
 
 
 func _on_Help_pressed():
+	_exit_menu()
 	tutorial.visible = true
 
 
@@ -359,9 +376,7 @@ func _on_Tutorial_visibility_changed():
 		grid_container.modulate.a = 0.5
 		$Tutorial/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 	else:
-		_enable_focus_for_dices()
-		level_parent.visible = true
-		grid_container.modulate.a = 1
+		_exit_menu()
 
 
 func _on_WinDialog_visibility_changed():
@@ -369,11 +384,9 @@ func _on_WinDialog_visibility_changed():
 		_disable_focus_for_dices()
 		level_parent.visible = false
 		grid_container.modulate.a = 0.5
+		$WinDialog/VBoxContainer/TextureButton.grab_focus()
 	else:
-		_enable_focus_for_dices()
-		level_parent.visible = true
-		grid_container.modulate.a = 1
-
+		_exit_menu()
 
 
 func _exit_menu():

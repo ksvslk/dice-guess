@@ -5,7 +5,6 @@ onready var main = $"../.."
 onready var level_scroll_container = $".." as ScrollContainer
 
 func _ready():
-	print("ready")
 	var levels = Data.get_levels()
 	for index in range(0, levels.size()):
 		var button = level_button.instance()

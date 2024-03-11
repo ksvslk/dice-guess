@@ -60,10 +60,11 @@ func load_next_level(nr: int = -1, from_level_select: bool = false) -> int:
 		next_level_nr = int(current_level) + 1
 	else:
 		next_level_nr = nr
-	var is_next_purchased = is_next_level_purchased(next_level_nr)
 	
 	if next_level_nr == _total_levels_plus_one:
 		return 2
+		
+	var is_next_purchased = is_next_level_purchased(next_level_nr)
 	if !is_next_purchased:
 		return 1
 		
@@ -178,8 +179,10 @@ func _set_initial_launch_settings():
 		_config.set_value(String(i), C.best_score_key, 0)
 		_config.set_value(String(i), C.current_score_key, i * 100)
 		_config.set_value(String(i), C.level_completed_once_key, 0)
-		_config.set_value(String(i), C.level_purchased_key, 1)
-
+		if i == 1:
+			_config.set_value(String(i), C.level_purchased_key, 1)
+		else:
+			_config.set_value(String(i), C.level_purchased_key, 0)
 	_config.save(_path)
 
 
