@@ -1,6 +1,6 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=63 format=2]
 
-[ext_resource path="res://addons/controller_icons/assets/key/d.png" type="Texture" id=1]
+[ext_resource path="res://addons/controller_icons/assets/mouse/left.png" type="Texture" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
 [ext_resource path="res://diceThrow4.wav" type="AudioStream" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Ding.wav" type="AudioStream" id=7]
 [ext_resource path="res://dieShuffle3.wav" type="AudioStream" id=8]
 [ext_resource path="res://sound/select.wav" type="AudioStream" id=9]
-[ext_resource path="res://addons/controller_icons/assets/key/enter_alt.png" type="Texture" id=10]
 [ext_resource path="res://PopupPanel.gd" type="Script" id=11]
 [ext_resource path="res://addons/controller_icons/objects/Button.gd" type="Script" id=12]
 [ext_resource path="res://icons/leaderboard.png" type="Texture" id=13]
@@ -21,23 +20,15 @@
 [ext_resource path="res://addons/controller_icons/assets/mouse/simple.png" type="Texture" id=20]
 [ext_resource path="res://custom_mouse.gd" type="Script" id=21]
 [ext_resource path="res://smiley.png" type="Texture" id=22]
-[ext_resource path="res://addons/controller_icons/assets/key/a.png" type="Texture" id=23]
 [ext_resource path="res://PlayerScoreUpdate.tscn" type="PackedScene" id=24]
 [ext_resource path="res://icons/quit.png" type="Texture" id=25]
 [ext_resource path="res://font/Main.tres" type="DynamicFont" id=26]
-[ext_resource path="res://addons/controller_icons/assets/key/esc.png" type="Texture" id=27]
 [ext_resource path="res://font/NotoSansSC-Black.ttf" type="DynamicFontData" id=28]
 [ext_resource path="res://font/NotoSansKR-Black.ttf" type="DynamicFontData" id=29]
 [ext_resource path="res://font/NotoSansJP-Black.ttf" type="DynamicFontData" id=30]
 [ext_resource path="res://font/NotoSansArabic-Black.ttf" type="DynamicFontData" id=31]
 [ext_resource path="res://font/NotoSans-Black.ttf" type="DynamicFontData" id=32]
 [ext_resource path="res://font/NotoSerifThai-Black.ttf" type="DynamicFontData" id=33]
-[ext_resource path="res://addons/controller_icons/assets/key/1.png" type="Texture" id=34]
-[ext_resource path="res://addons/controller_icons/assets/key/5.png" type="Texture" id=35]
-[ext_resource path="res://addons/controller_icons/assets/key/3.png" type="Texture" id=36]
-[ext_resource path="res://addons/controller_icons/assets/key/2.png" type="Texture" id=37]
-[ext_resource path="res://addons/controller_icons/assets/key/4.png" type="Texture" id=38]
-[ext_resource path="res://addons/controller_icons/assets/key/6.png" type="Texture" id=39]
 [ext_resource path="res://addons/controller_icons/objects/TextureRect.gd" type="Script" id=40]
 
 [sub_resource type="DynamicFont" id=119]
@@ -199,6 +190,7 @@ corner_radius_bottom_left = 16
 script = ExtResource( 4 )
 
 [node name="ControllerTutorial" type="VBoxContainer" parent="."]
+visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 32.0
@@ -208,11 +200,10 @@ margin_bottom = 236.0
 
 [node name="ConfirmHint" type="Button" parent="ControllerTutorial"]
 margin_right = 353.0
-margin_bottom = 106.0
+margin_bottom = 55.0
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
 text = "confirm"
-icon = ExtResource( 10 )
 flat = true
 align = 2
 icon_align = 2
@@ -220,13 +211,12 @@ script = ExtResource( 12 )
 path = "ui_accept"
 
 [node name="NextHint" type="Button" parent="ControllerTutorial"]
-margin_top = 110.0
+margin_top = 59.0
 margin_right = 353.0
-margin_bottom = 216.0
+margin_bottom = 114.0
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
 text = "next"
-icon = ExtResource( 1 )
 flat = true
 align = 2
 icon_align = 2
@@ -234,13 +224,12 @@ script = ExtResource( 12 )
 path = "ui_focus_next"
 
 [node name="PrevHint" type="Button" parent="ControllerTutorial"]
-margin_top = 220.0
+margin_top = 118.0
 margin_right = 353.0
-margin_bottom = 326.0
+margin_bottom = 173.0
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
 text = "previous"
-icon = ExtResource( 23 )
 flat = true
 align = 2
 icon_align = 2
@@ -248,13 +237,12 @@ script = ExtResource( 12 )
 path = "ui_focus_prev"
 
 [node name="BackHint" type="Button" parent="ControllerTutorial"]
-margin_top = 330.0
+margin_top = 177.0
 margin_right = 353.0
-margin_bottom = 436.0
+margin_bottom = 232.0
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
 text = "back"
-icon = ExtResource( 27 )
 flat = true
 align = 2
 icon_align = 2
@@ -262,9 +250,9 @@ script = ExtResource( 12 )
 path = "ui_cancel"
 
 [node name="MouseHint" type="Button" parent="ControllerTutorial"]
-margin_top = 440.0
+margin_top = 236.0
 margin_right = 353.0
-margin_bottom = 546.0
+margin_bottom = 342.0
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
 text = "or"
@@ -290,10 +278,26 @@ margin_right = 1856.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="StateIcon" type="TextureRect" parent="TopBar/HBoxContainer"]
+[node name="NextOrRestart" type="HBoxContainer" parent="TopBar/HBoxContainer"]
 visible = false
-margin_right = 1413.0
-margin_bottom = 106.0
+margin_right = 184.0
+margin_bottom = 100.0
+custom_constants/separation = 16
+
+[node name="ControllerTextureRect" type="TextureRect" parent="TopBar/HBoxContainer/NextOrRestart"]
+margin_right = 80.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 80, 80 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 40 )
+path = "ui_accept"
+max_width = 80
+
+[node name="StateIcon" type="TextureRect" parent="TopBar/HBoxContainer/NextOrRestart"]
+margin_left = 84.0
+margin_right = 184.0
+margin_bottom = 100.0
 mouse_filter = 2
 size_flags_horizontal = 3
 texture = ExtResource( 19 )
@@ -364,17 +368,6 @@ texture_normal = SubResource( 29 )
 texture_focused = SubResource( 100 )
 expand = true
 
-[node name="TextureRect" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/1"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 34 )
-stretch_mode = 4
-
 [node name="2" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 182.0
 margin_right = 332.0
@@ -386,17 +379,6 @@ size_flags_vertical = 6
 texture_normal = SubResource( 30 )
 texture_focused = SubResource( 98 )
 expand = true
-
-[node name="TextureRect2" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/2"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 37 )
-stretch_mode = 4
 
 [node name="3" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 364.0
@@ -410,17 +392,6 @@ texture_normal = SubResource( 31 )
 texture_focused = SubResource( 101 )
 expand = true
 
-[node name="TextureRect3" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/3"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 36 )
-stretch_mode = 4
-
 [node name="4" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 546.0
 margin_right = 696.0
@@ -432,17 +403,6 @@ size_flags_vertical = 6
 texture_normal = SubResource( 32 )
 texture_focused = SubResource( 102 )
 expand = true
-
-[node name="TextureRect4" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/4"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 38 )
-stretch_mode = 4
 
 [node name="5" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 728.0
@@ -456,17 +416,6 @@ texture_normal = SubResource( 33 )
 texture_focused = SubResource( 103 )
 expand = true
 
-[node name="TextureRect5" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/5"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 35 )
-stretch_mode = 4
-
 [node name="6" type="TextureButton" parent="Menu/HBoxContainer/GridContainer"]
 margin_left = 910.0
 margin_right = 1060.0
@@ -478,17 +427,6 @@ size_flags_vertical = 6
 texture_normal = SubResource( 34 )
 texture_focused = SubResource( 104 )
 expand = true
-
-[node name="TextureRect6" type="TextureRect" parent="Menu/HBoxContainer/GridContainer/6"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -138.0
-margin_bottom = -138.0
-mouse_filter = 2
-size_flags_horizontal = 3
-texture = ExtResource( 39 )
-stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/HBoxContainer"]
 margin_left = 1424.0
@@ -656,7 +594,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
 margin_right = 1856.0
-margin_bottom = 191.0
+margin_bottom = 178.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -668,9 +606,9 @@ autowrap = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
 margin_left = 697.0
-margin_top = 223.0
+margin_top = 210.0
 margin_right = 1158.0
-margin_bottom = 681.0
+margin_bottom = 668.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 alignment = 1
@@ -792,9 +730,9 @@ text = "=  7"
 align = 1
 
 [node name="GuessTheNumber" type="Label" parent="Tutorial/MarginContainer/VBoxContainer"]
-margin_top = 713.0
+margin_top = 700.0
 margin_right = 1856.0
-margin_bottom = 904.0
+margin_bottom = 878.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -804,17 +742,42 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="ContinueButton" type="TextureRect" parent="Tutorial/MarginContainer/VBoxContainer"]
-margin_top = 936.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
+margin_top = 910.0
 margin_right = 1856.0
-margin_bottom = 1016.0
+margin_bottom = 1018.0
+size_flags_vertical = 3
+custom_constants/separation = 16
+alignment = 1
+
+[node name="ContinueButton" type="TextureRect" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 808.0
+margin_right = 888.0
+margin_bottom = 108.0
 rect_min_size = Vector2( 80, 80 )
-texture = ExtResource( 10 )
+size_flags_vertical = 3
 expand = true
 stretch_mode = 6
 script = ExtResource( 40 )
 path = "ui_accept"
 max_width = 80
+
+[node name="Mouse" type="Button" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 904.0
+margin_right = 1047.0
+margin_bottom = 108.0
+size_flags_vertical = 3
+custom_constants/hseparation = 16
+custom_fonts/font = SubResource( 119 )
+text = "/"
+icon = ExtResource( 1 )
+flat = true
+align = 2
+icon_align = 2
+script = ExtResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="WinDialog" type="PopupDialog" parent="."]
 anchor_left = 0.5

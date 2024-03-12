@@ -14,7 +14,8 @@ const last_move_pause = 0.5
 onready var level_nr = $Menu/HBoxContainer/VBoxContainer/LevelNr
 onready var tutorial = $Tutorial
 onready var tile_map = $MarginContainer/Level
-onready var state_icon = $TopBar/HBoxContainer/StateIcon
+onready var state_icon = $TopBar/HBoxContainer/NextOrRestart/StateIcon
+onready var next_or_restart = $TopBar/HBoxContainer/NextOrRestart
 
 onready var level_parent = $MarginContainer
 
@@ -75,16 +76,14 @@ func _ready():
 
 	Data.load_latest_level()
 	_switch_level_scene()
-	
 	one.call_deferred("grab_focus")
-	_show_controller_tutorial()
 
 
 func switch_level(index):
 	if not animating:
 		level_scroll_container.visible = false
 		level_scroller.visible = false
-		state_icon.visible = false
+		next_or_restart.visible = false
 		load_next_level(index)
 		_reset_partially()
 
@@ -104,7 +103,6 @@ func load_next_level(lv:int = -1):
 			_update_score_label()
 			return
 	_switch_level_scene()
-	_show_controller_tutorial()
 
 
 func _switch_level_scene():
@@ -120,7 +118,8 @@ func _switch_level_scene():
 	_update_score_label()
 	tile_map.set_random_dice_side_up()
 	level_scroller.update_current_level_color()
-
+	_show_controller_tutorial()
+	
 
 func double_blink_label_red():
 	var original_color = score_label.modulate
@@ -142,7 +141,6 @@ func double_blink_label_green():
 	tween.tween_property(score_label, "modulate", original_color, 0.5).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
 
 
-
 func _set_move_pause(length:int) -> void:
 	move_pause = sqrt(length) / length * 0.75
 
@@ -160,16 +158,16 @@ func _show_tutorial():
 func _show_controller_tutorial():
 	if Data.current_level == "1":
 		$ControllerTutorial.visible = true
-		for c in [one, two, three, four, five, six]:
-			c.get_child(0).visible = true
-	else:
+
+
+func _hide_controller_tutorial():
+	if Data.current_level == "1":
 		$ControllerTutorial.visible = false
-		for c in [one, two, three, four, five, six]:
-			c.get_child(0).visible = false
 
 
 func _animate_to_end(guess:int, button:TextureButton):
 	print("_animate_to_end")
+	_hide_controller_tutorial()
 	_disable_focus_for_dices()
 	GPack.perform_haptic_feedback(C.tap_vibration)
 	_hide_tutorial()
@@ -215,7 +213,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 		Data.unlock_next_level()
 		GSteam.submit_score()
 		GSteam.set_achievement(int(Data.current_level))
-		state_icon.visible = true
+		next_or_restart.visible = true
 		state_icon.texture = load("res://icons/forward.png")
 	else:
 		GPack.perform_haptic_feedback(C.fail_vibration)
@@ -225,7 +223,7 @@ func _animate_to_end(guess:int, button:TextureButton):
 		button.modulate = Color.red
 		_decrease_score_and_update_label()
 		wrong.play()
-		state_icon.visible = true
+		next_or_restart.visible = true
 		state_icon.texture = load("res://icons/restart.png")
 	animating = false
 	game_over = true
@@ -285,7 +283,7 @@ func _is_b_pressed(event:InputEventJoypadButton):
 
 
 func _reset_level():
-	state_icon.visible = false
+	next_or_restart.visible = false
 	restart.play()
 	if win:
 		next_level.play()
@@ -315,6 +313,7 @@ func _reset_partially():
 	score_label.modulate = Color.white
 	game_over = false
 	win = false
+	_show_controller_tutorial()
 	_enable_focus_for_dices()
 
 
@@ -380,7 +379,7 @@ func _on_Tutorial_visibility_changed():
 		_disable_focus_for_dices()
 		level_parent.visible = false
 		grid_container.modulate.a = 0.5
-		$Tutorial/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
+		$Tutorial/MarginContainer/VBoxContainer/HBoxContainer/ContinueButton.grab_focus()
 	else:
 		_exit_menu()
 
