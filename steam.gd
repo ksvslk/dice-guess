@@ -56,8 +56,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Get callbacks
 	Steam.run_callbacks()
-	
-
 
 
 func _on_leaderboard_find_result(handle: int, found: int) -> void:

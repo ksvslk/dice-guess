@@ -14,11 +14,11 @@ func _exit_tree():
 
 
 func animate_score(this_score:Dictionary) -> void:
-	if this_score["score_changed"] == 1 && this_score.has("new_rank") && this_score.has("prev_rank") && this_score.has("score"):
+	if this_score["score_changed"] == 1 && this_score.has("global_rank_new") && this_score.has("global_rank_prev") && this_score.has("score"):
 		var new_score = this_score["score"]
-		var new_rank = this_score["new_rank"]
-		var prev_rank = this_score["prev_rank"]
-		if new_rank && new_score && new_rank < prev_rank:
+		var new_rank = this_score["global_rank_new"]
+		var prev_rank = this_score["global_rank_prev"]
+		if new_rank && new_score && new_rank > prev_rank:
 			# Initially, everything is invisible
 			label.modulate.a = 0
 			arrows.modulate.a = 0

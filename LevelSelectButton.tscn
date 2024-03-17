@@ -4,17 +4,17 @@
 [ext_resource path="res://LevelSelectButton.gd" type="Script" id=2]
 [ext_resource path="res://icons/done.png" type="Texture" id=3]
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
-border_width_top = 10
-border_color = Color( 0.243137, 0.243137, 0.243137, 1 )
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0.490196, 0.792157, 1 )
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0, 0.490196, 0.792157, 1 )
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )
+border_width_top = 10
+border_color = Color( 0.243137, 0.243137, 0.243137, 1 )
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -32,7 +32,7 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 1 )
-custom_styles/hover = SubResource( 3 )
+custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 3 )
