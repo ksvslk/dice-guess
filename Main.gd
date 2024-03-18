@@ -8,6 +8,8 @@ onready var correct = $Correct
 onready var wrong = $Wrong
 onready var next_level = $NextLevel
 onready var select = $Select
+onready var backtrack = $BacktrackContainer/Backtrack
+onready var backtrack_container = $BacktrackContainer
 
 var move_pause = 0.05
 const last_move_pause = 0.5
@@ -38,6 +40,7 @@ onready var focus_arrow = $Menu/HBoxContainer/FocusArrow
 var game_over = false
 var animating = false
 var win = false
+var is_backtrack_hovered = false
 
 onready var score_label = $Menu/HBoxContainer/VBoxContainer/Score
 
@@ -72,10 +75,10 @@ var current_focus = null
 
 func _ready():
 	if Data.get_tutorial_shown() == 0:
+		level_parent.visible = false
 		tutorial.visible = true
 	get_viewport().connect("gui_focus_changed", self, "_on_focus_changed")
 	#_assert_levels_correctness()
-	
 	Data.load_latest_level()
 	_switch_level_scene()
 	focus_arrow.call_deferred("grab_focus")
@@ -87,6 +90,7 @@ func _on_focus_changed(new_focus):
 
 func switch_level(index):
 	if not animating:
+		get_tree().set_input_as_handled()
 		level_scroll_container.visible = false
 		level_scroller.visible = false
 		next_or_restart.visible = false
@@ -124,6 +128,7 @@ func _switch_level_scene():
 	tile_map.set_random_dice_side_up()
 	level_scroller.update_current_level_color()
 	_show_controller_tutorial()
+	
 	
 
 func double_blink_label_red():
@@ -166,8 +171,43 @@ func _show_controller_tutorial():
 
 
 func _hide_controller_tutorial():
-	if Data.current_level == "1":
-		$ControllerTutorial.visible = false
+	$ControllerTutorial.visible = false
+
+
+var current_dice_index = -1
+
+func _move_dice_back():
+	var previous_cell_index = max(0, current_dice_index - 1)
+	var previous_cell = tile_map.unique_path[previous_cell_index]
+	var direction_result = previous_cell - dice_current_position
+	current_dice_index = previous_cell_index
+	_move_dice(previous_cell, direction_result)
+
+
+func _move_dice_forward():
+	var next_cell_index = min(tile_map.unique_path.size() - 1, current_dice_index + 1)
+	var next_cell = tile_map.unique_path[next_cell_index]
+	var direction_result = next_cell - dice_current_position
+	current_dice_index = next_cell_index
+	_move_dice(next_cell, direction_result)
+
+
+func _move_dice(next_cell, direction_result):
+	print("Moving dice")
+	match direction_result:
+		Vector2(0,1): # RIGHT
+			tile_map.dice.move_right()
+			move_dice_random.play()
+		Vector2(0,-1): # LEFT
+			tile_map.dice.move_left()
+			move_dice_random.play()
+		Vector2(1,0): # UP
+			tile_map.dice.move_forward()
+			move_dice_random.play()
+		Vector2(-1,0): # DOWN
+			tile_map.dice.move_back()
+			move_dice_random.play()
+	_set_dice_position(next_cell)
 
 
 func _animate_to_end(guess:int, button:TextureButton):
@@ -232,8 +272,20 @@ func _animate_to_end(guess:int, button:TextureButton):
 		wrong.play()
 		next_or_restart.visible = true
 		state_icon.texture = load("res://icons/restart.png")
+		_set_up_backtracker()
+		_show_replay_hint()
 	animating = false
 	game_over = true
+
+
+func _show_replay_hint():
+	if Data.get_replay_shown() == 0:
+		$ReplayHint.visible = true
+		Data.set_replay_shown()
+
+
+func _hide_replay_hint():
+	$ReplayHint.visible = false
 
 
 func _decrease_score_and_update_label():
@@ -252,7 +304,11 @@ func _input(event):
 		if event.is_action_pressed("ui_cancel"):
 			_exit_menu()
 		elif event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel") || (event is InputEventScreenTouch && event.is_pressed()):
-			if game_over:
+			if event is InputEventScreenTouch and backtrack.get_global_rect().has_point(event.position) and not win:
+				is_backtrack_hovered = true
+			elif event is InputEventScreenTouch and not win:
+				is_backtrack_hovered = false
+			if game_over and !is_backtrack_hovered || game_over && event is InputEventKey:
 				_reset_level()
 		elif event.is_action_pressed("ui_focus_next") || event.is_action_pressed("ui_focus_prev"):
 			select.play()
@@ -286,6 +342,8 @@ func _is_b_pressed(event:InputEventJoypadButton):
 
 func _reset_level():
 	next_or_restart.visible = false
+	backtrack_container.visible = false
+	is_backtrack_hovered = false
 	restart.play()
 	if win:
 		next_level.play()
@@ -298,7 +356,8 @@ func _reset_level():
 
 func _disable_focus_for_dices():
 	for c in grid_container.get_children():
-		c.enabled_focus_mode = Control.FOCUS_NONE
+		c.release_focus()
+		c.focus_mode = Control.FOCUS_NONE
 		c.disabled = true
 	current_focus.release_focus()
 
@@ -307,8 +366,8 @@ func _enable_focus_for_dices():
 	current_focus.release_focus()
 	if not game_over:
 		for c in grid_container.get_children():
+			c.focus_mode = Control.FOCUS_ALL
 			c.modulate = Color.white
-			c.enabled_focus_mode = Control.FOCUS_ALL
 			c.disabled = false
 	focus_arrow.call_deferred("grab_focus")
 		
@@ -321,6 +380,8 @@ func _reset_partially():
 	win = false
 	_show_controller_tutorial()
 	_enable_focus_for_dices()
+	_hide_replay_hint()
+	_hide_controller_tutorial()
 
 
 func _set_dice_position(next_position:Vector2):
@@ -421,3 +482,38 @@ func _on_Options_visibility_changed():
 
 func _on_Tutorial_pressed():
 	tutorial.visible = true
+
+
+func _on_Backtrack_value_changed(value):
+	if game_over:
+		var index_value = value - 1
+		var moves  = abs(current_dice_index - index_value)
+		print("-----")
+		print("current level: ", Data.current_level)
+		print("current_dice_index:", current_dice_index)
+		print("moves:", moves)
+		print("-----")
+		
+		if index_value < current_dice_index:
+			for i in moves:
+				_move_dice_back()
+		elif index_value > current_dice_index:
+			for i in moves:
+				_move_dice_forward()
+			
+
+func _set_up_backtracker():
+	backtrack.max_value = tile_map.unique_path.size()
+	backtrack.tick_count = backtrack.max_value
+	current_dice_index = backtrack.max_value - 1
+	backtrack_container.visible = true
+	backtrack.value = backtrack.max_value
+	backtrack.grab_focus()
+
+
+func _on_Backtrack_mouse_entered():
+	is_backtrack_hovered = true
+
+
+func _on_Backtrack_mouse_exited():
+	is_backtrack_hovered = false

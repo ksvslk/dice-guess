@@ -1,7 +1,9 @@
 extends ColorRect
 
 func _on_Start_pressed():
-	Data.set_tutorial_shown()
+	if !Data.get_tutorial_shown():
+		Data.set_tutorial_shown()
+		get_parent().level_parent.visible = true
 	visible = false
 
 

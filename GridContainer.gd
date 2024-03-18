@@ -70,8 +70,6 @@ func _input(event):
 			var new_focus = get_child(new_focus_index)
 			if new_focus:
 				new_focus.grab_focus()
-			
-			
 
 
 func _set(property, value):

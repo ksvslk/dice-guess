@@ -17,6 +17,7 @@ func _ready():
 		_set_initial_launch_settings()
 	elif err != 0:
 		printerr("Could not load local data. ", err)
+	_set_more_settings()
 	
 
 ######################################
@@ -99,6 +100,16 @@ func set_best_score() -> void:
 	_config.save(_path)
 
 
+func get_replay_shown() -> int:
+	var value = _config.get_value(C.various_section, C.replay_shown_key)
+	return value
+
+
+func set_replay_shown() -> void:
+	_config.set_value(C.various_section, C.replay_shown_key, 1)
+	_config.save(_path)
+
+
 func get_tutorial_shown() -> int:
 	var value = _config.get_value(C.various_section, C.tutorial_shown_key)
 	return value
@@ -107,7 +118,23 @@ func get_tutorial_shown() -> int:
 func set_tutorial_shown() -> void:
 	_config.set_value(C.various_section, C.tutorial_shown_key, 1)
 	_config.save(_path)
+	
+	
+func set_volume(value:float) -> void:
+	_config.set_value(C.various_section, C.volume, value)
+	_config.save(_path)
 
+func get_volume() -> float:
+	var value = _config.get_value(C.various_section, C.volume)
+	return value
+
+func set_fullscreen(value:int) -> void:
+	_config.set_value(C.various_section, C.fullscreen, value)
+	_config.save(_path)
+
+func get_fullscreen() -> int:
+	var value = _config.get_value(C.various_section, C.fullscreen)
+	return value
 
 func get_levels() -> Dictionary:
 	var info = Dictionary()
@@ -122,6 +149,9 @@ func get_levels() -> Dictionary:
 func _set_initial_launch_settings():
 	_config.set_value(C.various_section, C.current_level_key, "1")
 	_config.set_value(C.various_section, C.tutorial_shown_key, 0)
+	_config.set_value(C.various_section, C.replay_shown_key, 0)
+	_config.set_value(C.various_section, C.volume, 1.0)
+	_config.set_value(C.various_section, C.fullscreen, 1)
 	
 	for i in range(1, _total_levels_plus_one):
 		_config.set_value(String(i), C.best_score_key, 0)
@@ -131,4 +161,14 @@ func _set_initial_launch_settings():
 			_config.set_value(String(i), C.unlocked, 1)
 		else:
 			_config.set_value(String(i), C.unlocked, 0)
+	_config.save(_path)
+	
+	
+func _set_more_settings():
+	if !_config.has_section_key(C.various_section, C.volume):
+		_config.set_value(C.various_section, C.volume, 1.0)
+	elif !_config.has_section_key(C.various_section, C.fullscreen):
+		_config.set_value(C.various_section, C.fullscreen, 1)
+	elif !_config.has_section_key(C.various_section, C.replay_shown_key):
+		_config.set_value(C.various_section, C.replay_shown_key, 0)
 	_config.save(_path)

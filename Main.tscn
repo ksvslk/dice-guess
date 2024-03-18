@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=82 format=2]
 
 [ext_resource path="res://addons/controller_icons/assets/mouse/left.png" type="Texture" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -14,11 +14,12 @@
 [ext_resource path="res://addons/controller_icons/objects/Button.gd" type="Script" id=12]
 [ext_resource path="res://icons/leaderboard.png" type="Texture" id=13]
 [ext_resource path="res://Gabarito-Bold.ttf" type="DynamicFontData" id=14]
-[ext_resource path="res://addons/controller_icons/assets/key/enter_alt.png" type="Texture" id=15]
+[ext_resource path="res://addons/controller_icons/assets/key/space.png" type="Texture" id=15]
 [ext_resource path="res://icons/question.png" type="Texture" id=16]
 [ext_resource path="res://GridContainer.gd" type="Script" id=17]
 [ext_resource path="res://icons/levelselect.png" type="Texture" id=18]
 [ext_resource path="res://icons/forward.png" type="Texture" id=19]
+[ext_resource path="res://icons/knob.png" type="Texture" id=20]
 [ext_resource path="res://custom_mouse.gd" type="Script" id=21]
 [ext_resource path="res://smiley.png" type="Texture" id=22]
 [ext_resource path="res://addons/controller_icons/assets/key/d.png" type="Texture" id=23]
@@ -45,6 +46,8 @@
 [ext_resource path="res://icons/smiley_gs.png" type="Texture" id=44]
 [ext_resource path="res://icons/arrow_focus.png" type="Texture" id=45]
 [ext_resource path="res://icons/arrow.png" type="Texture" id=46]
+[ext_resource path="res://icons/knob_gs.png" type="Texture" id=47]
+[ext_resource path="res://icons/tick.png" type="Texture" id=48]
 
 [sub_resource type="DynamicFont" id=119]
 size = 35
@@ -54,6 +57,10 @@ fallback/1 = ExtResource( 28 )
 fallback/2 = ExtResource( 30 )
 fallback/3 = ExtResource( 29 )
 fallback/4 = ExtResource( 33 )
+
+[sub_resource type="StyleBoxLine" id=121]
+color = Color( 0, 0.490196, 0.792157, 1 )
+thickness = 5
 
 [sub_resource type="StreamTexture" id=28]
 flags = 4
@@ -131,8 +138,8 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 expand_margin_left = 16.0
 expand_margin_right = 16.0
-expand_margin_top = 4.0
-expand_margin_bottom = 4.0
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
 
 [sub_resource type="StyleBoxEmpty" id=84]
 
@@ -324,6 +331,82 @@ __meta__ = {
 
 [node name="Level" parent="MarginContainer" instance=ExtResource( 5 )]
 
+[node name="ReplayHint" type="HBoxContainer" parent="."]
+visible = false
+anchor_top = 0.642
+anchor_right = 1.0
+anchor_bottom = 0.772
+margin_left = 32.0
+margin_top = -0.360046
+margin_right = -32.0
+margin_bottom = 0.23999
+alignment = 1
+
+[node name="ControllerTextureRect" type="TextureRect" parent="ReplayHint"]
+margin_right = 264.0
+margin_bottom = 141.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 27 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 40 )
+path = "ui_focus_prev"
+
+[node name="Label2" type="Label" parent="ReplayHint"]
+margin_left = 268.0
+margin_right = 1588.0
+margin_bottom = 141.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+custom_fonts/font = ExtResource( 26 )
+text = "analyze"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="ControllerTextureRect2" type="TextureRect" parent="ReplayHint"]
+margin_left = 1592.0
+margin_right = 1856.0
+margin_bottom = 141.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 40 )
+path = "ui_focus_next"
+
+[node name="BacktrackContainer" type="MarginContainer" parent="."]
+visible = false
+anchor_top = 0.74
+anchor_right = 1.0
+anchor_bottom = 0.829
+margin_top = -3.20001
+margin_bottom = -3.32007
+size_flags_horizontal = 11
+size_flags_vertical = 3
+custom_constants/margin_right = 32
+custom_constants/margin_left = 32
+
+[node name="Backtrack" type="HSlider" parent="BacktrackContainer"]
+margin_left = 32.0
+margin_right = 1888.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_icons/tick = ExtResource( 48 )
+custom_icons/grabber_highlight = ExtResource( 20 )
+custom_icons/grabber = ExtResource( 47 )
+custom_styles/grabber_area_highlight = SubResource( 121 )
+custom_styles/grabber_area = SubResource( 121 )
+min_value = 1.0
+value = 1.0
+ticks_on_borders = true
+
 [node name="Menu" type="MarginContainer" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
@@ -351,7 +434,6 @@ alignment = 1
 margin_top = 25.0
 margin_right = 52.0
 margin_bottom = 125.0
-focus_next = NodePath("../GridContainer/1")
 focus_previous = NodePath("../HelpQuit2/Help")
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -437,7 +519,6 @@ margin_left = 910.0
 margin_right = 1060.0
 margin_bottom = 150.0
 rect_min_size = Vector2( 150, 150 )
-focus_neighbour_right = NodePath("../../VBoxContainer/LevelNr")
 focus_next = NodePath("../../VBoxContainer/LevelNr")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 6
@@ -458,7 +539,6 @@ size_flags_vertical = 10
 [node name="LevelNr" type="Button" parent="Menu/HBoxContainer/VBoxContainer"]
 margin_right = 50.0
 margin_bottom = 69.0
-focus_neighbour_left = NodePath("../../GridContainer/6")
 focus_next = NodePath("../../HelpQuit2/Help")
 focus_previous = NodePath("../../GridContainer/6")
 mouse_default_cursor_shape = 2
@@ -581,13 +661,13 @@ margin_bottom = 378.0
 focus_previous = NodePath("../Quit")
 size_flags_horizontal = 5
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 91 )
+custom_fonts/font = ExtResource( 26 )
 custom_styles/hover = SubResource( 105 )
 custom_styles/pressed = SubResource( 118 )
 custom_styles/focus = SubResource( 105 )
 custom_styles/disabled = SubResource( 118 )
 custom_styles/normal = SubResource( 118 )
-text = "Back"
+text = "back"
 icon = ExtResource( 38 )
 align = 0
 icon_align = 2
@@ -621,7 +701,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 custom_icons/grabber_highlight = ExtResource( 34 )
 custom_icons/grabber = ExtResource( 44 )
-custom_styles/grabber_area_highlight = SubResource( 105 )
+custom_styles/grabber_area_highlight = SubResource( 121 )
 max_value = 1.0
 step = 0.05
 script = ExtResource( 41 )
@@ -646,13 +726,13 @@ mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
 size_flags_vertical = 4
 custom_constants/hseparation = 16
-custom_fonts/font = SubResource( 91 )
+custom_fonts/font = ExtResource( 26 )
 custom_styles/hover = SubResource( 105 )
 custom_styles/pressed = SubResource( 118 )
 custom_styles/focus = SubResource( 105 )
 custom_styles/disabled = SubResource( 118 )
 custom_styles/normal = SubResource( 118 )
-text = "Tutorial"
+text = "tutorial"
 icon = ExtResource( 16 )
 align = 0
 icon_align = 2
@@ -668,14 +748,14 @@ mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
 size_flags_vertical = 4
 custom_constants/hseparation = 16
-custom_fonts/font = SubResource( 91 )
+custom_fonts/font = ExtResource( 26 )
 custom_styles/hover = SubResource( 105 )
 custom_styles/pressed = SubResource( 118 )
 custom_styles/focus = SubResource( 105 )
 custom_styles/disabled = SubResource( 118 )
 custom_styles/normal = SubResource( 118 )
 toggle_mode = true
-text = "Full screen"
+text = "fullscreen"
 icon = ExtResource( 37 )
 align = 0
 icon_align = 2
@@ -693,13 +773,13 @@ mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
 size_flags_vertical = 4
 custom_constants/hseparation = 16
-custom_fonts/font = SubResource( 91 )
+custom_fonts/font = ExtResource( 26 )
 custom_styles/hover = SubResource( 105 )
 custom_styles/pressed = SubResource( 118 )
 custom_styles/focus = SubResource( 105 )
 custom_styles/disabled = SubResource( 118 )
 custom_styles/normal = SubResource( 118 )
-text = "Quit"
+text = "quit"
 icon = ExtResource( 25 )
 align = 0
 icon_align = 2
@@ -901,7 +981,7 @@ autowrap = true
 [node name="HBoxContainer" type="HBoxContainer" parent="Tutorial/MarginContainer/VBoxContainer"]
 margin_top = 910.0
 margin_right = 1856.0
-margin_bottom = 1018.0
+margin_bottom = 1016.0
 size_flags_vertical = 3
 custom_constants/separation = 16
 alignment = 1
@@ -909,7 +989,7 @@ alignment = 1
 [node name="ContinueButton" type="TextureRect" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 808.0
 margin_right = 888.0
-margin_bottom = 108.0
+margin_bottom = 106.0
 rect_min_size = Vector2( 80, 80 )
 size_flags_vertical = 3
 texture = ExtResource( 15 )
@@ -922,7 +1002,7 @@ max_width = 80
 [node name="Mouse" type="Button" parent="Tutorial/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 904.0
 margin_right = 1047.0
-margin_bottom = 108.0
+margin_bottom = 106.0
 size_flags_vertical = 3
 custom_constants/hseparation = 16
 custom_fonts/font = SubResource( 119 )
@@ -985,6 +1065,9 @@ text = "win2"
 align = 1
 autowrap = true
 
+[connection signal="mouse_entered" from="BacktrackContainer/Backtrack" to="." method="_on_Backtrack_mouse_entered"]
+[connection signal="mouse_exited" from="BacktrackContainer/Backtrack" to="." method="_on_Backtrack_mouse_exited"]
+[connection signal="value_changed" from="BacktrackContainer/Backtrack" to="." method="_on_Backtrack_value_changed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/1" to="." method="_on_1_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/2" to="." method="_on_2_pressed"]
 [connection signal="pressed" from="Menu/HBoxContainer/GridContainer/3" to="." method="_on_3_pressed"]

@@ -10,11 +10,16 @@ const various_section: String = "various"
 # Initial value is 1, UPDATE on level change
 const current_level_key: String = "progress"
 const tutorial_shown_key: String = "tutorial_shown"
+const replay_shown_key: String = "replay_shown"
 # Initial value is 0, UPDATE on level complete
 const current_score_key: String = "current_score"
 const best_score_key: String = "best_score"
 const level_completed_once_key: String = "level_completed_once"
 const level_purchased_key: String = "level_purchased"
+
+
+const volume: String = "volume"
+const fullscreen: String = "fullscreen"
 
 const unlocked: String = "unlocked"
 
