@@ -129,7 +129,6 @@ func _switch_level_scene():
 	level_scroller.update_current_level_color()
 	_show_controller_tutorial()
 	
-	
 
 func double_blink_label_red():
 	var original_color = score_label.modulate
@@ -151,8 +150,8 @@ func double_blink_label_green():
 	tween.tween_property(score_label, "modulate", original_color, 0.5).set_delay(0).set_trans(Tween.TRANS_ELASTIC)
 
 
-func _set_move_pause(length:int) -> void:
-	move_pause = sqrt(length) / length * 0.75
+func _set_move_pause(length:int, factor:float) -> void:
+	move_pause = sqrt(length) / length * 0.75 / factor
 
 
 func _hide_tutorial():
@@ -168,6 +167,8 @@ func _show_tutorial():
 func _show_controller_tutorial():
 	if Data.current_level == "1":
 		$ControllerTutorial.visible = true
+	else:
+		_hide_controller_tutorial()
 
 
 func _hide_controller_tutorial():
@@ -193,7 +194,6 @@ func _move_dice_forward():
 
 
 func _move_dice(next_cell, direction_result):
-	print("Moving dice")
 	match direction_result:
 		Vector2(0,1): # RIGHT
 			tile_map.dice.move_right()
@@ -219,14 +219,15 @@ func _animate_to_end(guess:int, button:TextureButton):
 	animating = true
 	button.modulate = Color.gold
 	var path = tile_map.unique_path
-	_set_move_pause(path.size())
+	var move_pause_factor = Data.get_move_pause_factor()
+	_set_move_pause(path.size(), move_pause_factor)
 	var first = true
 	var last_three = path.size() - 2
 	var path_size = path.size()
 	for cell_index in path_size:
 		var cell = path[cell_index]
 		if cell_index >= last_three:
-			move_pause = last_move_pause
+			move_pause = last_move_pause / move_pause_factor
 		if not first:
 			yield(get_tree().create_timer(move_pause), "timeout")
 		first = false
@@ -301,7 +302,7 @@ func _update_score_label() -> void:
 
 func _input(event):
 	if event is InputEvent && not animating:
-		if event.is_action_pressed("ui_cancel"):
+		if event.is_action_pressed("ui_cancel") and not level_parent.visible:
 			_exit_menu()
 		elif event.is_action_pressed("ui_accept") || event.is_action_pressed("ui_cancel") || (event is InputEventScreenTouch && event.is_pressed()):
 			if event is InputEventScreenTouch and backtrack.get_global_rect().has_point(event.position) and not win:
@@ -359,11 +360,13 @@ func _disable_focus_for_dices():
 		c.release_focus()
 		c.focus_mode = Control.FOCUS_NONE
 		c.disabled = true
-	current_focus.release_focus()
+	if current_focus:
+		current_focus.release_focus()
 
 
 func _enable_focus_for_dices():
-	current_focus.release_focus()
+	if current_focus:
+		current_focus.release_focus()
 	if not game_over:
 		for c in grid_container.get_children():
 			c.focus_mode = Control.FOCUS_ALL
@@ -378,10 +381,8 @@ func _reset_partially():
 	score_label.modulate = Color.white
 	game_over = false
 	win = false
-	_show_controller_tutorial()
 	_enable_focus_for_dices()
 	_hide_replay_hint()
-	_hide_controller_tutorial()
 
 
 func _set_dice_position(next_position:Vector2):
@@ -469,7 +470,6 @@ func _exit_menu():
 	_enable_focus_for_dices()
 	
 
-
 func _on_Options_visibility_changed():
 	if options.visible:
 		_disable_focus_for_dices()
@@ -488,12 +488,6 @@ func _on_Backtrack_value_changed(value):
 	if game_over:
 		var index_value = value - 1
 		var moves  = abs(current_dice_index - index_value)
-		print("-----")
-		print("current level: ", Data.current_level)
-		print("current_dice_index:", current_dice_index)
-		print("moves:", moves)
-		print("-----")
-		
 		if index_value < current_dice_index:
 			for i in moves:
 				_move_dice_back()

@@ -27,14 +27,5 @@ func _on_HSlider_value_changed(value: float):
 	select.play()
 
 
-func _on_VolumeDown_pressed():
-	value = max(0, value - step)
-
-
-func _on_VolumeUp_pressed():
-	value = min(1, value + step)
-
-
-
 func _on_HSlider_mouse_exited():
 	release_focus()

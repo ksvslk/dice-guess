@@ -14,7 +14,7 @@ const achievements_dict = {7:"ACH_COMPLETE_7", 42:"ACH_COMPLETE_42", 101:"ACH_CO
 signal score_uploaded
 const leaderboard_name = "Default"
 var leaderboard_handle = null
-
+var is_steam_ok = false
 
 # Set your game's Steam app IP
 func _init() -> void:
@@ -27,6 +27,7 @@ func _ready() -> void:
 	var initialize_response: Dictionary = Steam.steamInit(false)
 	print("[STEAM] Did Steam initialize?: %s" % initialize_response)
 	if initialize_response['status'] != 1:
+		is_steam_ok = false
 		# If Steam fails to start up, shut down the app
 		print("[STEAM] Failed to initialize Steam: %s" % initialize_response['verbal'])
 		return
@@ -48,6 +49,7 @@ func _ready() -> void:
 
 	# Is the game running on the Steam Deck
 	#is_on_steam_deck = Steam.isSteamRunningOnSteamDeck()
+	is_steam_ok = true
 	Steam.connect("leaderboard_find_result", self, "_on_leaderboard_find_result")
 	Steam.connect("leaderboard_score_uploaded", self, "_on_leaderboard_score_uploaded")
 	Steam.findLeaderboard(leaderboard_name)
@@ -67,8 +69,9 @@ func _on_leaderboard_find_result(handle: int, found: int) -> void:
 
 
 func submit_score():
-	var score = Data.get_total_score()
-	Steam.uploadLeaderboardScore(score, 1, [], leaderboard_handle)
+	if is_steam_ok and leaderboard_handle:
+		var score = Data.get_total_score()
+		Steam.uploadLeaderboardScore(score, 1, [], leaderboard_handle)
 
 
 func _on_leaderboard_score_uploaded(success: int, this_handle: int, this_score: Dictionary) -> void:
@@ -81,7 +84,7 @@ func _on_leaderboard_score_uploaded(success: int, this_handle: int, this_score: 
 	
 
 func set_achievement(level_nr: int) -> void:
-	if achievements_dict.has(level_nr):
+	if is_steam_ok and achievements_dict.has(level_nr):
 		var achievement = achievements_dict.get(level_nr)
 		var WAS_SET: bool = Steam.setAchievement(achievement)
 		print("Steam achievement "+str(achievement)+" set: "+str(WAS_SET))

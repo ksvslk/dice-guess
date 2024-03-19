@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://addons/controller_icons/assets/mouse/left.png" type="Texture" id=1]
 [ext_resource path="res://dum.wav" type="AudioStream" id=2]
@@ -48,6 +48,9 @@
 [ext_resource path="res://icons/arrow.png" type="Texture" id=46]
 [ext_resource path="res://icons/knob_gs.png" type="Texture" id=47]
 [ext_resource path="res://icons/tick.png" type="Texture" id=48]
+[ext_resource path="res://HSliderSpeed.gd" type="Script" id=49]
+[ext_resource path="res://icons/car.png" type="Texture" id=50]
+[ext_resource path="res://icons/snail.png" type="Texture" id=51]
 
 [sub_resource type="DynamicFont" id=119]
 size = 35
@@ -395,7 +398,7 @@ custom_constants/margin_left = 32
 [node name="Backtrack" type="HSlider" parent="BacktrackContainer"]
 margin_left = 32.0
 margin_right = 1888.0
-margin_bottom = 96.0
+margin_bottom = 95.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_icons/tick = ExtResource( 48 )
@@ -655,9 +658,9 @@ custom_constants/separation = 32
 alignment = 1
 
 [node name="BackButton" type="Button" parent="Options/OptionsVBox"]
-margin_top = 305.0
+margin_top = 272.0
 margin_right = 1052.0
-margin_bottom = 378.0
+margin_bottom = 341.0
 focus_previous = NodePath("../Quit")
 size_flags_horizontal = 5
 size_flags_vertical = 4
@@ -676,9 +679,9 @@ script = ExtResource( 12 )
 path = "ui_cancel"
 
 [node name="Volume" type="HBoxContainer" parent="Options/OptionsVBox"]
-margin_top = 410.0
+margin_top = 373.0
 margin_right = 1052.0
-margin_bottom = 460.0
+margin_bottom = 423.0
 custom_constants/separation = 32
 alignment = 1
 
@@ -718,10 +721,55 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Tutorial" type="Button" parent="Options/OptionsVBox"]
-margin_top = 492.0
+[node name="DiceSpeed" type="HBoxContainer" parent="Options/OptionsVBox"]
+margin_top = 455.0
 margin_right = 1052.0
-margin_bottom = 565.0
+margin_bottom = 505.0
+custom_constants/separation = 32
+alignment = 1
+
+[node name="SpeedDown" type="TextureRect" parent="Options/OptionsVBox/DiceSpeed"]
+margin_right = 50.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 51 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HSliderSpeed" type="HSlider" parent="Options/OptionsVBox/DiceSpeed"]
+margin_left = 82.0
+margin_right = 970.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_icons/grabber_highlight = ExtResource( 34 )
+custom_icons/grabber = ExtResource( 44 )
+custom_styles/grabber_area_highlight = SubResource( 121 )
+min_value = 0.25
+max_value = 1.75
+step = 0.25
+value = 0.25
+script = ExtResource( 49 )
+
+[node name="SpeedUp" type="TextureRect" parent="Options/OptionsVBox/DiceSpeed"]
+margin_left = 1002.0
+margin_right = 1052.0
+margin_bottom = 50.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 50 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Tutorial" type="Button" parent="Options/OptionsVBox"]
+margin_top = 537.0
+margin_right = 1052.0
+margin_bottom = 606.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
 size_flags_vertical = 4
@@ -741,9 +789,9 @@ __meta__ = {
 }
 
 [node name="FullScreen" type="Button" parent="Options/OptionsVBox"]
-margin_top = 597.0
+margin_top = 638.0
 margin_right = 1052.0
-margin_bottom = 670.0
+margin_bottom = 707.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
 size_flags_vertical = 4
@@ -765,9 +813,9 @@ __meta__ = {
 }
 
 [node name="Quit" type="Button" parent="Options/OptionsVBox"]
-margin_top = 702.0
+margin_top = 739.0
 margin_right = 1052.0
-margin_bottom = 775.0
+margin_bottom = 808.0
 focus_next = NodePath("../BackButton")
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 5
@@ -1081,6 +1129,8 @@ autowrap = true
 [connection signal="pressed" from="Options/OptionsVBox/BackButton" to="Options" method="_on_BackButton_pressed"]
 [connection signal="mouse_exited" from="Options/OptionsVBox/Volume/HSlider" to="Options/OptionsVBox/Volume/HSlider" method="_on_HSlider_mouse_exited"]
 [connection signal="value_changed" from="Options/OptionsVBox/Volume/HSlider" to="Options/OptionsVBox/Volume/HSlider" method="_on_HSlider_value_changed"]
+[connection signal="mouse_exited" from="Options/OptionsVBox/DiceSpeed/HSliderSpeed" to="Options/OptionsVBox/DiceSpeed/HSliderSpeed" method="_on_HSliderSpeed_mouse_exited"]
+[connection signal="value_changed" from="Options/OptionsVBox/DiceSpeed/HSliderSpeed" to="Options/OptionsVBox/DiceSpeed/HSliderSpeed" method="_on_HSliderSpeed_value_changed"]
 [connection signal="pressed" from="Options/OptionsVBox/Tutorial" to="." method="_on_Tutorial_pressed"]
 [connection signal="toggled" from="Options/OptionsVBox/FullScreen" to="Options/OptionsVBox/FullScreen" method="_on_FullScreen_toggled"]
 [connection signal="pressed" from="Options/OptionsVBox/Quit" to="Options" method="_on_Quit_pressed"]

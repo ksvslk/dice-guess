@@ -18,7 +18,7 @@ func _ready():
 	elif err != 0:
 		printerr("Could not load local data. ", err)
 	_set_more_settings()
-	
+
 
 ######################################
 #	REPOSITORY/VIEWMODEL PART	    #
@@ -100,6 +100,16 @@ func set_best_score() -> void:
 	_config.save(_path)
 
 
+func get_move_pause_factor() -> float:
+	var value = _config.get_value(C.various_section, C.move_pause_factor_key)
+	return value
+
+
+func set_move_pause_factor(factor:float) -> void:
+	_config.set_value(C.various_section, C.move_pause_factor_key, factor)
+	_config.save(_path)
+	
+
 func get_replay_shown() -> int:
 	var value = _config.get_value(C.various_section, C.replay_shown_key)
 	return value
@@ -150,6 +160,7 @@ func _set_initial_launch_settings():
 	_config.set_value(C.various_section, C.current_level_key, "1")
 	_config.set_value(C.various_section, C.tutorial_shown_key, 0)
 	_config.set_value(C.various_section, C.replay_shown_key, 0)
+	_config.set_value(C.various_section, C.move_pause_factor_key, 1.0)
 	_config.set_value(C.various_section, C.volume, 1.0)
 	_config.set_value(C.various_section, C.fullscreen, 1)
 	
@@ -171,4 +182,6 @@ func _set_more_settings():
 		_config.set_value(C.various_section, C.fullscreen, 1)
 	elif !_config.has_section_key(C.various_section, C.replay_shown_key):
 		_config.set_value(C.various_section, C.replay_shown_key, 0)
+	elif !_config.has_section_key(C.various_section, C.move_pause_factor_key):
+		_config.set_value(C.various_section, C.move_pause_factor_key, 1.0)
 	_config.save(_path)
