@@ -7,7 +7,7 @@
 <p align="center">A logic game. Picture the dice rolling along the track and guess which number lands face up.</p>
 
 <p align="center">
-  <a href="https://store.steampowered.com/app/2747540"><img src="https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white" height="40" align="middle" alt="Get it on Steam"></a>
+  <a href="https://store.steampowered.com/app/2747540"><img src=".github/steam-badge.svg" height="40" align="middle" alt="Get it on Steam"></a>
   &nbsp;
   <a href="https://apps.apple.com/app/id6478107812"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="40" align="middle" alt="Download on the App Store"></a>
   &nbsp;
