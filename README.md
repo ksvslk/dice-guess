@@ -1,25 +1,25 @@
-# Mac notarization part
-`xcrun notarytool submit DiceGuess.dmg --apple-id indrekl@gmail.com --team-id PGTN5QKRGG --password nefn-vjya-dqfn-pmvq`
+<p align="center">
+  <img src=".github/icon.png" width="140" alt="Dice Guess app icon">
+</p>
 
-Get back id from last command. And use here:
+<h1 align="center">Dice Guess</h1>
 
-`xcrun notarytool [ID] --apple-id indrekl@gmail.com --team-id PGTN5QKRGG --password nefn-vjya-dqfn-pmvq`
+<p align="center">A logic game. Picture the dice rolling along the track and guess which number lands face up.</p>
 
-Then when accepted (about 5 min or less).
+<p align="center">
+  <a href="https://store.steampowered.com/app/2747540"><img src="https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white" height="40" align="middle" alt="Get it on Steam"></a>
+  &nbsp;
+  <a href="https://apps.apple.com/app/id6478107812"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="40" align="middle" alt="Download on the App Store"></a>
+  &nbsp;
+  <a href="https://play.google.com/store/apps/details?id=com.indest.diceguess"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60" align="middle" alt="Get it on Google Play"></a>
+</p>
 
-`xcrun stapler staple DiceGuess.dmg`
+<p align="center">Godot 4 · GDScript · Steam · iOS · Android</p>
 
-# Useful commands 
+## About the code
 
-## Screenshots 
-magick mogrify -path /path/to/output -resize 1920x1080 -background black -gravity center -extent 1920x1080 /path/to/input/*.png
-magick mogrify -path /path/to/output -resize 1920x1080 -background black -gravity center -extent 1920x1080 *.png
-magick mogrify -resize 1920x1080 -background black -gravity center -extent 1920x1080 *.png
+I wrote it in 2024. One codebase builds the Steam version for Windows, macOS and Linux and the mobile versions.
 
-## Gifs
-ffmpeg -i /Users/ksvslk/Projects/dice-guess-graphics/gif_dice.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v gif output.gif
-ffmpeg -i gif_dice.mp4 -filter_complex "[0:v] fps=20,scale=640:-1:flags=lanczos,split [a][b];[a] palettegen [p];[b][p] paletteuse" -c:v gif output.gif
+Art, sounds, fonts and third-party addons are not included, so the game can't be built from this repo.
 
-## Icons
-magick convert icon_256x256.png -define icon:auto-resize=256,128,64,48,32,16 icon.ico
-
+© 2024 Indest OÜ. All rights reserved.
